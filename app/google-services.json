@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "550988734512",
+    "project_id": "pissss-ebffd",
+    "storage_bucket": "pissss-ebffd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550988734512:android:e1efefb870cc12ba4e4df5",
+        "android_client_info": {
+          "package_name": "edu.ub.pis.firebaseexamplepis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550988734512-90pfm12hbhqmqmo132vim5uc2p446u1m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABbRS6Q8NR1kPWMmW58D4Qfcj31th5cO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550988734512-90pfm12hbhqmqmo132vim5uc2p446u1m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

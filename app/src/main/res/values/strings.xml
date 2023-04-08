@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Lab5</string>
+    <string name="signup_text">Sign Up</string>
+    <string name="login_button">Login</string>
+    <string name="logout_button">Logout</string>
+    <string name="login_info_text">Login information</string>
+    <string name="personal_info_text">Personal information</string>
+    <string name="signup_button">Sign Up</string>
+    <string name="update_button">Update</string>
+    <string name="home_title">Home</string>
+    <string name="modify_info_button_desc">Modify personal information</string>
+    <string name="logged_as_email_hint">Signed-in login e-mail</string>
+    <string name="take_picture_button_desc">Take picture</string>
+    <string name="logged_picture_desc">Shows user picture</string>
+</resources>

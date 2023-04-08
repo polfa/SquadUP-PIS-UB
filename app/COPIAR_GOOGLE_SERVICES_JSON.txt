@@ -1,0 +1,3 @@
+En aquest mateix directori, hi heu de copiar el vostre fitxer google-services.json.
+
+-- Albert
