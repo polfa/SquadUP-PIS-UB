@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Lab5</string>
+    <string name="app_name">SquadUp</string>
     <string name="signup_text">Sign Up</string>
-    <string name="login_button">Login</string>
+    <string name="login_button">Log in</string>
     <string name="logout_button">Logout</string>
     <string name="login_info_text">Login information</string>
     <string name="personal_info_text">Personal information</string>
@@ -12,4 +12,13 @@
     <string name="logged_as_email_hint">Signed-in login e-mail</string>
     <string name="take_picture_button_desc">Take picture</string>
     <string name="logged_picture_desc">Shows user picture</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="skip">Skip</string>
+    <string name="todo">TODO</string>
+    <string name="log_in">Log In</string>
+    <string name="or_with">or with</string>
+    <string name="lineas_de_separacion">lineas de separacion</string>
+    <string name="lineas_de_separacion2">lineas de separacion</string>
+    <string name="logo_facebook">logoGoogle</string>
 </resources>
