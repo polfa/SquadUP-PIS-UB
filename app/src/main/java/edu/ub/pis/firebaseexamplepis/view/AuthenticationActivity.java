@@ -41,20 +41,28 @@ public class AuthenticationActivity extends AppCompatActivity {
 
         mLoginButton.setOnClickListener(view -> {
             // Prova de fer sign-in (aka login)
-            mAuth.signInWithEmailAndPassword(mEmailText.getText().toString(), mPasswordText.getText().toString())
-                .addOnCompleteListener(AuthenticationActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) { // Si es pot loguejar, passa a la Home
-                            Intent intent = new Intent(AuthenticationActivity.this, HomeActivity.class);
-                            startActivity(intent);
-                        } else {
-                            // Si falla el logueig, fes un Toast
-                            Toast.makeText(getApplicationContext(), "Login failed.",
-                                Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+            if (!mEmailText.getText().toString().isEmpty() && !mPasswordText.getText().toString().isEmpty()) {
+                mAuth.signInWithEmailAndPassword(mEmailText.getText().toString(), mPasswordText.getText().toString())
+                        .addOnCompleteListener(AuthenticationActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) { // Si es pot loguejar, passa a la Home
+                                    Intent intent = new Intent(AuthenticationActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    // Si falla el logueig, fes un Toast
+                                    Toast.makeText(getApplicationContext(), "Login failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }else if (mEmailText.getText().toString().isEmpty()){
+                Toast.makeText(getApplicationContext(), "Email is required. Please enter your email to continue.",
+                        Toast.LENGTH_SHORT).show();
+            }else if (mPasswordText.getText().toString().isEmpty()){
+                Toast.makeText(getApplicationContext(), "Password is required. Please enter your password to continue.",
+                        Toast.LENGTH_SHORT).show();
+            }
         });
 
         // Obrir activity de sign up

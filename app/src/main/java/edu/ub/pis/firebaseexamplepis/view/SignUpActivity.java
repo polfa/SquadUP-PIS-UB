@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,7 +51,15 @@ public class SignUpActivity extends AppCompatActivity {
 
         mSignUpButton = (Button) findViewById(R.id.updateButton);
         mSignUpButton.setOnClickListener(view -> {
-            signUp(mEmailText.getText().toString(), mPasswordText.getText().toString());
+            if (!mEmailText.getText().toString().isEmpty() && !mPasswordText.getText().toString().isEmpty()) {
+                signUp(mEmailText.getText().toString(), mPasswordText.getText().toString());
+            }else if (mEmailText.getText().toString().isEmpty()){
+                Toast.makeText(getApplicationContext(), "Email is required. Please enter your email to continue.",
+                        Toast.LENGTH_SHORT).show();
+            }else if (mPasswordText.getText().toString().isEmpty()){
+                Toast.makeText(getApplicationContext(), "Password is required. Please enter your password to continue.",
+                        Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -58,18 +68,33 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+
+                        if (task.isSuccessful() && !mFirstNameText.getText().toString().isEmpty() && !mLastNameText.getText().toString().isEmpty()) {
+                            String txtHobbies;
+                            if (!mHobbiesText.getText().toString().isEmpty()) {
+                                txtHobbies = mHobbiesText.getText().toString();
+                            }else{
+                                txtHobbies = "";
+                            }
                             mRepository.addUser(
                                 email,
                                 mFirstNameText.getText().toString(),
                                 mLastNameText.getText().toString(),
-                                mHobbiesText.getText().toString()
+                                    txtHobbies
+
                             );
                             // Anar a la pantalla home de l'usuari autenticat
                             Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
                             startActivity(intent);
                         } else {
                             Log.d(TAG, "Sign up create user succeeded");
+                             if (mFirstNameText.getText().toString().isEmpty()){
+                                Toast.makeText(getApplicationContext(), "First name is required. Please enter your first name to continue.",
+                                        Toast.LENGTH_SHORT).show();
+                             }else if (mLastNameText.getText().toString().isEmpty()) {
+                                 Toast.makeText(getApplicationContext(), "Last name is required. Please enter your last name to continue.",
+                                         Toast.LENGTH_SHORT).show();
+                             }
                         }
                     }
                 });
