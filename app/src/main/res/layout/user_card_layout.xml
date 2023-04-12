@@ -70,6 +70,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_delete" />
 
+        <ImageView
+            android:id="@+id/status_circle"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/avatar"
+            app:layout_constraintEnd_toEndOf="@+id/avatar"
+            app:srcCompat="@drawable/green_circle" />
+
         <!--        &lt;!&ndash; Buttons &ndash;&gt;-->
         <!--        <LinearLayout-->
         <!--            android:layout_width="376dp"-->

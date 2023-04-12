@@ -13,7 +13,7 @@
         android:layout_width="360dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
         android:autofillHints=""
         android:elegantTextHeight="false"
@@ -22,7 +22,6 @@
         android:inputType="textEmailAddress"
         android:singleLine="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.148"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -45,7 +44,7 @@
         android:id="@+id/loginButton"
         android:layout_width="320dp"
         android:layout_height="54dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="#170028"
         android:shadowColor="#170028"
         android:text="@string/login_button"
@@ -54,7 +53,7 @@
         android:textSize="18sp"
         app:iconTint="#170028"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
         app:rippleColor="#170028"
@@ -64,7 +63,7 @@
         android:id="@+id/signUpText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#FF9800"
         android:elegantTextHeight="false"
         android:gravity="center"
@@ -72,17 +71,18 @@
         android:textColor="#170028"
         android:textSize="13sp"
         android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintEnd_toEndOf="@+id/passwordText"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordText"
         tools:ignore="TextSizeCheck" />
 
     <TextView
         android:id="@+id/skipSignInText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_width="47dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="#FF9800"
         android:elegantTextHeight="false"
         android:gravity="center"
@@ -90,10 +90,12 @@
         android:textColor="#170028"
         android:textSize="18sp"
         android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/loginButton"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -122,48 +124,24 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="TextSizeCheck" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="155dp"
-        android:layout_height="7dp"
-        android:layout_marginTop="28dp"
-        android:contentDescription="@string/lineas_de_separacion2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpText"
-        app:srcCompat="@drawable/linia_horizontal"
-        tools:ignore="ImageContrastCheck" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="155dp"
-        android:layout_height="7dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="28dp"
-        android:contentDescription="@string/lineas_de_separacion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/signUpText"
-        app:srcCompat="@drawable/linia_horizontal"
-        tools:ignore="ImageContrastCheck" />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="@string/or_with"
         android:textColor="#170028"
         android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpText" />
 
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="41dp"
         android:layout_height="35dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
