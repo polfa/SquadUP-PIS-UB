@@ -45,8 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     private HomeActivityViewModel mHomeActivityViewModel; //nuestro viewModel
 
     /* Elements de la vista de la HomeActivity */
-    private TextView mLoggedAsText;
-    private ImageButton mModifyPersonalInfoButton;
+    private ImageView mModifyPersonalInfoButton;
     private ImageView mLoggedPictureImageView;
     private ImageButton mTakePictureButton;
     private ImageButton mChoosePictureButton; // [Exercici 2: crea aquest botó al layout i implementa
@@ -79,14 +78,11 @@ public class HomeActivity extends AppCompatActivity {
 
         if (mAuth.getCurrentUser() != null) {  // Si hi ha usuari logat...
             // Obté elements de loggedLayout
-            mLoggedAsText = findViewById(R.id.loggedAsText);
             mModifyPersonalInfoButton = findViewById(R.id.modifyPersonalInfoButton);
             mLoggedPictureImageView = findViewById(R.id.loggedPictureImageView);
-            mTakePictureButton = findViewById(R.id.takePictureButton);
             mLogoutButton = findViewById(R.id.logoutButton);
 
             // Mostrar usuari logat
-            mLoggedAsText.setText(mAuth.getCurrentUser().getEmail());
 
             // Defineix listeners
             mModifyPersonalInfoButton.setOnClickListener(view -> {
@@ -98,8 +94,6 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, AuthenticationActivity.class);
                 startActivity(intent);
             });
-
-            setTakeCameraPictureListener(mTakePictureButton);
         } else { // Si no ho està, ...
             //
             loggedLayout.setVisibility(View.GONE); // No mostris cap element del layout inferior
@@ -173,65 +167,7 @@ public class HomeActivity extends AppCompatActivity {
      * a una variable observable, que HomeActivity està observant. Quan HomeActivity detecti
      * el canvi, la pintarà al seu l'ImageView loggedPictureImageView.
      */
-    private void setTakeCameraPictureListener(@NonNull View takePictureView) {
-        // Codi que s'encarrega de rebre el resultat de l'intent de fer foto des de càmera
-        // i que es llençarà des del listener que definirem a baix.
-        ActivityResultLauncher<Intent> takePictureLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        mHomeActivityViewModel.setPictureUrlOfUser(
-                            mAuth.getCurrentUser().getEmail(), mPhotoUri
-                        );
-                    }
-                }
-            }
-        );
 
-        // Listener del botó de fer foto, que llençarà l'intent amb l'ActivityResultLauncher.
-        takePictureView.setOnClickListener(view -> {
-            // Crearem un nom de fitxer d'imatge temporal amb una data i hora i format JPEG
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = "JPEG_" + timeStamp + "_";
-            // Anem a buscar el directori extern (del sistema) especificat per la variable
-            // d'entorn Environment.DIRECTORY_PICTURES (pren per valor "Pictures").
-            // Se li afageix, com a sufix, el directori del sistema on es guarden els fitxers.
-            File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
-            // Creem el fitxer
-            File image = null;
-            try {
-                image = File.createTempFile(
-                        imageFileName,  /* Prefix */
-                        ".jpg",         /* Sufix */
-                        storageDir      /* Directori on es guarda la imatge */
-                );
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            // Recuperem la Uri definitiva del fitxer amb FileProvider (obligatori per seguretat)
-            // Per a fer-ho:
-            // 1. Especifiquem a res>xml>paths.xml el directori on es guardarà la imatge
-            //    de manera definitiva.
-            // 2. Afegir al manifest un provider que apunti a paths.xml del pas 1
-            Uri photoUri = FileProvider.getUriForFile(this,
-                    "edu.ub.pis.firebaseexamplepis.fileprovider",
-                    image);
-
-            // Per tenir accés a la URI de la foto quan es llenci l'intent de la camara.
-            // Perquè encara que li passem la photoUri com a dades extra a l'intent, aquestes
-            // no tornen com a resultat de l'Intent.
-            mPhotoUri = photoUri;
-
-            // Llancem l'intent amb el launcher declarat al començament d'aquest mateix mètode
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mPhotoUri);
-            takePictureLauncher.launch(intent);
-        });
-    }
 
     /**
      * Bloc que seteja un listener al botó de seleccionar foto i que la posarà com a imatge de perfil.
