@@ -1,44 +1,34 @@
 package edu.ub.pis.firebaseexamplepis.view;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import edu.ub.pis.firebaseexamplepis.R;
-import edu.ub.pis.firebaseexamplepis.viewmodel.HomeActivityViewModel;
 import edu.ub.pis.firebaseexamplepis.model.User;
+import edu.ub.pis.firebaseexamplepis.viewmodel.HomeActivityViewModel;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeEventsActivity extends AppCompatActivity {
     private final String TAG = "HomeActivity";
 
     /** ViewModel del HomeActivity */
@@ -46,8 +36,6 @@ public class HomeActivity extends AppCompatActivity {
 
     /* Elements de la vista de la HomeActivity */
     private ImageView mModifyPersonalInfoButton;
-
-    private TextView eventBtn;
     private ImageView mLoggedPictureImageView;
     private ImageButton mTakePictureButton;
     private ImageButton mChoosePictureButton; // [Exercici 2: crea aquest botó al layout i implementa
@@ -57,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView mUserCardsRV; // RecyclerView
 
     /** Adapter de la RecyclerView */
-    private UserCardAdapter mUserCardRVAdapter;
+    private EventCardAdapter mUserCardRVAdapter;
 
     /** Autenticació de Firebase */
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -69,7 +57,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        eventBtn = findViewById(R.id.eventBtn);
 
         // Inicialitza el ViewModel d'aquesta activity (HomeActivity)
         mHomeActivityViewModel = new ViewModelProvider(this)
@@ -89,16 +76,12 @@ public class HomeActivity extends AppCompatActivity {
 
             // Defineix listeners
             mModifyPersonalInfoButton.setOnClickListener(view -> {
-                Intent intent = new Intent(HomeActivity.this, UpdateInfoActivity.class);
+                Intent intent = new Intent(HomeEventsActivity.this, UpdateInfoActivity.class);
                 startActivity(intent);
             });
             mLogoutButton.setOnClickListener(view -> {
                 mAuth.signOut();
-                Intent intent = new Intent(HomeActivity.this, AuthenticationActivity.class);
-                startActivity(intent);
-            });
-            eventBtn.setOnClickListener(view -> {
-                Intent intent = new Intent(HomeActivity.this, HomeEventsActivity.class);
+                Intent intent = new Intent(HomeEventsActivity.this, AuthenticationActivity.class);
                 startActivity(intent);
             });
         } else { // Si no ho està, ...
@@ -116,10 +99,10 @@ public class HomeActivity extends AppCompatActivity {
         mUserCardsRV.setLayoutManager(manager);
 
         // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
-        mUserCardRVAdapter = new UserCardAdapter(
+        mUserCardRVAdapter = new EventCardAdapter(
             mHomeActivityViewModel.getUsers().getValue() // Passem-li referencia llista usuaris
         );
-        mUserCardRVAdapter.setOnClickHideListener(new UserCardAdapter.OnClickHideListener() {
+        mUserCardRVAdapter.setOnClickHideListener(new EventCardAdapter.OnClickHideListener() {
             // Listener que escoltarà quan interactuem amb un item en una posició donada
             // dins de la recicler view. En aquest cas, quan es faci clic al botó d'amagar
             // l'usuari.

@@ -1,20 +1,22 @@
 package edu.ub.pis.firebaseexamplepis.view;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.User;
 
-public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.ViewHolder> {
+public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.ViewHolder> {
 
     /** Definició de listener (interficie)
      *  per a quan algú vulgui escoltar un event de OnClickHide, és a dir,
@@ -28,7 +30,7 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.ViewHo
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
-    public UserCardAdapter(ArrayList<User> userList) {
+    public EventCardAdapter(ArrayList<User> userList) {
         this.mUsers = userList; // no fa new (La llista la manté el ViewModel)
 
     }
@@ -39,19 +41,19 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.ViewHo
 
     @NonNull
     @Override
-    public UserCardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public EventCardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         // Inflate crea una view genèrica definida pel layout que l'hi passem (l'user_card_layout)
-        View view = inflater.inflate(R.layout.user_card_layout, parent, false);
+        View view = inflater.inflate(R.layout.user_card_layout_events, parent, false);
 
         // La classe ViewHolder farà de pont entre la classe User del model i la view (UserCard).
-        return new UserCardAdapter.ViewHolder(view);
+        return new EventCardAdapter.ViewHolder(view);
     }
 
     /* Mètode cridat per cada ViewHolder de la RecyclerView */
     @Override
-    public void onBindViewHolder(@NonNull UserCardAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EventCardAdapter.ViewHolder holder, int position) {
         // El ViewHolder té el mètode que s'encarrega de llegir els atributs del User (1r parametre),
         // i assignar-los a les variables del ViewHolder.
         // Qualsevol listener que volguem posar a un item, ha d'entrar com a paràmetre extra (2n).

@@ -28,6 +28,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="edu.ub.pis.firebaseexamplepis.view.HomeEventsActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="edu.ub.pis.firebaseexamplepis.view.AuthenticationActivity"
             android:exported="true">
             <intent-filter>
