@@ -26,13 +26,13 @@ import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.User;
-import edu.ub.pis.firebaseexamplepis.viewmodel.HomeActivityViewModel;
+import edu.ub.pis.firebaseexamplepis.viewmodel.HomeEventsActivityViewModel;
 
 public class HomeEventsActivity extends AppCompatActivity {
     private final String TAG = "HomeActivity";
 
     /** ViewModel del HomeActivity */
-    private HomeActivityViewModel mHomeActivityViewModel; //nuestro viewModel
+    private HomeEventsActivityViewModel mHomeEventsActivityViewModel; //nuestro viewModel
 
     /* Elements de la vista de la HomeActivity */
     private ImageView mModifyPersonalInfoButton;
@@ -56,11 +56,11 @@ public class HomeEventsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_home_events);
 
-        // Inicialitza el ViewModel d'aquesta activity (HomeActivity)
-        mHomeActivityViewModel = new ViewModelProvider(this)
-            .get(HomeActivityViewModel.class);
+        // Inicialitza el ViewModel d'aquesta activity (HomeEventsActivity)
+        mHomeEventsActivityViewModel = new ViewModelProvider(this)
+            .get(HomeEventsActivityViewModel.class);
 
         // Elements del ViewGroup inferior (email, botó logout, etc),
         // que només mostrarem si hi ha usuari logat.
@@ -100,7 +100,7 @@ public class HomeEventsActivity extends AppCompatActivity {
 
         // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
         mUserCardRVAdapter = new EventCardAdapter(
-            mHomeActivityViewModel.getUsers().getValue() // Passem-li referencia llista usuaris
+            mHomeEventsActivityViewModel.getUsers().getValue() // Passem-li referencia llista usuaris
         );
         mUserCardRVAdapter.setOnClickHideListener(new EventCardAdapter.OnClickHideListener() {
             // Listener que escoltarà quan interactuem amb un item en una posició donada
@@ -108,7 +108,7 @@ public class HomeEventsActivity extends AppCompatActivity {
             // l'usuari.
             @Override
             public void OnClickHide(int position) {
-                mHomeActivityViewModel.removeUserFromHome(position);
+                mHomeEventsActivityViewModel.removeUserFromHome(position);
                 mUserCardRVAdapter.hideUser(position);
             }
         });
@@ -122,10 +122,10 @@ public class HomeEventsActivity extends AppCompatActivity {
                 mUserCardRVAdapter.notifyDataSetChanged();
             }
         };
-        mHomeActivityViewModel.getUsers().observe(this, observerUsers);
+        mHomeEventsActivityViewModel.getUsers().observe(this, observerUsers);
 
         // A partir d'aquí, en cas que es faci cap canvi a la llista d'usuaris, HomeActivity ho sabrá
-        mHomeActivityViewModel.loadUsersFromRepository();  // Internament pobla els usuaris de la BBDD
+        mHomeEventsActivityViewModel.loadUsersFromRepository();  // Internament pobla els usuaris de la BBDD
 
         // Si hi ha usuari logat i seteja una foto de perfil, mostra-la.
         if (mAuth.getCurrentUser() != null) {
@@ -139,9 +139,9 @@ public class HomeEventsActivity extends AppCompatActivity {
                         .into(mLoggedPictureImageView);
                 }
             };
-            mHomeActivityViewModel.getPictureUrl().observe(this, observerPictureUrl);
+            mHomeEventsActivityViewModel.getPictureUrl().observe(this, observerPictureUrl);
 
-            mHomeActivityViewModel.loadPictureOfUser(mAuth.getCurrentUser().getEmail());
+            mHomeEventsActivityViewModel.loadPictureOfUser(mAuth.getCurrentUser().getEmail());
         }
     }
 
