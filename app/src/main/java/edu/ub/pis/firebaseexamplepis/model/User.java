@@ -37,6 +37,8 @@ public class User {
     }
     public String getURL() { return this.mPictureURL; }
 
+    public String getID() { return this.mId; }
+
     // Setters
     public void setFirstName (String firstName) { this.mFirstName = firstName; }
     public void setLastName (String lastName) {

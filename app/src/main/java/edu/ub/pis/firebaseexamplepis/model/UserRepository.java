@@ -116,6 +116,18 @@ public class UserRepository {
             });
     }
 
+
+    public User getUserById(String userID){
+        ArrayList<User> users = new ArrayList<>();
+        loadUsers(users);
+        for (User user: users){
+            if (user.getID() == userID){
+                return user;
+            }
+        }
+        throw new RuntimeException();
+    }
+
     /**
      * Mètode que llegeix la Url d'una foto de perfil d'un usuari indicat pel seu
      * email. Vindrà cridat des de fora i quan acabi, avisarà sempre al listener,
