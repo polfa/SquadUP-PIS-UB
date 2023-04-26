@@ -40,14 +40,17 @@ public class AuthenticationActivity extends AppCompatActivity {
         mSkipSignInText = findViewById(R.id.skipSignInText);
 
         mLoginButton.setOnClickListener(view -> {
+            System.out.println("1");
             // Prova de fer sign-in (aka login)
             if (!mEmailText.getText().toString().isEmpty() && !mPasswordText.getText().toString().isEmpty()) {
                 mAuth.signInWithEmailAndPassword(mEmailText.getText().toString(), mPasswordText.getText().toString())
                         .addOnCompleteListener(AuthenticationActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                System.out.println("2");
                                 if (task.isSuccessful()) { // Si es pot loguejar, passa a la Home
                                     Intent intent = new Intent(AuthenticationActivity.this, HomeActivity.class);
+                                    System.out.println("AAA");
                                     startActivity(intent);
                                 } else {
                                     // Si falla el logueig, fes un Toast

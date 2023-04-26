@@ -101,14 +101,12 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
         private final ImageView mCardPictureUrl;
         private final TextView mCardFullName;
         private final TextView mCardHobbies;
-        private final ImageView mHideButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mCardPictureUrl = itemView.findViewById(R.id.avatar);
             mCardFullName = itemView.findViewById(R.id.fullname);
             mCardHobbies = itemView.findViewById(R.id.description_event);
-            mHideButton = itemView.findViewById(R.id.hideButton);
         }
 
         public void bind(final User user, OnClickHideListener listener) {
@@ -120,12 +118,6 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             // Seteja el listener onClick del botó d'amagar (hide), que alhora
             // cridi el mètode OnClickHide que implementen els nostres propis
             // listeners de tipus OnClickHideListener.
-            mHideButton.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   listener.OnClickHide(getAdapterPosition());
-               }
-           });
         }
     }
 
