@@ -173,6 +173,7 @@ public class UserRepository {
         String secondName,
         String hobbies
     ) {
+        userList.add(new User(email,firstName,secondName,hobbies,"",email));
          // Obtenir informació personal de l'usuari
         Map<String, Object> signedUpUser = new HashMap<>();
         signedUpUser.put("first", firstName);

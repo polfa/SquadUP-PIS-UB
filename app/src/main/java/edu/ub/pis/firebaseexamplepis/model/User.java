@@ -12,7 +12,6 @@ public class User {
     private String mHobbies;
     private String mPictureURL;
     private String mail;// Url d'Internet, no la foto en si
-    private ArrayList<Chat> chats;
     // Constructor
     public User(
         String id,

@@ -7,9 +7,10 @@ public class Chat {
     private User user1;
     private User user2;
 
-    public Chat(User user1, User user2) {
-        this.user1 = user1;
-        this.user2 = user2;
+    public Chat(String idUser1, String idUser2) {
+        UserRepository uRepo = UserRepository.getInstance();
+        this.user1 = uRepo.getUserById(idUser1);
+        this.user2 = uRepo.getUserById(idUser2);
         this.messages = new ArrayList<>();
     }
 
