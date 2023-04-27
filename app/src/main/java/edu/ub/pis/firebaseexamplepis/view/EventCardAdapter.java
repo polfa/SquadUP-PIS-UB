@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
-import edu.ub.pis.firebaseexamplepis.model.User;
+import edu.ub.pis.firebaseexamplepis.model.Event;
 
 public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.ViewHolder> {
 
@@ -26,12 +26,12 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
         void OnClickHide(int position);
     }
 
-    private ArrayList<User> mUsers; // Referència a la llista d'usuaris
+    private ArrayList<Event> mEvents; // Referència a la llista d'usuaris
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
-    public EventCardAdapter(ArrayList<User> userList) {
-        this.mUsers = userList; // no fa new (La llista la manté el ViewModel)
+    public EventCardAdapter(ArrayList<Event> eventList) {
+        this.mEvents = eventList; // no fa new (La llista la manté el ViewModel)
 
     }
 
@@ -44,20 +44,20 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
     public EventCardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        // Inflate crea una view genèrica definida pel layout que l'hi passem (l'user_card_layout)
+        // Inflate crea una view genèrica definida pel layout que l'hi passem (l'event_card_layout)
         View view = inflater.inflate(R.layout.user_card_layout_events, parent, false);
 
-        // La classe ViewHolder farà de pont entre la classe User del model i la view (UserCard).
+        // La classe ViewHolder farà de pont entre la classe Event del model i la view (EventCard).
         return new EventCardAdapter.ViewHolder(view);
     }
 
     /* Mètode cridat per cada ViewHolder de la RecyclerView */
     @Override
     public void onBindViewHolder(@NonNull EventCardAdapter.ViewHolder holder, int position) {
-        // El ViewHolder té el mètode que s'encarrega de llegir els atributs del User (1r parametre),
+        // El ViewHolder té el mètode que s'encarrega de llegir els atributs del Event (1r parametre),
         // i assignar-los a les variables del ViewHolder.
         // Qualsevol listener que volguem posar a un item, ha d'entrar com a paràmetre extra (2n).
-        holder.bind(mUsers.get(position), this.mOnClickHideListener);
+        holder.bind(mEvents.get(position), this.mOnClickHideListener);
     }
 
     /**
@@ -66,21 +66,21 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
      */
     @Override
     public int getItemCount() {
-        return mUsers.size();
+        return mEvents.size();
     }
 
     /**
      * Mètode que seteja de nou la llista d'usuaris si s'hi han fet canvis de manera externa.
-     * @param users
+     * @param events
      */
-    public void setUsers(ArrayList<User> users) {
-        this.mUsers = users; // no recicla/repinta res
+    public void setEvents(ArrayList<Event> events) {
+        this.mEvents = events; // no recicla/repinta res
     }
 
     /**
      * Mètode que repinta la RecyclerView sencera.
      */
-    public void updateUsers() {
+    public void updateEvents() {
         notifyDataSetChanged();
     }
 
@@ -88,12 +88,12 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
      * Mètode que repinta només posició indicada
      * @param position
      */
-    public void hideUser(int position) {
+    public void hideEvent(int position) {
         notifyItemRemoved(position);
     }
 
     /**
-     * Classe ViewHolder. No és més que un placeholder de la vista (user_card_list.xml)
+     * Classe ViewHolder. No és més que un placeholder de la vista (event_card_list.xml)
      * dels items de la RecyclerView. Podem implementar-ho fora de RecyclerViewAdapter,
      * però es pot fer dins.
      */
@@ -109,12 +109,12 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             mCardHobbies = itemView.findViewById(R.id.description_event);
         }
 
-        public void bind(final User user, OnClickHideListener listener) {
-            mCardFullName.setText(user.getFirstName() + " " + user.getLastName());
-            mCardHobbies.setText(user.getHobbies());
+        public void bind(final Event event, OnClickHideListener listener) {
+            mCardFullName.setText(event.getUser().getFirstName() + " " + event.getUser().getLastName());
+            mCardHobbies.setText(event.getDescription());
             // Carrega foto de l'usuari de la llista directament des d'una Url
             // d'Internet.
-            Picasso.get().load(user.getURL()).into(mCardPictureUrl);
+            Picasso.get().load(event.getUser().getURL()).into(mCardPictureUrl);
             // Seteja el listener onClick del botó d'amagar (hide), que alhora
             // cridi el mètode OnClickHide que implementen els nostres propis
             // listeners de tipus OnClickHideListener.

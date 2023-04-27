@@ -8,7 +8,9 @@ public class User {
     private String mFirstName;
     private String mLastName;
     private String mHobbies;
-    private String mPictureURL; // Url d'Internet, no la foto en si
+    private String mPictureURL;
+
+    private String mail;// Url d'Internet, no la foto en si
 
     // Constructor
     public User(
@@ -16,13 +18,15 @@ public class User {
         String firstName,
         String lastName,
         String hobbies,
-        String pictureURL
+        String pictureURL,
+        String mail
     ) {
         this.mId = id;
         this.mFirstName = firstName;
         this.mLastName = lastName;
         this.mHobbies = hobbies;
         this.mPictureURL = pictureURL;
+        this.mail = mail;
     }
 
     // Getters
@@ -37,7 +41,7 @@ public class User {
     }
     public String getURL() { return this.mPictureURL; }
 
-    public String getID() { return this.mId; }
+    public String getID() { return this.mail; }
 
     // Setters
     public void setFirstName (String firstName) { this.mFirstName = firstName; }

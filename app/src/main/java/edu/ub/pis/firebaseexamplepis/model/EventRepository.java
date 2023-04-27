@@ -40,11 +40,11 @@ public class EventRepository {
     /** Definició de listener (interficie)
      * per poder escoltar quan s'hagi acabat de llegir la Url de la foto de perfil
      * d'un usuari concret */
-    public interface OnLoadGameImageIDListener {
-        void OnLoadEventPictureUrl(String pictureUrl);
+    public interface OnLoadUserPictureUrlListener {
+        void  OnLoadUserPictureUrl(String pictureUrl);
     }
 
-    public OnLoadGameImageIDListener mOnLoadGameImageIDListener;
+    public OnLoadUserPictureUrlListener mOnLoadUserPictureUrlListener;
 
     /**
      * Constructor privat per a forçar la instanciació amb getInstance(),
@@ -78,8 +78,8 @@ public class EventRepository {
      * també a tall d'exemple.
      * @param listener
      */
-    public void setOnLoadEventGameImageID(OnLoadGameImageIDListener listener) {
-        mOnLoadGameImageIDListener = listener;
+    public void setOnLoadUserPictureListener(OnLoadUserPictureUrlListener listener) {
+        mOnLoadUserPictureUrlListener = listener;
     }
 
     /**
@@ -115,6 +115,26 @@ public class EventRepository {
                     }
                 }
             });
+    }
+
+    public void loadPictureOfUser(String email) {
+        mDb.collection("users")
+                .document(email)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null) {
+                                mOnLoadUserPictureUrlListener.OnLoadUserPictureUrl(document.getString("picture_url"));
+                            } else {
+                                Log.d("LOGGER", "No such document");
+                            }
+                        } else {
+                            Log.d("LOGGER", "get failed with ", task.getException());
+                        }
+                    }
+                });
     }
 
 
@@ -156,6 +176,21 @@ public class EventRepository {
                     }
                 }
             });
+    }
+
+    public void setPictureUrlOfUser(String userId, String pictureUrl) {
+        Map<String, Object> userEntry = new HashMap<>();
+        userEntry.put("picture_url", pictureUrl);
+
+        mDb.collection("users")
+                .document(userId)
+                .set(userEntry, SetOptions.merge())
+                .addOnSuccessListener(documentReference -> {
+                    Log.d(TAG, "Photo upload succeeded: " + pictureUrl);
+                })
+                .addOnFailureListener(exception -> {
+                    Log.d(TAG, "Photo upload failed: " + pictureUrl);
+                });
     }
 
 

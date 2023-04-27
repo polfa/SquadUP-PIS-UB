@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
-import edu.ub.pis.firebaseexamplepis.model.User;
+import edu.ub.pis.firebaseexamplepis.model.Event;
 import edu.ub.pis.firebaseexamplepis.viewmodel.HomeEventsActivityViewModel;
 
 public class HomeEventsActivity extends AppCompatActivity {
@@ -42,10 +42,10 @@ public class HomeEventsActivity extends AppCompatActivity {
                                               // correctament setChoosePictureListener()]
     private Button mLogoutButton;
     private ViewGroup loggedLayout;
-    private RecyclerView mUserCardsRV; // RecyclerView
+    private RecyclerView mEventCardsRV; // RecyclerView
 
     /** Adapter de la RecyclerView */
-    private EventCardAdapter mUserCardRVAdapter;
+    private EventCardAdapter mEventCardRVAdapter;
 
     /** Autenticació de Firebase */
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -90,42 +90,42 @@ public class HomeEventsActivity extends AppCompatActivity {
         }
 
         // Anem a buscar la RecyclerView i fem dues coses:
-        mUserCardsRV = findViewById(R.id.userCardRv);
+        mEventCardsRV = findViewById(R.id.eventCardRv);
 
         // (1) Li assignem un layout manager.
         LinearLayoutManager manager = new LinearLayoutManager(
             this, LinearLayoutManager.VERTICAL, false
         );
-        mUserCardsRV.setLayoutManager(manager);
+        mEventCardsRV.setLayoutManager(manager);
 
         // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
-        mUserCardRVAdapter = new EventCardAdapter(
-            mHomeEventsActivityViewModel.getUsers().getValue() // Passem-li referencia llista usuaris
+        mEventCardRVAdapter = new EventCardAdapter(
+            mHomeEventsActivityViewModel.getEvents().getValue() // Passem-li referencia llista usuaris
         );
-        mUserCardRVAdapter.setOnClickHideListener(new EventCardAdapter.OnClickHideListener() {
+        mEventCardRVAdapter.setOnClickHideListener(new EventCardAdapter.OnClickHideListener() {
             // Listener que escoltarà quan interactuem amb un item en una posició donada
             // dins de la recicler view. En aquest cas, quan es faci clic al botó d'amagar
             // l'usuari.
             @Override
             public void OnClickHide(int position) {
-                mHomeEventsActivityViewModel.removeUserFromHome(position);
-                mUserCardRVAdapter.hideUser(position);
+                mHomeEventsActivityViewModel.removeEventFromHome(position);
+                mEventCardRVAdapter.hideEvent(position);
             }
         });
-        mUserCardsRV.setAdapter(mUserCardRVAdapter); // Associa l'adapter amb la ReciclerView
+        mEventCardsRV.setAdapter(mEventCardRVAdapter); // Associa l'adapter amb la ReciclerView
 
-        // Observer a HomeActivity per veure si la llista de User (observable MutableLiveData)
+        // Observer a HomeActivity per veure si la llista de Event (observable MutableLiveData)
         // a HomeActivityViewModel ha canviat.
-        final Observer<ArrayList<User>> observerUsers = new Observer<ArrayList<User>>() {
+        final Observer<ArrayList<Event>> observerEvents = new Observer<ArrayList<Event>>() {
             @Override
-            public void onChanged(ArrayList<User> users) {
-                mUserCardRVAdapter.notifyDataSetChanged();
+            public void onChanged(ArrayList<Event> Events) {
+                mEventCardRVAdapter.notifyDataSetChanged();
             }
         };
-        mHomeEventsActivityViewModel.getUsers().observe(this, observerUsers);
+        mHomeEventsActivityViewModel.getEvents().observe(this, observerEvents);
 
         // A partir d'aquí, en cas que es faci cap canvi a la llista d'usuaris, HomeActivity ho sabrá
-        mHomeEventsActivityViewModel.loadUsersFromRepository();  // Internament pobla els usuaris de la BBDD
+        mHomeEventsActivityViewModel.loadEventsFromRepository();  // Internament pobla els usuaris de la BBDD
 
         // Si hi ha usuari logat i seteja una foto de perfil, mostra-la.
         if (mAuth.getCurrentUser() != null) {

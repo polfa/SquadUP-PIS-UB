@@ -28,8 +28,8 @@ public class Event {
     private com.google.firebase.Timestamp startTime;
 
     public Event(String userID,String eventID, String description, String gameImageId, String rankImageId, com.google.firebase.Timestamp startTime){
-        UserRepository userRepository = UserRepository.getInstance();
-        userRepository.getUserById(userID);
+        UserRepository uRepo = UserRepository.getInstance();
+        this.user = uRepo.getUserById(userID);
         this.description = description;
         this.gameImageId = gameImageId;
         this.rankImageId = rankImageId;

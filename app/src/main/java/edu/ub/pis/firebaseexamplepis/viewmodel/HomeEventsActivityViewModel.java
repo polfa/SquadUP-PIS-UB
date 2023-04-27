@@ -19,6 +19,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
+import edu.ub.pis.firebaseexamplepis.model.Event;
+import edu.ub.pis.firebaseexamplepis.model.EventRepository;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
 
@@ -27,12 +29,12 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
     private final String TAG = "HomeEventsActivityViewModel";
 
     /* Elements observables del ViewModel */
-    private final MutableLiveData<ArrayList<User>> mUsers; // Els usuaris que la RecyclerView mostra al home
+    private final MutableLiveData<ArrayList<Event>> mEvents; // Els events que la RecyclerView mostra al home
     private final MutableLiveData<String> mPictureUrl; // URL de la foto de l'usuari logat
     private final MutableLiveData<Integer> mHidPosition;
 
     /* Repositori (base de dades) dels usuaris */
-    private UserRepository mUserRepository; // On es manté la informació dels usuaris
+    private EventRepository mEventRepository; // On es manté la informació dels usuaris
 
     /* Atributs auxiliars */
     private FirebaseStorage mStorage; // Per pujar fitxers grans (fotos) i accedir-hi
@@ -41,26 +43,26 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
         super(application);
 
         // Instancia els atributs
-        mUsers = new MutableLiveData<>(new ArrayList<>());
+        mEvents = new MutableLiveData<>(new ArrayList<>());
         mPictureUrl = new MutableLiveData<>();
         mHidPosition = new MutableLiveData<>();
-        mUserRepository = UserRepository.getInstance();
+        mEventRepository = EventRepository.getInstance();
         mStorage = FirebaseStorage.getInstance();
 
         // Quan s'acabin de llegir de la BBDD els usuaris, el ViewModel ha d'actualitzar
-        // l'observable mUsers. I com que la RecyclerView de la HomeEventsActivity està observant aquesta
-        // mateixa variable (mUsers), també se n'enterarà
-        mUserRepository.addOnLoadUsersListener(new UserRepository.OnLoadUsersListener() {
+        // l'observable mEvents. I com que la RecyclerView de la HomeEventsActivity està observant aquesta
+        // mateixa variable (mEvents), també se n'enterarà
+        mEventRepository.addOnLoadEventsListener(new EventRepository.OnLoadEventsListener() {
             @Override
-            public void onLoadUsers(ArrayList<User> users) {
-                HomeEventsActivityViewModel.this.setUsers(users);
+            public void onLoadEvents(ArrayList<Event> events) {
+                HomeEventsActivityViewModel.this.setEvents(events);
             }
         });
 
         // Quan s'acabi de llegir la URL de la foto de perfil de l'usuari logat, el ViewModel
         // actualitza també mPictureUrl, per a que la HomeEventsActivity la mostri en l'ImageView
         // corresponent
-        mUserRepository.setOnLoadUserPictureListener(new UserRepository.OnLoadUserPictureUrlListener() {
+        mEventRepository.setOnLoadUserPictureListener(new EventRepository.OnLoadUserPictureUrlListener() {
             @Override
             public void OnLoadUserPictureUrl(String pictureUrl) {
                 // Log.d(TAG, "Loaded pictureUrl: " + pictureUrl);
@@ -72,8 +74,8 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
     /*
      * Retorna els usuaris perquè la HomeEventsActivity pugui subscriure-hi l'observable.
      */
-    public LiveData<ArrayList<User>> getUsers() {
-        return mUsers;
+    public LiveData<ArrayList<Event>> getEvents() {
+        return mEvents;
     }
 
 
@@ -94,11 +96,11 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
     }
 
     /*
-     * Mètode que serà invocat pel UserRepository.OnLoadUsersListener definit al
-     * constructor (quan l'objecte UserRepository hagi acabat de llegir de la BBDD).
+     * Mètode que serà invocat pel EventRepository.OnLoadEventsListener definit al
+     * constructor (quan l'objecte EventRepository hagi acabat de llegir de la BBDD).
      */
-    public void setUsers(ArrayList<User> users) {
-        mUsers.setValue(users);
+    public void setEvents(ArrayList<Event> users) {
+        mEvents.setValue(users);
     }
 
     /*
@@ -146,7 +148,7 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
                     // un cop pujat, passa-li la URL de la imatge a l'adapter de
                     // la Base de Dades per a que l'associï a l'usuari
                     Log.d(TAG, "DownloadTask: " + uploadUrl.toString());
-                    mUserRepository.setPictureUrlOfUser(userId, uploadUrl.toString());
+                    mEventRepository.setPictureUrlOfUser(userId, uploadUrl.toString());
                     mPictureUrl.setValue(uploadUrl.toString());
                 }
             }
@@ -154,23 +156,23 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
     }
 
     /* Mètode que crida a carregar dades dels usuaris */
-    public void loadUsersFromRepository() {
-        mUserRepository.loadUsers(mUsers.getValue());
+    public void loadEventsFromRepository() {
+        mEventRepository.loadEvents(mEvents.getValue());
     }
 
     /* Mètode que crida a carregar la foto d'un usuari entre els usuaris */
     public void loadPictureOfUser(String userId) {
-        mUserRepository.loadPictureOfUser(userId);
+        mEventRepository.loadPictureOfUser(userId);
     }
 
     /*
      * Mètode que esborra un usuari de la llista d'usuaris, donada una posició en
-     * la llista. La posició ve del UserCardAdapter, que es torna a la HomeEventsActivity
+     * la llista. La posició ve del EventCardAdapter, que es torna a la HomeEventsActivity
      * i aquesta crida aquest mètode, després que el HomeEventsActivityViewModel hagi esborrat
-     * l'usuari en qüestió de mUsers.
+     * l'usuari en qüestió de mEvents.
      */
-    public void removeUserFromHome(int position) {
-        mUsers.getValue().remove(position);
+    public void removeEventFromHome(int position) {
+        mEvents.getValue().remove(position);
     }
 }
 

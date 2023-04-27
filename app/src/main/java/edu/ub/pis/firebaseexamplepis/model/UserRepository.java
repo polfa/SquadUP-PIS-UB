@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.ub.pis.firebaseexamplepis.viewmodel.HomeActivityViewModel;
+
 /** Classe que fa d'adaptador entre la base de dades (Cloud Firestore) i les classes del model
  * Segueix el patró de disseny Singleton.
  */
@@ -28,6 +30,8 @@ public class UserRepository {
 
     /** Referència a la Base de Dades */
     private FirebaseFirestore mDb;
+
+    private ArrayList<User> userList = new ArrayList<>();
 
     /** Definició de listener (interficie),
      *  per escoltar quan s'hagin acabat de llegir els usuaris de la BBDD */
@@ -101,10 +105,13 @@ public class UserRepository {
                                 document.getString("first"),
                                 document.getString("last"),
                                 document.getString("hobbies"),
-                                document.getString("picture_url")
+                                document.getString("picture_url"),
+                                    document.getString("mail")
                             );
                             users.add(user);
+
                         }
+                        userList = users;
                         /* Callback listeners */
                         for (OnLoadUsersListener l: mOnLoadUsersListeners) {
                             l.onLoadUsers(users);
@@ -116,16 +123,15 @@ public class UserRepository {
             });
     }
 
-
     public User getUserById(String userID){
-        ArrayList<User> users = new ArrayList<>();
-        loadUsers(users);
-        for (User user: users){
-            if (user.getID() == userID){
-                return user;
+        System.out.println(userList.size());
+        for (User u: userList) {
+            System.out.println(u.getID());
+            if (userID.equals(u.getID())) {
+                return u;
             }
         }
-        throw new RuntimeException();
+        throw new RuntimeException("User not found");
     }
 
     /**

@@ -144,7 +144,7 @@
             android:padding="0dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/userCardRv"
+                android:id="@+id/eventCardRv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </ScrollView>
