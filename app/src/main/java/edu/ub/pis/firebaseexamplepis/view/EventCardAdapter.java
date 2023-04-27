@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.Event;
@@ -101,20 +102,40 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
         private final ImageView mCardPictureUrl;
         private final TextView mCardFullName;
         private final TextView mCardHobbies;
+        private final TextView mCardTime;
+        private final ImageView mCardGameImage;
+
+        private final ImageView mCardRankImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mCardPictureUrl = itemView.findViewById(R.id.avatar);
             mCardFullName = itemView.findViewById(R.id.fullname);
             mCardHobbies = itemView.findViewById(R.id.description_event);
+            mCardGameImage = itemView.findViewById(R.id.game_event_image);
+            mCardRankImage = itemView.findViewById(R.id.rank_event_image);
+            mCardTime = itemView.findViewById(R.id.time_event);
         }
 
         public void bind(final Event event, OnClickHideListener listener) {
+            Date date = new Date();
             mCardFullName.setText(event.getUser().getFirstName() + " " + event.getUser().getLastName());
             mCardHobbies.setText(event.getDescription());
+            String day;
+            String hour = String.valueOf(Integer.parseInt(event.getStartTime().toDate().toString().substring(11,13)) + 2);
+            hour = hour + event.getStartTime().toDate().toString().substring(13,16);
+            if (event.getStartTime().toDate().toString().substring(0,3).equals(date.toString().substring(0,3))){
+                day = "Today";
+            }else{
+                day = event.getStartTime().toDate().toString().substring(0,3);
+            }
+
+            mCardTime.setText(day + " " + hour);
             // Carrega foto de l'usuari de la llista directament des d'una Url
             // d'Internet.
             Picasso.get().load(event.getUser().getURL()).into(mCardPictureUrl);
+            //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
+            //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
             // Seteja el listener onClick del botó d'amagar (hide), que alhora
             // cridi el mètode OnClickHide que implementen els nostres propis
             // listeners de tipus OnClickHideListener.

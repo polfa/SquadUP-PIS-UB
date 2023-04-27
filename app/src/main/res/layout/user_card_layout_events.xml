@@ -31,63 +31,62 @@
 
         <TextView
             android:id="@+id/fullname"
-            android:layout_width="130dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="28dp"
+            android:layout_width="135dp"
+            android:layout_height="38dp"
             android:layout_marginTop="8dp"
             android:gravity="center|left"
             android:text="Full Name"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            android:textStyle="normal"
+            android:textSize="13sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/description_event"
             app:layout_constraintEnd_toStartOf="@+id/time_event"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/joc_event_image"
+            app:layout_constraintHorizontal_bias="0.407"
+            app:layout_constraintStart_toEndOf="@+id/game_event_image"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.129" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/description_event"
-            android:layout_width="192dp"
-            android:layout_height="63dp"
-            android:layout_marginBottom="28dp"
+            android:layout_width="136dp"
+            android:layout_height="79dp"
+            android:layout_marginBottom="12dp"
             android:gravity="left"
             android:text="lorem ipsum dolor amet"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintHorizontal_bias="0.243"
             app:layout_constraintStart_toEndOf="@+id/rank_event_image" />
 
         <TextView
             android:id="@+id/time_event"
-            android:layout_width="76dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="4dp"
+            android:layout_width="93dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="8dp"
             android:text="00:00"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.13" />
+            app:layout_constraintVertical_bias="0.102" />
 
         <ImageView
             android:id="@+id/rank_event_image"
             android:layout_width="59dp"
             android:layout_height="52dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/joc_event_image"
-            app:layout_constraintStart_toStartOf="@+id/joc_event_image"
-            app:layout_constraintTop_toBottomOf="@+id/joc_event_image"
+            app:layout_constraintEnd_toEndOf="@+id/game_event_image"
+            app:layout_constraintStart_toStartOf="@+id/game_event_image"
+            app:layout_constraintTop_toBottomOf="@+id/game_event_image"
             app:layout_constraintVertical_bias="0.448"
             app:srcCompat="@android:drawable/btn_star_big_on" />
 
         <ImageView
-            android:id="@+id/joc_event_image"
+            android:id="@+id/game_event_image"
             android:layout_width="56dp"
             android:layout_height="55dp"
             android:layout_marginStart="16dp"
@@ -95,6 +94,18 @@
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="72dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="16dp"
+            android:text="JOIN"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time_event"
+            app:layout_constraintVertical_bias="0.475" />
 
         <!--        &lt;!&ndash; Buttons &ndash;&gt;-->
         <!--        <LinearLayout-->
