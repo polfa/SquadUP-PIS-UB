@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#C0C0C0">
+        android:background="#423855">
 
         <!-- Media -->
 
@@ -18,16 +18,17 @@
         <TextView
             android:id="@+id/time_event3"
             android:layout_width="93dp"
-            android:layout_height="26dp"
+            android:layout_height="28dp"
             android:layout_marginEnd="16dp"
             android:text="00:00"
-            android:textColor="#170028"
+            android:textColor="#FFFFFF"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/punt_missatges"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/fullname"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.133" />
 
         <ImageView
             android:id="@+id/avatar"
@@ -52,7 +53,7 @@
             android:gravity="center|left"
             android:text="Full Name"
             android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textColor="#170028"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/avatar"
@@ -60,14 +61,14 @@
 
         <TextView
             android:id="@+id/chat"
-            android:layout_width="190dp"
-            android:layout_height="71dp"
+            android:layout_width="218dp"
+            android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="4dp"
             android:gravity="left"
-            android:text="email@pis.com"
+            android:text="Hola buenos dias, quieres jugar?"
             android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="#170028"
+            android:textColor="#9F9F9F"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/punt_missatges"
             app:layout_constraintHorizontal_bias="0.0"
@@ -76,36 +77,27 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-            android:id="@+id/status_circle"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/avatar"
-            app:layout_constraintEnd_toEndOf="@+id/avatar"
-            app:srcCompat="@drawable/green_circle" />
-
-        <ImageView
             android:id="@+id/punt_missatges"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="72dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/num_missatges"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/punto__1_" />
+            app:srcCompat="@drawable/white_circle" />
 
         <TextView
             android:id="@+id/num_missatges"
-            android:layout_width="9dp"
+            android:layout_width="7dp"
             android:layout_height="22dp"
-            android:layout_marginEnd="84dp"
+            android:layout_marginEnd="2dp"
             android:text="1"
-            android:textColor="#FDFCFC"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.506"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/punt_missatges"
+            app:layout_constraintEnd_toEndOf="@+id/punt_missatges"
+            app:layout_constraintStart_toStartOf="@+id/punt_missatges"
+            app:layout_constraintTop_toTopOf="@+id/punt_missatges"
+            app:layout_constraintVertical_bias="0.0"
             tools:visibility="visible" />
 
         <!--        &lt;!&ndash; Buttons &ndash;&gt;-->

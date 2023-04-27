@@ -46,7 +46,7 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         // Inflate crea una view genèrica definida pel layout que l'hi passem (l'event_card_layout)
-        View view = inflater.inflate(R.layout.user_card_layout_events, parent, false);
+        View view = inflater.inflate(R.layout.card_layout_events, parent, false);
 
         // La classe ViewHolder farà de pont entre la classe Event del model i la view (EventCard).
         return new EventCardAdapter.ViewHolder(view);
