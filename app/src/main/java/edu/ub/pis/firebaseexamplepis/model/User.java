@@ -1,5 +1,7 @@
 package edu.ub.pis.firebaseexamplepis.model;
 
+import java.util.ArrayList;
+
 /**
  * Classe contenidor de la informació de l'usuari.
  */
@@ -9,9 +11,8 @@ public class User {
     private String mLastName;
     private String mHobbies;
     private String mPictureURL;
-
     private String mail;// Url d'Internet, no la foto en si
-
+    private ArrayList<Chat> chats;
     // Constructor
     public User(
         String id,

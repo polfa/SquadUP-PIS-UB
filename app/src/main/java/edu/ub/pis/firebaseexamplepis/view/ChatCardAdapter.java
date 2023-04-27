@@ -32,7 +32,6 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
     // Constructor
     public ChatCardAdapter(ArrayList<Event> eventList) {
 
-
     }
 
     public void setOnClickHideListener(OnClickHideListener listener) {
