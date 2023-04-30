@@ -100,8 +100,8 @@ public class EventRepository {
                                     document.getString("userID"),
                                     document.toString(), // ID
                                     document.getString("description"),
-                                    document.getString("gameImageID"),
-                                    document.getString("rankImageID"),
+                                    document.getString("gameImageId"),
+                                    document.getString("rankImageId"),
                                     document.getTimestamp("startTime")
                             );
                             events.add(event);
