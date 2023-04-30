@@ -16,6 +16,7 @@ import java.util.Date;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.Event;
+import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
 
 public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.ViewHolder> {
 
@@ -121,6 +122,7 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             Date date = new Date();
             mCardFullName.setText(event.getUser().getFirstName() + " " + event.getUser().getLastName());
             mCardHobbies.setText(event.getDescription());
+            System.out.println(event.getRankImageId());
             String day;
             String hour = String.valueOf(Integer.parseInt(event.getStartTime().toDate().toString().substring(11,13)) + 2);
             hour = hour + event.getStartTime().toDate().toString().substring(13,16);
@@ -134,8 +136,8 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             // Carrega foto de l'usuari de la llista directament des d'una Url
             // d'Internet.
             Picasso.get().load(event.getUser().getURL()).into(mCardPictureUrl);
-            //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
-            //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
+            Picasso.get().load(VideogameLogos.valueOf(event.getGameImageId()).getImageLocation()).into(mCardGameImage);
+            Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
             // Seteja el listener onClick del botó d'amagar (hide), que alhora
             // cridi el mètode OnClickHide que implementen els nostres propis
             // listeners de tipus OnClickHideListener.

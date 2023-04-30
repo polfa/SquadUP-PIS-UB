@@ -26,8 +26,35 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.511"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
+            app:layout_constraintVertical_bias="0.511" />
+
+        <ImageView
+            android:id="@+id/game_event_image"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="12dp"
+            android:contentDescription="content"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/no_picture" />
+
+        <ImageView
+            android:id="@+id/rank_event_image"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="content"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/description_event"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toBottomOf="@+id/game_event_image"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/no_picture" />
 
         <TextView
             android:id="@+id/fullname"
@@ -42,8 +69,6 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/description_event"
             app:layout_constraintEnd_toStartOf="@+id/time_event"
-            app:layout_constraintHorizontal_bias="0.407"
-            app:layout_constraintStart_toEndOf="@+id/game_event_image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -51,15 +76,14 @@
             android:id="@+id/description_event"
             android:layout_width="136dp"
             android:layout_height="79dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
             android:gravity="left"
             android:text="lorem ipsum dolor amet"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button"
-            app:layout_constraintHorizontal_bias="0.243"
-            app:layout_constraintStart_toEndOf="@+id/rank_event_image" />
+            app:layout_constraintEnd_toStartOf="@+id/button" />
 
         <TextView
             android:id="@+id/time_event"
@@ -74,31 +98,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.102" />
 
-        <ImageView
-            android:id="@+id/rank_event_image"
-            android:layout_width="59dp"
-            android:layout_height="52dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/game_event_image"
-            app:layout_constraintStart_toStartOf="@+id/game_event_image"
-            app:layout_constraintTop_toBottomOf="@+id/game_event_image"
-            app:layout_constraintVertical_bias="0.448"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
-
-        <ImageView
-            android:id="@+id/game_event_image"
-            android:layout_width="56dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
-
         <Button
             android:id="@+id/button"
             android:layout_width="72dp"
-            android:layout_height="44dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="8dp"
             android:text="JOIN"
             android:textSize="14sp"

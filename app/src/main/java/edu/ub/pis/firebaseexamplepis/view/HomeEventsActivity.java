@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -44,6 +45,8 @@ public class HomeEventsActivity extends AppCompatActivity {
     private ViewGroup loggedLayout;
     private RecyclerView mEventCardsRV; // RecyclerView
 
+    private TextView mFriendsButton;
+
     /** Adapter de la RecyclerView */
     private EventCardAdapter mEventCardRVAdapter;
 
@@ -71,6 +74,7 @@ public class HomeEventsActivity extends AppCompatActivity {
             mModifyPersonalInfoButton = findViewById(R.id.modifyPersonalInfoButton);
             mLoggedPictureImageView = findViewById(R.id.loggedPictureImageView);
             mLogoutButton = findViewById(R.id.logoutButton);
+            mFriendsButton = findViewById(R.id.friendsBtn);
 
             // Mostrar usuari logat
 
@@ -82,6 +86,11 @@ public class HomeEventsActivity extends AppCompatActivity {
             mLogoutButton.setOnClickListener(view -> {
                 mAuth.signOut();
                 Intent intent = new Intent(HomeEventsActivity.this, AuthenticationActivity.class);
+                startActivity(intent);
+            });
+
+            mFriendsButton.setOnClickListener(view -> {
+                Intent intent = new Intent(HomeEventsActivity.this, HomeActivity.class);
                 startActivity(intent);
             });
         } else { // Si no ho està, ...
