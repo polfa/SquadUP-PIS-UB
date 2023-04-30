@@ -27,7 +27,11 @@ public class Event {
     private String rankImageId;
     private com.google.firebase.Timestamp startTime;
 
-    public Event(String userID,String eventID, String description, String gameImageId, String rankImageId, com.google.firebase.Timestamp startTime){
+    private Long maxMembers;
+
+    private HashMap<String,User> members;
+
+    public Event(String userID,String eventID, String description, String gameImageId, String rankImageId, com.google.firebase.Timestamp startTime, Long maxMembers){
         UserRepository uRepo = UserRepository.getInstance();
         this.user = uRepo.getUserById(userID);
         this.description = description;
@@ -35,6 +39,9 @@ public class Event {
         this.rankImageId = rankImageId;
         this.startTime = startTime;
         this.eventID = eventID;
+        this.maxMembers = maxMembers;
+        this.members = new HashMap<>();
+        members.put(this.user.getID(),this.user);
 
     }
     public User getUser() {
@@ -75,5 +82,32 @@ public class Event {
 
     public void setStartTime(com.google.firebase.Timestamp startTime) {
         this.startTime = startTime;
+    }
+
+    public void addMember(User user) throws Exception {
+        if (members.size() >= maxMembers){
+            throw new Exception("No hi poden entrar mes usuaris en aquest event");
+        }
+        members.put(user.getID(),user);
+    }
+
+    public HashMap<String, User> getMembers (){
+        return members;
+    }
+
+    public User getMemberByMail(String mail){
+        return members.get(mail);
+    }
+
+    public boolean userInEvent(String mail){
+        return members.containsKey(mail);
+    }
+
+    public int getCurrentMembers() {
+        return members.size();
+    }
+
+    public Long getMaxMembers() {
+        return maxMembers;
     }
 }

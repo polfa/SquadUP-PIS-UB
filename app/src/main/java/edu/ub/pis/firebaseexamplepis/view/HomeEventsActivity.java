@@ -111,14 +111,14 @@ public class HomeEventsActivity extends AppCompatActivity {
         mEventCardRVAdapter = new EventCardAdapter(
             mHomeEventsActivityViewModel.getEvents().getValue() // Passem-li referencia llista usuaris
         );
-        mEventCardRVAdapter.setOnClickHideListener(new EventCardAdapter.OnClickHideListener() {
+        mEventCardRVAdapter.setOnClickJoinListener(new EventCardAdapter.OnClickJoinListener() {
             // Listener que escoltarà quan interactuem amb un item en una posició donada
             // dins de la recicler view. En aquest cas, quan es faci clic al botó d'amagar
             // l'usuari.
             @Override
-            public void OnClickHide(int position) {
+            public void OnClickJoin(int position) {
                 mHomeEventsActivityViewModel.removeEventFromHome(position);
-                mEventCardRVAdapter.hideEvent(position);
+                mEventCardRVAdapter.JoinEvent(position);
             }
         });
         mEventCardsRV.setAdapter(mEventCardRVAdapter); // Associa l'adapter amb la ReciclerView
@@ -152,6 +152,10 @@ public class HomeEventsActivity extends AppCompatActivity {
 
             mHomeEventsActivityViewModel.loadPictureOfUser(mAuth.getCurrentUser().getEmail());
         }
+    }
+
+    public void ClickJoin(int position){
+        mEventCardRVAdapter.ClickJoin(position);
     }
 
     /**

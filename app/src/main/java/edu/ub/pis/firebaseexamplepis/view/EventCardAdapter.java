@@ -1,14 +1,18 @@
 package edu.ub.pis.firebaseexamplepis.view;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -16,29 +20,30 @@ import java.util.Date;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.Event;
+import edu.ub.pis.firebaseexamplepis.model.UserRepository;
 import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
 
 public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.ViewHolder> {
 
     /** Definició de listener (interficie)
-     *  per a quan algú vulgui escoltar un event de OnClickHide, és a dir,
+     *  per a quan algú vulgui escoltar un event de OnClickJoin, és a dir,
      *  quan l'usuari faci clic en la creu (amagar) algún dels items de la RecyclerView
      */
-    public interface OnClickHideListener {
-        void OnClickHide(int position);
+    public interface OnClickJoinListener {
+        void OnClickJoin(int position);
     }
-
     private ArrayList<Event> mEvents; // Referència a la llista d'usuaris
-    private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
+    private OnClickJoinListener mOnClickJoinListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
+
     // Constructor
     public EventCardAdapter(ArrayList<Event> eventList) {
         this.mEvents = eventList; // no fa new (La llista la manté el ViewModel)
 
     }
 
-    public void setOnClickHideListener(OnClickHideListener listener) {
-        this.mOnClickHideListener = listener;
+    public void setOnClickJoinListener(OnClickJoinListener listener) {
+        this.mOnClickJoinListener = listener;
     }
 
     @NonNull
@@ -47,7 +52,7 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         // Inflate crea una view genèrica definida pel layout que l'hi passem (l'event_card_layout)
-        View view = inflater.inflate(R.layout.card_layout_events, parent, false);
+        View view = inflater.inflate(R.layout.events_card_layout, parent, false);
 
         // La classe ViewHolder farà de pont entre la classe Event del model i la view (EventCard).
         return new EventCardAdapter.ViewHolder(view);
@@ -59,7 +64,7 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
         // El ViewHolder té el mètode que s'encarrega de llegir els atributs del Event (1r parametre),
         // i assignar-los a les variables del ViewHolder.
         // Qualsevol listener que volguem posar a un item, ha d'entrar com a paràmetre extra (2n).
-        holder.bind(mEvents.get(position), this.mOnClickHideListener);
+        holder.bind(mEvents.get(position), this.mOnClickJoinListener);
     }
 
     /**
@@ -90,8 +95,13 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
      * Mètode que repinta només posició indicada
      * @param position
      */
-    public void hideEvent(int position) {
+    public void JoinEvent(int position) {
         notifyItemRemoved(position);
+    }
+
+    public void ClickJoin(int position){
+
+
     }
 
     /**
@@ -104,9 +114,15 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
         private final TextView mCardFullName;
         private final TextView mCardHobbies;
         private final TextView mCardTime;
+
+        private final TextView mCardMembers;
         private final ImageView mCardGameImage;
 
         private final ImageView mCardRankImage;
+
+        private final Button mCardJoin;
+
+        private final ImageView mCardCheck;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -116,10 +132,16 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             mCardGameImage = itemView.findViewById(R.id.game_event_image);
             mCardRankImage = itemView.findViewById(R.id.rank_event_image);
             mCardTime = itemView.findViewById(R.id.time_event);
+            mCardMembers = itemView.findViewById(R.id.membersTxt);
+            mCardJoin = itemView.findViewById(R.id.joinbtn);
+            mCardCheck = itemView.findViewById(R.id.check_image);
         }
 
-        public void bind(final Event event, OnClickHideListener listener) {
+        public void bind(final Event event, OnClickJoinListener listener) {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
             Date date = new Date();
+            UserRepository userRepository = UserRepository.getInstance();
+            String currentUserID = userRepository.getUserById(mAuth.getCurrentUser().getEmail()).getID();
             if (date.getTime() < event.getStartTime().toDate().getTime()) {
                 mCardFullName.setText(event.getUser().getFirstName() + " " + event.getUser().getLastName());
                 mCardHobbies.setText(event.getDescription());
@@ -140,9 +162,28 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                 VideogameLogos vl = VideogameLogos.valueOf(event.getGameImageId());
                 Picasso.get().load(vl.getImageLocation()).into(mCardGameImage);
                 Picasso.get().load(vl.getRank(event.getRankImageId())).into(mCardRankImage);
-                // Seteja el listener onClick del botó d'amagar (hide), que alhora
-                // cridi el mètode OnClickHide que implementen els nostres propis
-                // listeners de tipus OnClickHideListener.
+                mCardMembers.setText(event.getCurrentMembers() + "/" + event.getMaxMembers());
+                if(event.userInEvent(currentUserID)){
+                    mCardJoin.setVisibility(View.INVISIBLE);
+                    mCardCheck.setVisibility(View.VISIBLE);
+                }else{
+                    mCardCheck.setVisibility(View.INVISIBLE);
+                }
+                mCardJoin.setOnClickListener(view -> {
+                    if (!event.userInEvent(currentUserID)){
+                        try {
+                            event.addMember(userRepository.getUserById(currentUserID));
+                            mCardJoin.setVisibility(View.INVISIBLE);
+                            mCardCheck.setVisibility(View.VISIBLE);
+                        }catch (Exception e){
+                            System.out.println("User not found");
+                        }
+                    }
+                    mCardMembers.setText(event.getCurrentMembers() + "/" + event.getMaxMembers());
+                });
+                // Seteja el listener onClick del botó d'amagar (Join), que alhora
+                // cridi el mètode OnClickJoin que implementen els nostres propis
+                // listeners de tipus OnClickJoinListener.
             }
         }
     }

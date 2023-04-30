@@ -124,14 +124,23 @@ public class UserRepository {
     }
 
     public User getUserById(String userID){
+        if (userID.charAt(0) == ' '){
+            userID = userID.substring(1);
+        }
         System.out.println(userList.size());
         for (User u: userList) {
-            System.out.println(u.getID());
-            if (userID.equals(u.getID())) {
+            System.out.println(userID + u.getID());
+            String uID;
+            if (u.getID() != null && u.getID().charAt(0) == ' '){
+                uID = u.getID().substring(1);
+            }else{
+                uID = u.getID();
+            }
+            if (userID.equals(uID)) {
                 return u;
             }
         }
-        throw new RuntimeException("User not found");
+        return null;
     }
 
     /**

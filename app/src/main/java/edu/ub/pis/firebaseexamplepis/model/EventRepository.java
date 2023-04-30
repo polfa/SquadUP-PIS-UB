@@ -105,7 +105,8 @@ public class EventRepository {
                                         document.getString("description"),
                                         document.getString("gameImageId"),
                                         document.getString("rankImageId"),
-                                        document.getTimestamp("startTime")
+                                        document.getTimestamp("startTime"),
+                                        document.getLong("maxMembers")
                                 );
                                 events.add(event);
                             }
