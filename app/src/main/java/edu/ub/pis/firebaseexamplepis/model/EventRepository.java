@@ -14,6 +14,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -95,16 +96,19 @@ public class EventRepository {
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d(TAG, document.getId() + " => " + document.getData());
-                            Event event = new Event(
-                                    document.getString("userID"),
-                                    document.toString(), // ID
-                                    document.getString("description"),
-                                    document.getString("gameImageId"),
-                                    document.getString("rankImageId"),
-                                    document.getTimestamp("startTime")
-                            );
-                            events.add(event);
+                            Date date = new Date();
+                            if (document.getTimestamp("startTime").toDate().getTime() >= date.getTime()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Event event = new Event(
+                                        document.getString("userID"),
+                                        document.toString(), // ID
+                                        document.getString("description"),
+                                        document.getString("gameImageId"),
+                                        document.getString("rankImageId"),
+                                        document.getTimestamp("startTime")
+                                );
+                                events.add(event);
+                            }
                         }
                         /* Callback listeners */
                         for (OnLoadEventsListener l: mOnLoadEventsListeners) {
@@ -142,7 +146,6 @@ public class EventRepository {
      * Mètode que afegeix un nou usuari a la base de dades. Utilitzat per la funció
      * de Sign-Up (registre) de la SignUpActivity.
      * @param userID
-     * @param eventID
      * @param description
      * @param gameImageID
      * @param rankImageId
@@ -150,7 +153,6 @@ public class EventRepository {
      */
     public void addEvent(
         String userID,
-        String eventID,
         String description,
         String gameImageID,
         String rankImageId,
@@ -165,7 +167,7 @@ public class EventRepository {
         newEvent.put("startTime", startTime);
 
         // Afegir-la a la base de dades
-        mDb.collection("events").document(eventID).set(newEvent)
+        mDb.collection("events").document().set(newEvent)
             .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

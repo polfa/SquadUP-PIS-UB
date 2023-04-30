@@ -18,6 +18,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import edu.ub.pis.firebaseexamplepis.model.Event;
 import edu.ub.pis.firebaseexamplepis.model.EventRepository;
@@ -55,6 +57,7 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
         mEventRepository.addOnLoadEventsListener(new EventRepository.OnLoadEventsListener() {
             @Override
             public void onLoadEvents(ArrayList<Event> events) {
+                events = ordenarEventsPerData(events);
                 HomeEventsActivityViewModel.this.setEvents(events);
             }
         });
@@ -173,6 +176,16 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
      */
     public void removeEventFromHome(int position) {
         mEvents.getValue().remove(position);
+    }
+
+    private ArrayList<Event> ordenarEventsPerData(ArrayList<Event> eventList){
+        Collections.sort(eventList, new Comparator<Event>() {
+            public int compare(Event e1, Event e2) {
+                return e1.getStartTime().compareTo(e2.getStartTime());
+            }
+        });
+
+        return eventList;
     }
 }
 
