@@ -1,22 +1,7 @@
 package edu.ub.pis.firebaseexamplepis.model;
 
-import java.sql.Time;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
-
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Event {
     private User user;
@@ -28,10 +13,10 @@ public class Event {
     private com.google.firebase.Timestamp startTime;
 
     private Long maxMembers;
-
+    private Long numMembers;
     private HashMap<String,User> members;
 
-    public Event(String userID,String eventID, String description, String gameImageId, String rankImageId, com.google.firebase.Timestamp startTime, Long maxMembers){
+    public Event(String userID,String eventID, String description, String gameImageId, String rankImageId, com.google.firebase.Timestamp startTime, Long maxMembers, String stringMembers){
         UserRepository uRepo = UserRepository.getInstance();
         this.user = uRepo.getUserById(userID);
         this.description = description;
@@ -41,9 +26,26 @@ public class Event {
         this.eventID = eventID;
         this.maxMembers = maxMembers;
         this.members = new HashMap<>();
-        members.put(this.user.getID(),this.user);
+        initMembers(stringMembers, uRepo);
 
     }
+
+    private void initMembers(String stringMembers, UserRepository uRepo) {
+        String current = "";
+        for (char s: stringMembers.toCharArray()){
+            if (s != ',' && s!= ' '){
+                current += s;
+            }else if (!current.isEmpty()){
+                System.out.println(current);
+                members.put(current,uRepo.getUserById(current));
+                current = "";
+            }else{
+                current = "";
+            }
+        }
+        members.put(current,uRepo.getUserById(current));
+    }
+
     public User getUser() {
         return user;
     }
@@ -85,10 +87,12 @@ public class Event {
     }
 
     public void addMember(User user) throws Exception {
+        EventRepository eventRepository = EventRepository.getInstance();
         if (members.size() >= maxMembers){
             throw new Exception("No hi poden entrar mes usuaris en aquest event");
         }
         members.put(user.getID(),user);
+
     }
 
     public HashMap<String, User> getMembers (){
