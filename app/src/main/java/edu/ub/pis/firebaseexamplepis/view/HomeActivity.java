@@ -39,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView mModifyPersonalInfoButton;
 
     private TextView eventBtn;
+    private ImageView mChatBtn;
     private ImageView mLoggedPictureImageView;
     private ImageButton mTakePictureButton;
     private ImageButton mChoosePictureButton; // [Exercici 2: crea aquest botó al layout i implementa
@@ -61,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         eventBtn = findViewById(R.id.eventBtn);
+        mChatBtn = findViewById(R.id.messages_btn);
 
         // Inicialitza el ViewModel d'aquesta activity (HomeActivity)
         mHomeActivityViewModel = new ViewModelProvider(this)
@@ -90,6 +92,11 @@ public class HomeActivity extends AppCompatActivity {
             });
             eventBtn.setOnClickListener(view -> {
                 Intent intent = new Intent(HomeActivity.this, HomeEventsActivity.class);
+                startActivity(intent);
+            });
+
+            mChatBtn.setOnClickListener(view -> {
+                Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
                 startActivity(intent);
             });
         } else { // Si no ho està, ...

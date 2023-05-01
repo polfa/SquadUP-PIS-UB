@@ -39,6 +39,20 @@ public class Chat {
     public void setUser2(User user2) {
         this.user2 = user2;
     }
+
+    public User getUser(User currentUser) {
+        if (user1 == currentUser){
+            return user2;
+        }else if (user2 == currentUser){
+            return user1;
+        }else{
+            throw new RuntimeException("user not in chat");
+        }
+    }
+
+    public String getMessage() {
+        return missatge;
+    }
 }
 
 

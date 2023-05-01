@@ -43,6 +43,8 @@ public class ChatActivity extends AppCompatActivity {
     private ImageButton mTakePictureButton;
     private ImageButton mChoosePictureButton; // [Exercici 2: crea aquest botó al layout i implementa
     private ViewGroup loggedLayout;          // correctament setChoosePictureListener()]
+
+    private ImageView mHomeButton;
     private Button mLogoutButton;
     private RecyclerView mChatCardsRV; // RecyclerView
 
@@ -67,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // Elements del ViewGroup inferior (email, botó logout, etc),
         // que només mostrarem si hi ha usuari logat.
+        mHomeButton = findViewById(R.id.home_btn);
         loggedLayout = findViewById(R.id.loggedLayout);
 
         if (mAuth.getCurrentUser() != null) {  // Si hi ha usuari logat...
@@ -85,6 +88,11 @@ public class ChatActivity extends AppCompatActivity {
             mLogoutButton.setOnClickListener(view -> {
                 mAuth.signOut();
                 Intent intent = new Intent(ChatActivity.this, AuthenticationActivity.class);
+                startActivity(intent);
+            });
+
+            mHomeButton.setOnClickListener(view -> {
+                Intent intent = new Intent(ChatActivity.this, HomeActivity.class);
                 startActivity(intent);
             });
 

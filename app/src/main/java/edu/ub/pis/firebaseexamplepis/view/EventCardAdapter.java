@@ -145,7 +145,6 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             if (date.getTime() < event.getStartTime().toDate().getTime()) {
                 mCardFullName.setText(event.getUser().getFirstName() + " " + event.getUser().getLastName());
                 mCardHobbies.setText(event.getDescription());
-                System.out.println(event.getRankImageId());
                 String day;
                 String hour = String.valueOf(Integer.parseInt(event.getStartTime().toDate().toString().substring(11, 13)) + 2);
                 hour = hour + event.getStartTime().toDate().toString().substring(13, 16);

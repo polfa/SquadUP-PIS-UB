@@ -5,7 +5,6 @@ import java.util.Date;
 public class Message {
     private String text;
     private Date timestamp;
-
     private Boolean read;
 
     public Message(String text) {

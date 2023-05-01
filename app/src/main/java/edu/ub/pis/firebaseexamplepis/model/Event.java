@@ -36,7 +36,6 @@ public class Event {
             if (s != ',' && s!= ' '){
                 current += s;
             }else if (!current.isEmpty()){
-                System.out.println(current);
                 members.put(current,uRepo.getUserById(current));
                 current = "";
             }else{
@@ -114,7 +113,6 @@ public class Event {
         if (mail.charAt(0) == ' '){
             mail = mail.substring(1);
         }
-        System.out.println(members.containsKey(mail) + "  " + mail + " ");
         return members.containsKey(mail);
     }
 

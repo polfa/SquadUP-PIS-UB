@@ -139,12 +139,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/loggedPictureImageView"
                 app:layout_constraintHorizontal_bias="0.408"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toEndOf="@+id/home_btn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/matchmaking_icon" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/home_btn"
                 android:layout_width="40dp"
                 android:layout_height="38dp"
                 android:layout_marginStart="32dp"
@@ -156,7 +156,7 @@
                 app:srcCompat="@drawable/home_negro" />
 
             <ImageView
-                android:id="@+id/imageView16"
+                android:id="@+id/messages_btn"
                 android:layout_width="35dp"
                 android:layout_height="29dp"
                 app:layout_constraintBottom_toBottomOf="parent"

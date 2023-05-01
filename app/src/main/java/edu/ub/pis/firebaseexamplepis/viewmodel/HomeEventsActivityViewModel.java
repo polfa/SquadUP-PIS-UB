@@ -102,8 +102,8 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
      * Mètode que serà invocat pel EventRepository.OnLoadEventsListener definit al
      * constructor (quan l'objecte EventRepository hagi acabat de llegir de la BBDD).
      */
-    public void setEvents(ArrayList<Event> users) {
-        mEvents.setValue(users);
+    public void setEvents(ArrayList<Event> events) {
+        mEvents.setValue(events);
     }
 
     /*
