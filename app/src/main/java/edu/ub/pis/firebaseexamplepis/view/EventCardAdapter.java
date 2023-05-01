@@ -142,16 +142,16 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             Date date = new Date();
             UserRepository userRepository = UserRepository.getInstance();
             String currentUserID = userRepository.getUserById(mAuth.getCurrentUser().getEmail()).getID();
-            if (date.getTime() < event.getStartTime().toDate().getTime()) {
+            if (date.getTime() < event.getStartTime().getTime()) {
                 mCardFullName.setText(event.getUser().getFirstName() + " " + event.getUser().getLastName());
                 mCardHobbies.setText(event.getDescription());
                 String day;
-                String hour = String.valueOf(Integer.parseInt(event.getStartTime().toDate().toString().substring(11, 13)) + 2);
-                hour = hour + event.getStartTime().toDate().toString().substring(13, 16);
-                if (event.getStartTime().toDate().toString().substring(0, 3).equals(date.toString().substring(0, 3))) {
+                String hour = String.valueOf(Integer.parseInt(event.getStartTime().toString().substring(11, 13)) + 2);
+                hour = hour + event.getStartTime().toString().substring(13, 16);
+                if (event.getStartTime().toString().substring(0, 3).equals(date.toString().substring(0, 3))) {
                     day = "Today";
                 } else {
-                    day = event.getStartTime().toDate().toString().substring(0, 3);
+                    day = event.getStartTime().toString().substring(0, 3);
                 }
 
                 mCardTime.setText(day + " " + hour);

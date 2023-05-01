@@ -42,6 +42,8 @@ public class HomeEventsActivity extends AppCompatActivity {
     private ImageButton mChoosePictureButton; // [Exercici 2: crea aquest botó al layout i implementa
                                               // correctament setChoosePictureListener()]
     private Button mLogoutButton;
+
+    private Button mNewEventButton;
     private ViewGroup loggedLayout;
     private RecyclerView mEventCardsRV; // RecyclerView
 
@@ -77,6 +79,7 @@ public class HomeEventsActivity extends AppCompatActivity {
             mLogoutButton = findViewById(R.id.logoutButton);
             mFriendsButton = findViewById(R.id.friendsBtn);
             mChatButton = findViewById(R.id.messages_btn);
+            mNewEventButton = findViewById(R.id.button);
 
             // Mostrar usuari logat
 
@@ -98,6 +101,11 @@ public class HomeEventsActivity extends AppCompatActivity {
 
             mChatButton.setOnClickListener(view -> {
                 Intent intent = new Intent(HomeEventsActivity.this, ChatActivity.class);
+                startActivity(intent);
+            });
+
+            mNewEventButton.setOnClickListener(view -> {
+                Intent intent = new Intent(HomeEventsActivity.this, CrearEventActivity.class);
                 startActivity(intent);
             });
         } else { // Si no ho està, ...

@@ -105,7 +105,7 @@ public class EventRepository {
                                         document.getString("description"),
                                         document.getString("gameImageId"),
                                         document.getString("rankImageId"),
-                                        document.getTimestamp("startTime"),
+                                        document.getTimestamp("startTime").toDate(),
                                         document.getLong("maxMembers"),
                                         document.getString("members")
                                 );
@@ -184,7 +184,8 @@ public class EventRepository {
         String description,
         String gameImageID,
         String rankImageId,
-        com.google.firebase.Timestamp startTime
+        Date startTime,
+        int maxMembers
     ) {
          // Obtenir informació personal de l'usuari
         Map<String, Object> newEvent = new HashMap<>();
@@ -193,6 +194,7 @@ public class EventRepository {
         newEvent.put("gameImageID", gameImageID);
         newEvent.put("rankImageId", rankImageId);
         newEvent.put("startTime", startTime);
+        newEvent.put("maxMembers", maxMembers);
 
         // Afegir-la a la base de dades
         mDb.collection("events").document().set(newEvent)

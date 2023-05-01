@@ -1,6 +1,7 @@
 package edu.ub.pis.firebaseexamplepis.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Event {
@@ -10,13 +11,13 @@ public class Event {
     private String description;
     private String gameImageId;
     private String rankImageId;
-    private com.google.firebase.Timestamp startTime;
+    private Date startTime;
 
     private Long maxMembers;
     private Long numMembers;
     private HashMap<String,User> members;
 
-    public Event(String userID,String eventID, String description, String gameImageId, String rankImageId, com.google.firebase.Timestamp startTime, Long maxMembers, String stringMembers){
+    public Event(String userID, String eventID, String description, String gameImageId, String rankImageId, Date startTime, Long maxMembers, String stringMembers){
         UserRepository uRepo = UserRepository.getInstance();
         this.user = uRepo.getUserById(userID);
         this.description = description;
@@ -79,11 +80,11 @@ public class Event {
         this.rankImageId = rankImageId;
     }
 
-    public com.google.firebase.Timestamp getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(com.google.firebase.Timestamp startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
