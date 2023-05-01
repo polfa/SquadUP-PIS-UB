@@ -43,7 +43,9 @@ public class Event {
                 current = "";
             }
         }
-        members.put(current,uRepo.getUserById(current));
+        if (!current.isEmpty() && !(current.charAt(0) == ',')) {
+            members.put(current, uRepo.getUserById(current));
+        }
     }
 
     public User getUser() {
@@ -96,7 +98,7 @@ public class Event {
             throw new Exception("No hi poden entrar mes usuaris en aquest event");
         }
         members.put(user.getID(),user);
-        eventRepository.addUserToEvent(user, this);
+        eventRepository.updateUserEvent(user, Event.this);
 
     }
 
@@ -135,5 +137,11 @@ public class Event {
             current += ", ";
         }
         return current;
+    }
+
+    public void removeMember(User user) {
+        EventRepository eventRepository = EventRepository.getInstance();
+        members.remove(user.getID());
+        eventRepository.updateUserEvent(user, Event.this);
     }
 }

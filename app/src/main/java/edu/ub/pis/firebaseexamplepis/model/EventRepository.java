@@ -101,7 +101,7 @@ public class EventRepository {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 Event event = new Event(
                                         document.getString("userID"),
-                                        document.toString(), // ID
+                                        document.getId(), // ID
                                         document.getString("description"),
                                         document.getString("gameImageId"),
                                         document.getString("rankImageId"),
@@ -123,7 +123,7 @@ public class EventRepository {
             });
     }
 
-    public void addUserToEvent(User user, Event event) {
+    public void updateUserEvent(User user, Event event) {
 
 
         Map<String, Object> newEvent = new HashMap<>();

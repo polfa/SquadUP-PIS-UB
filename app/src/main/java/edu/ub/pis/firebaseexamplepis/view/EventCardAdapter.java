@@ -181,6 +181,19 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                     }
                     mCardMembers.setText(event.getCurrentMembers() + "/" + event.getMaxMembers());
                 });
+
+                mCardCheck.setOnClickListener(view -> {
+                    if (event.userInEvent(currentUserID)){
+                        try {
+                            event.removeMember(userRepository.getUserById(currentUserID));
+                            mCardJoin.setVisibility(View.VISIBLE);
+                            mCardCheck.setVisibility(View.INVISIBLE);
+                        }catch (Exception e){
+                            System.out.println("User not found");
+                        }
+                    }
+                    mCardMembers.setText(event.getCurrentMembers() + "/" + event.getMaxMembers());
+                });
                 // Seteja el listener onClick del botó d'amagar (Join), que alhora
                 // cridi el mètode OnClickJoin que implementen els nostres propis
                 // listeners de tipus OnClickJoinListener.

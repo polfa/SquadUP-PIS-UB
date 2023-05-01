@@ -124,7 +124,7 @@ public class UserRepository {
     }
 
     public User getUserById(String userID){
-        if (userID.charAt(0) == ' '){
+        if (!userID.isEmpty() && userID.charAt(0) == ' '){
             userID = userID.substring(1);
         }
         System.out.println(userList.size());

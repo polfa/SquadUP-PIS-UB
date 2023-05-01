@@ -124,16 +124,18 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/description_event"
             app:layout_constraintTop_toBottomOf="@+id/joinbtn"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.272" />
 
         <ImageView
             android:id="@+id/check_image"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            app:layout_constraintBottom_toBottomOf="@+id/joinbtn"
-            app:layout_constraintEnd_toEndOf="@+id/joinbtn"
+            android:layout_width="27dp"
+            android:layout_height="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/membersTxt"
+            app:layout_constraintHorizontal_bias="0.625"
             app:layout_constraintStart_toStartOf="@+id/joinbtn"
-            app:layout_constraintTop_toTopOf="@+id/joinbtn"
+            app:layout_constraintTop_toBottomOf="@+id/joinbtn"
+            app:layout_constraintVertical_bias="0.315"
             app:srcCompat="@drawable/check" />
 
         <!--        &lt;!&ndash; Buttons &ndash;&gt;-->
