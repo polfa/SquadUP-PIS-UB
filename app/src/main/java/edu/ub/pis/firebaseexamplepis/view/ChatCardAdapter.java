@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import edu.ub.pis.firebaseexamplepis.R;
+import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.Event;
 
 public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHolder> {
@@ -30,7 +31,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
-    public ChatCardAdapter(ArrayList<Event> eventList) {
+    public ChatCardAdapter(ArrayList<Chat> chatList) {
 
     }
 
@@ -84,7 +85,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
     /**
      * Mètode que repinta la RecyclerView sencera.
      */
-    public void updateEvents() {
+    public void updateChats() {
         notifyDataSetChanged();
     }
 
@@ -92,7 +93,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
      * Mètode que repinta només posició indicada
      * @param position
      */
-    public void hideEvent(int position) {
+    public void hideChat(int position) {
         notifyItemRemoved(position);
     }
 

@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 public class Chat {
     private ArrayList<Message> messages;
+    private String missatge;
     private User user1;
     private User user2;
 
-    public Chat(String idUser1, String idUser2) {
+    public Chat(String idUser1, String idUser2, String missatge) {
         UserRepository uRepo = UserRepository.getInstance();
         this.user1 = uRepo.getUserById(idUser1);
         this.user2 = uRepo.getUserById(idUser2);
         this.messages = new ArrayList<>();
+        this.missatge = missatge;
     }
 
     public void addMessage(Message message) {

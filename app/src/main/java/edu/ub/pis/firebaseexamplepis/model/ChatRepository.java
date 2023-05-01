@@ -95,8 +95,9 @@ public class ChatRepository {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 Chat chat = new Chat(
-                                        document.getString("user1_ID"),
-                                        document.getString("user2_ID")
+                                        document.getString("idUser1"),
+                                        document.getString("idUser2"),
+                                        document.getString("message")
                                 );
                                 chats.add(chat);
                             }
@@ -136,24 +137,24 @@ public class ChatRepository {
     /**
      * Mètode que afegeix un nou usuari a la base de dades. Utilitzat per la funció
      * de Sign-Up (registre) de la SignUpActivity.
-     * @param chatID
+     * @param message
      * @param user1_ID
      * @param user2_ID
      */
     public void addChat(
-            String chatID,
             String user1_ID,
-            String user2_ID
+            String user2_ID,
+            String message
     ) {
         // Obtenir informació personal de l'usuari
         Map<String, Object> newChat = new HashMap<>();
-        newChat.put("user1_ID", user1_ID);
-        newChat.put("user2_ID", user2_ID);
-        chatID = String.valueOf(chatList.size() * 2);
+        newChat.put("idUser1", user1_ID);
+        newChat.put("idUser2", user2_ID);
+        newChat.put("message", message);
 
 
         // Afegir-la a la base de dades
-        mDb.collection("chats").document(chatID).set(newChat)
+        mDb.collection("chats").document().set(newChat)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
