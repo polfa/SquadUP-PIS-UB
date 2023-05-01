@@ -101,7 +101,7 @@ public class UserRepository {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId() + " => " + document.getData());
                             User user = new User(
-                                document.toString(), // ID = Email
+                                document.getId(), // ID = Email
                                 document.getString("first"),
                                 document.getString("last"),
                                 document.getString("hobbies"),
