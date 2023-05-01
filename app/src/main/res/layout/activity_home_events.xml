@@ -136,6 +136,15 @@
                 app:srcCompat="@drawable/barra_morada" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#170028"
+            android:text="New Event"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"

@@ -47,6 +47,7 @@ public class HomeEventsActivity extends AppCompatActivity {
 
     private TextView mFriendsButton;
 
+    private ImageView mChatButton;
     /** Adapter de la RecyclerView */
     private EventCardAdapter mEventCardRVAdapter;
 
@@ -75,6 +76,7 @@ public class HomeEventsActivity extends AppCompatActivity {
             mLoggedPictureImageView = findViewById(R.id.loggedPictureImageView);
             mLogoutButton = findViewById(R.id.logoutButton);
             mFriendsButton = findViewById(R.id.friendsBtn);
+            mChatButton = findViewById(R.id.messages_btn);
 
             // Mostrar usuari logat
 
@@ -91,6 +93,11 @@ public class HomeEventsActivity extends AppCompatActivity {
 
             mFriendsButton.setOnClickListener(view -> {
                 Intent intent = new Intent(HomeEventsActivity.this, HomeActivity.class);
+                startActivity(intent);
+            });
+
+            mChatButton.setOnClickListener(view -> {
+                Intent intent = new Intent(HomeEventsActivity.this, ChatActivity.class);
                 startActivity(intent);
             });
         } else { // Si no ho està, ...
