@@ -54,6 +54,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 } else {
                                     // Si falla el logueig, fes un Toast
+                                    System.out.println("BBB");
                                     Toast.makeText(getApplicationContext(), "Login failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }

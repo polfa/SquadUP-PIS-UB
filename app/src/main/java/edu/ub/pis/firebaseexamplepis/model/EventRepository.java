@@ -123,6 +123,32 @@ public class EventRepository {
             });
     }
 
+    public void addUserToEvent(User user, Event event) {
+
+
+        Map<String, Object> newEvent = new HashMap<>();
+        newEvent.put("userID", event.getUserID());
+        newEvent.put("description", event.getDescription());
+        newEvent.put("gameImageId", event.getGameImageId());
+        newEvent.put("rankImageId", event.getRankImageId());
+        newEvent.put("startTime", event.getStartTime());
+        newEvent.put("maxMembers", event.getMaxMembers());
+        newEvent.put("members", event.getMembersString());
+
+        // Afegir-la a la base de dades
+        mDb.collection("events").document(event.getEventID()).update(newEvent)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Sign up completion succeeded");
+                        } else {
+                            Log.d(TAG, "Sign up completion failed");
+                        }
+                    }
+                });
+    }
+
     public void loadPictureOfUser(String email) {
         mDb.collection("users")
                 .document(email)

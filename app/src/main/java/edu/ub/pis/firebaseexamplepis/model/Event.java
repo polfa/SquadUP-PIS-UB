@@ -86,12 +86,17 @@ public class Event {
         this.startTime = startTime;
     }
 
+    public String getEventID(){
+        return eventID;
+    }
+
     public void addMember(User user) throws Exception {
         EventRepository eventRepository = EventRepository.getInstance();
         if (members.size() >= maxMembers){
             throw new Exception("No hi poden entrar mes usuaris en aquest event");
         }
         members.put(user.getID(),user);
+        eventRepository.addUserToEvent(user, this);
 
     }
 
@@ -104,6 +109,10 @@ public class Event {
     }
 
     public boolean userInEvent(String mail){
+        if (mail.charAt(0) == ' '){
+            mail = mail.substring(1);
+        }
+        System.out.println(members.containsKey(mail) + "  " + mail + " ");
         return members.containsKey(mail);
     }
 
@@ -113,5 +122,18 @@ public class Event {
 
     public Long getMaxMembers() {
         return maxMembers;
+    }
+
+    public Object getUserID() {
+        return user.getID();
+    }
+
+    public String getMembersString() {
+        String current = "";
+        for (User s: members.values()){
+            current += s.getID();
+            current += ", ";
+        }
+        return current;
     }
 }
