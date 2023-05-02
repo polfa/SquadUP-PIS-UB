@@ -1,5 +1,7 @@
 package edu.ub.pis.firebaseexamplepis.view.imageURLs;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public enum VideogameLogos {
@@ -63,5 +65,11 @@ public enum VideogameLogos {
 
     public String getRank(String r){
         return ranks.get(r);
+    }
+
+    public String[] getRankNames(){
+        ArrayList<String> sortedList = new ArrayList<>(ranks.keySet());
+        Collections.sort(sortedList);
+        return sortedList.toArray(new String[0]);
     }
 }

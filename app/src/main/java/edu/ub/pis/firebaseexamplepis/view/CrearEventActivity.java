@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,26 +33,37 @@ import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.EventRepository;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
+import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
 
 public class CrearEventActivity extends AppCompatActivity {
     private static final String TAG = "UpdatePersonalInfoActivity";
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDb;
-
-    private EditText mGameName;
-    private EditText mGameRank;
+    private Spinner mGameRankSpinner;
     private EditText mDescription;
-    private EditText mMaxMembers;
+    private Spinner mMaxMembersSpinner;
     private EditText mStartTime;
 
     private Button mUpdateButton;
 
-    String[] items = {"ROCKET_LEAGUE", "VALORANT", "CSGO"};
+    private Button mSetGameButton;
+
+    private Spinner mGameNameSpinner;
+
 
     AutoCompleteTextView autoCompleteTxt;
 
     ArrayAdapter<String> adapterItems;
+
+    private String[] listGames = {"Rocket_League", "Valorant", "CSGO"};
+
+    private String[] listRanks = {};
+
+    private int max_members = 10;
+
+    private String[] listMaxMembers = new String[max_members];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +73,8 @@ public class CrearEventActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDb = FirebaseFirestore.getInstance();
+
+        /*
 
         autoCompleteTxt = findViewById(R.id.auto_complete_txt);
         adapterItems = new ArrayAdapter<String>(this,R.layout.activity_crear_events, items);
@@ -73,29 +88,60 @@ public class CrearEventActivity extends AppCompatActivity {
             }
         });
 
-        mGameName = (EditText) findViewById(R.id.game_name_txt);
-        mGameRank = (EditText) findViewById(R.id.game_rank_txt);
-        mDescription = (EditText) findViewById(R.id.description_txt);
-        mMaxMembers = findViewById(R.id.max_members);
+         */
+
+        mGameNameSpinner = findViewById(R.id.game_name_spinner);
+        ArrayAdapter<String> adapterGameNames = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, listGames);
+        mGameNameSpinner.setAdapter(adapterGameNames);
+
+        mGameRankSpinner = findViewById(R.id.game_rank_spinner);
+        mGameRankSpinner.setAdapter(getGameAdapter());
+
+        mDescription = findViewById(R.id.description_txt);
+
+        for (int i = 0; i < max_members; i++){
+            listMaxMembers[i] = String.valueOf(i);
+        }
+        mMaxMembersSpinner = findViewById(R.id.max_members_spinner);
+        ArrayAdapter<String> adapterMaxMembers = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, listMaxMembers);
+        mMaxMembersSpinner.setAdapter(adapterMaxMembers);
+
         mStartTime = findViewById(R.id.date_txt);
-        mUpdateButton = (Button) findViewById(R.id.create_event_button);
+        mUpdateButton = findViewById(R.id.create_event_button);
+        mSetGameButton = findViewById(R.id.set_game_button);
 
         UserRepository userRepository = UserRepository.getInstance();
         EventRepository eventRepository = EventRepository.getInstance();
         User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
 
-
+        mSetGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mGameRankSpinner.setAdapter(getGameAdapter());
+            }
+        });
         // Update after clicking on button
         mUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String dateString = mStartTime.getText().toString();
                 Date date = new Date();
-                eventRepository.addEvent(currentUser.getID(),mDescription.getText().toString(),mGameName.getText().toString(),mGameRank.getText().toString(), date, Integer.parseInt(mMaxMembers.getText().toString()));
+                eventRepository.addEvent(currentUser.getID(),mDescription.getText().toString(), mGameNameSpinner.getSelectedItem().toString().toUpperCase(), mGameRankSpinner.getSelectedItem().toString(), date, Integer.parseInt(mMaxMembersSpinner.getSelectedItem().toString()));
                 Intent intent = new Intent(CrearEventActivity.this, HomeEventsActivity.class);
                 startActivity(intent);
             }
         });
+    }
+
+    private ArrayAdapter<String> getGameAdapter() {
+        for (String s: listGames){
+            if (mGameNameSpinner.getSelectedItem().toString().equalsIgnoreCase(s)) {
+                ArrayAdapter<String> adapterGameRanks = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, VideogameLogos.valueOf(s.toUpperCase()).getRankNames());
+                return adapterGameRanks;
+            }
+        }
+        return null;
+
     }
 
 

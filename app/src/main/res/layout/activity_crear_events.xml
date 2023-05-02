@@ -10,12 +10,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="410dp"
-        android:layout_height="731dp"
+        android:layout_width="391dp"
+        android:layout_height="787dp"
         android:background="#C0C0C0"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -95,66 +94,67 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint = "select"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-                <AutoCompleteTextView
-                    android:id="@+id/auto_complete_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/game_name_txt"
+        <TextView
+            android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Game Name"
-            android:gravity="center"
-            android:inputType="text"
-            android:minHeight="48dp" />
+            android:gravity="center|left"
+            android:text="      Game name"
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/game_rank_txt"
+        <Spinner
+            android:id="@+id/game_name_spinner"
+            android:layout_width="363dp"
+            android:layout_height="40dp"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/set_game_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Game Rank"
-            android:gravity="center"
-            android:inputType="text"
-            android:minHeight="48dp" />
+            android:backgroundTint="#170028"
+            android:text="set game" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:text="      Game rank"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/game_rank_spinner"
+            android:layout_width="363dp"
+            android:layout_height="40dp"
+            android:gravity="center" />
+
+
+        <TextView
+            android:id="@+id/max_members_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:text="      Max Members"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/max_members_spinner"
+            android:layout_width="363dp"
+            android:layout_height="40dp"
+            android:gravity="center" />
 
         <EditText
             android:id="@+id/description_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:gravity="center"
             android:hint="Description"
-            android:gravity="center"
             android:inputType="text"
-            android:minHeight="48dp" />
-
-        <EditText
-            android:id="@+id/max_members"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Max Members"
-            android:gravity="center"
-            android:inputType="number"
             android:minHeight="48dp" />
 
         <EditText
@@ -171,8 +171,8 @@
             android:id="@+id/create_event_button"
             android:layout_width="match_parent"
             android:layout_height="65dp"
-            android:gravity="center"
             android:backgroundTint="#170028"
+            android:gravity="center"
             android:text="CREATE EVENT"
             android:textSize="20sp" />
 

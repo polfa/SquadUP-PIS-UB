@@ -20,6 +20,7 @@ import java.util.Date;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.Event;
+import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
 import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
 
@@ -141,8 +142,8 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             Date date = new Date();
             UserRepository userRepository = UserRepository.getInstance();
-            String currentUserID = userRepository.getUserById(mAuth.getCurrentUser().getEmail()).getID();
-            if (date.getTime() < event.getStartTime().getTime()) {
+            User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
+            if (date.getTime() < event.getStartTime().getTime() && currentUser != null) {
                 mCardFullName.setText(event.getUser().getFirstName() + " " + event.getUser().getLastName());
                 mCardHobbies.setText(event.getDescription());
                 String day;
@@ -162,16 +163,16 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                 Picasso.get().load(vl.getImageLocation()).into(mCardGameImage);
                 Picasso.get().load(vl.getRank(event.getRankImageId())).into(mCardRankImage);
                 mCardMembers.setText(event.getCurrentMembers() + "/" + event.getMaxMembers());
-                if(event.userInEvent(currentUserID)){
+                if(event.userInEvent(currentUser.getID())){
                     mCardJoin.setVisibility(View.INVISIBLE);
                     mCardCheck.setVisibility(View.VISIBLE);
                 }else{
                     mCardCheck.setVisibility(View.INVISIBLE);
                 }
                 mCardJoin.setOnClickListener(view -> {
-                    if (!event.userInEvent(currentUserID)){
+                    if (!event.userInEvent(currentUser.getID())){
                         try {
-                            event.addMember(userRepository.getUserById(currentUserID));
+                            event.addMember(userRepository.getUserById(currentUser.getID()));
                             mCardJoin.setVisibility(View.INVISIBLE);
                             mCardCheck.setVisibility(View.VISIBLE);
                         }catch (Exception e){
@@ -182,9 +183,9 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                 });
 
                 mCardCheck.setOnClickListener(view -> {
-                    if (event.userInEvent(currentUserID) && event.getUser() != userRepository.getUserById(currentUserID)){
+                    if (event.userInEvent(currentUser.getID()) && event.getUser() != userRepository.getUserById(currentUser.getID())){
                         try {
-                            event.removeMember(userRepository.getUserById(currentUserID));
+                            event.removeMember(userRepository.getUserById(currentUser.getID()));
                             mCardJoin.setVisibility(View.VISIBLE);
                             mCardCheck.setVisibility(View.INVISIBLE);
                         }catch (Exception e){
