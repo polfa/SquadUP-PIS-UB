@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
+
 public class Event {
     private User user;
 
@@ -17,6 +19,10 @@ public class Event {
     private Long numMembers;
     private HashMap<String,User> members;
 
+    private String gameImage, rankImage;
+
+    VideogameLogos vl;
+
     public Event(String userID, String eventID, String description, String gameImageId, String rankImageId, Date startTime, Long maxMembers, String stringMembers){
         UserRepository uRepo = UserRepository.getInstance();
         this.user = uRepo.getUserById(userID);
@@ -28,6 +34,9 @@ public class Event {
         this.maxMembers = maxMembers;
         this.members = new HashMap<>();
         initMembers(stringMembers, uRepo);
+        vl = VideogameLogos.valueOf(gameImageId);
+        gameImage = vl.getImageLocation();
+        rankImage = vl.getRank(getRankImageId());
 
     }
 
@@ -68,12 +77,20 @@ public class Event {
         return gameImageId;
     }
 
+    public String getGameImage() {
+        return gameImage;
+    }
+
     public void setGameImageId(String gameImageId) {
         this.gameImageId = gameImageId;
     }
 
     public String getRankImageId() {
         return rankImageId;
+    }
+
+    public String getRankImage() {
+        return rankImage;
     }
 
     public void setRankImageId(String rankImageId) {

@@ -125,6 +125,10 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
 
         private final ImageView mCardCheck;
 
+        private User currentUser;
+
+        private String userImage, gameImage, rankImage;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mCardPictureUrl = itemView.findViewById(R.id.avatar);
@@ -136,13 +140,16 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             mCardMembers = itemView.findViewById(R.id.membersTxt);
             mCardJoin = itemView.findViewById(R.id.joinbtn);
             mCardCheck = itemView.findViewById(R.id.check_image);
+            userImage = null;
+            gameImage = null;
+            rankImage = null;
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            UserRepository userRepository = UserRepository.getInstance();
+            currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
         }
 
         public void bind(final Event event, OnClickJoinListener listener) {
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
             Date date = new Date();
-            UserRepository userRepository = UserRepository.getInstance();
-            User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
             if (date.getTime() < event.getStartTime().getTime() && currentUser != null) {
                 mCardFullName.setText(event.getUser().getFirstName() + " " + event.getUser().getLastName());
                 mCardHobbies.setText(event.getDescription());
@@ -158,10 +165,10 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                 mCardTime.setText(day + " " + hour);
                 // Carrega foto de l'usuari de la llista directament des d'una Url
                 // d'Internet
-                Picasso.get().load(event.getUser().getURL()).into(mCardPictureUrl);
-                VideogameLogos vl = VideogameLogos.valueOf(event.getGameImageId());
-                Picasso.get().load(vl.getImageLocation()).into(mCardGameImage);
-                Picasso.get().load(vl.getRank(event.getRankImageId())).into(mCardRankImage);
+                userImage = event.getUser().getURL();
+                Picasso.get().load(userImage).into(mCardPictureUrl);
+                Picasso.get().load(event.getGameImage()).into(mCardGameImage);
+                Picasso.get().load(event.getRankImage()).into(mCardRankImage);
                 mCardMembers.setText(event.getCurrentMembers() + "/" + event.getMaxMembers());
                 if(event.userInEvent(currentUser.getID())){
                     mCardJoin.setVisibility(View.INVISIBLE);
@@ -172,7 +179,7 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                 mCardJoin.setOnClickListener(view -> {
                     if (!event.userInEvent(currentUser.getID())){
                         try {
-                            event.addMember(userRepository.getUserById(currentUser.getID()));
+                            event.addMember(currentUser);
                             mCardJoin.setVisibility(View.INVISIBLE);
                             mCardCheck.setVisibility(View.VISIBLE);
                         }catch (Exception e){
@@ -183,9 +190,9 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                 });
 
                 mCardCheck.setOnClickListener(view -> {
-                    if (event.userInEvent(currentUser.getID()) && event.getUser() != userRepository.getUserById(currentUser.getID())){
+                    if (event.userInEvent(currentUser.getID()) && event.getUser() != currentUser){
                         try {
-                            event.removeMember(userRepository.getUserById(currentUser.getID()));
+                            event.removeMember(currentUser);
                             mCardJoin.setVisibility(View.VISIBLE);
                             mCardCheck.setVisibility(View.INVISIBLE);
                         }catch (Exception e){
