@@ -57,10 +57,8 @@ public class CrearEventActivity extends AppCompatActivity {
         mStartTime = findViewById(R.id.date_txt);
         mUpdateButton = (Button) findViewById(R.id.create_event_button);
 
-        mUpdateButton.setVisibility(View.INVISIBLE);
         UserRepository userRepository = UserRepository.getInstance();
         EventRepository eventRepository = EventRepository.getInstance();
-
         User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
 
 
@@ -70,7 +68,7 @@ public class CrearEventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String dateString = mStartTime.getText().toString();
                 Date date = new Date();
-                eventRepository.addEvent(currentUser.getID(),mDescription.getText().toString(),mGameName.getText().toString(),mGameRank.getText().toString(), date, Integer.parseInt(mMaxMembers.getText().toString()) );
+                eventRepository.addEvent(currentUser.getID(),mDescription.getText().toString(),mGameName.getText().toString(),mGameRank.getText().toString(), date, Integer.parseInt(mMaxMembers.getText().toString()));
                 Intent intent = new Intent(CrearEventActivity.this, HomeEventsActivity.class);
                 startActivity(intent);
             }

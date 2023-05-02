@@ -195,6 +195,7 @@ public class EventRepository {
         newEvent.put("rankImageId", rankImageId);
         newEvent.put("startTime", startTime);
         newEvent.put("maxMembers", maxMembers);
+        newEvent.put("members", userID);
 
         // Afegir-la a la base de dades
         mDb.collection("events").document().set(newEvent)

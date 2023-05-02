@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="right"
     android:background="#000000"
     tools:context=".view.HomeActivity">
 
@@ -102,6 +103,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Game Name"
+            android:gravity="center"
             android:inputType="text"
             android:minHeight="48dp" />
 
@@ -111,6 +113,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Game Rank"
+            android:gravity="center"
             android:inputType="text"
             android:minHeight="48dp" />
 
@@ -120,6 +123,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Description"
+            android:gravity="center"
             android:inputType="text"
             android:minHeight="48dp" />
 
@@ -129,14 +133,16 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Max Members"
+            android:gravity="center"
             android:inputType="number"
             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/date_txt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:ems="10"
+            android:gravity="center"
             android:hint="Start Time"
             android:inputType="datetime|date"
             android:minHeight="48dp" />
@@ -145,6 +151,7 @@
             android:id="@+id/create_event_button"
             android:layout_width="match_parent"
             android:layout_height="65dp"
+            android:gravity="center"
             android:backgroundTint="#170028"
             android:text="CREATE EVENT"
             android:textSize="20sp" />
