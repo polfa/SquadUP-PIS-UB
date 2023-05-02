@@ -182,7 +182,7 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                 });
 
                 mCardCheck.setOnClickListener(view -> {
-                    if (event.userInEvent(currentUserID)){
+                    if (event.userInEvent(currentUserID) && event.getUser() != userRepository.getUserById(currentUserID)){
                         try {
                             event.removeMember(userRepository.getUserById(currentUserID));
                             mCardJoin.setVisibility(View.VISIBLE);

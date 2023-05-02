@@ -191,7 +191,7 @@ public class EventRepository {
         Map<String, Object> newEvent = new HashMap<>();
         newEvent.put("userID", userID);
         newEvent.put("description", description);
-        newEvent.put("gameImageID", gameImageID);
+        newEvent.put("gameImageId", gameImageID);
         newEvent.put("rankImageId", rankImageId);
         newEvent.put("startTime", startTime);
         newEvent.put("maxMembers", maxMembers);

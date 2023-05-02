@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +22,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Array;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +46,12 @@ public class CrearEventActivity extends AppCompatActivity {
 
     private Button mUpdateButton;
 
+    String[] items = {"ROCKET_LEAGUE", "VALORANT", "CSGO"};
+
+    AutoCompleteTextView autoCompleteTxt;
+
+    ArrayAdapter<String> adapterItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -49,6 +60,18 @@ public class CrearEventActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDb = FirebaseFirestore.getInstance();
+
+        autoCompleteTxt = findViewById(R.id.auto_complete_txt);
+        adapterItems = new ArrayAdapter<String>(this,R.layout.activity_crear_events, items);
+        autoCompleteTxt.setAdapter(adapterItems);
+
+        autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(),"Item: "+ item, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         mGameName = (EditText) findViewById(R.id.game_name_txt);
         mGameRank = (EditText) findViewById(R.id.game_rank_txt);
