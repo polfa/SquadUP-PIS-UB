@@ -1,5 +1,7 @@
 package edu.ub.pis.firebaseexamplepis.view;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,8 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +28,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,7 +49,7 @@ public class CrearEventActivity extends AppCompatActivity {
     private Spinner mGameRankSpinner;
     private EditText mDescription;
     private Spinner mMaxMembersSpinner;
-    private EditText mStartTime;
+    private EditText mStartTime, mDateText, mHourText;
 
     private Button mUpdateButton;
 
@@ -74,22 +80,6 @@ public class CrearEventActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDb = FirebaseFirestore.getInstance();
 
-        /*
-
-        autoCompleteTxt = findViewById(R.id.auto_complete_txt);
-        adapterItems = new ArrayAdapter<String>(this,R.layout.activity_crear_events, items);
-        autoCompleteTxt.setAdapter(adapterItems);
-
-        autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(),"Item: "+ item, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-         */
-
         mGameNameSpinner = findViewById(R.id.game_name_spinner);
         ArrayAdapter<String> adapterGameNames = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, listGames);
         mGameNameSpinner.setAdapter(adapterGameNames);
@@ -110,6 +100,9 @@ public class CrearEventActivity extends AppCompatActivity {
         mUpdateButton = findViewById(R.id.create_event_button);
         mSetGameButton = findViewById(R.id.set_game_button);
 
+        mDateText = findViewById(R.id.date_txt);
+        mHourText = findViewById(R.id.hour_txt);
+
         UserRepository userRepository = UserRepository.getInstance();
         EventRepository eventRepository = EventRepository.getInstance();
         User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
@@ -125,10 +118,15 @@ public class CrearEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String dateString = mStartTime.getText().toString();
-                Date date = new Date();
-                eventRepository.addEvent(currentUser.getID(),mDescription.getText().toString(), mGameNameSpinner.getSelectedItem().toString().toUpperCase(), mGameRankSpinner.getSelectedItem().toString(), date, Integer.parseInt(mMaxMembersSpinner.getSelectedItem().toString()));
-                Intent intent = new Intent(CrearEventActivity.this, HomeEventsActivity.class);
-                startActivity(intent);
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                try {
+                    Date date = formatter.parse(mDateText.getText().toString() + " " + mHourText.getText().toString());
+                    eventRepository.addEvent(currentUser.getID(), mDescription.getText().toString(), mGameNameSpinner.getSelectedItem().toString().toUpperCase(), mGameRankSpinner.getSelectedItem().toString(), date, Integer.parseInt(mMaxMembersSpinner.getSelectedItem().toString()));
+                    Intent intent = new Intent(CrearEventActivity.this, HomeEventsActivity.class);
+                    startActivity(intent);
+                }catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -141,7 +139,27 @@ public class CrearEventActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
 
+    public void showCalendar(View v){
+        DatePickerDialog d = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mDateText.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+
+            }
+        },2023,5,2);
+        d.show();
+    }
+
+    public void showClock(View v){
+        TimePickerDialog d = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                mHourText.setText(hourOfDay + ":" + minute);
+            }
+        },12, 0, true);
+        d.show();
     }
 
 
