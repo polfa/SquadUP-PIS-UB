@@ -31,11 +31,31 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
         void OnClickHide(int position);
     }
     private ArrayList<Chat> mChats;
+
+    private FirebaseAuth mAuth;
+    private UserRepository userRepository;
+    private User currentUser;
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
     public ChatCardAdapter(ArrayList<Chat> chatList) {
+        mAuth = FirebaseAuth.getInstance();
+        userRepository = UserRepository.getInstance();
+        currentUser =  userRepository.getUserById(mAuth.getCurrentUser().getEmail());
         this.mChats = chatList;
+    }
+
+
+    public ArrayList<Chat> getCuerrentUserChats(ArrayList<Chat> chatList){
+        ArrayList<Chat> aux = new ArrayList<>();
+        for (Chat c: chatList){
+            System.out.println("------------------------");
+            if(c.userInChat(currentUser)){
+                System.out.println(c.getUser1().getID() + c.getUser2().getID() + currentUser.getID());
+                aux.add(c);
+            }
+        }
+        return aux;
     }
 
     public void setOnClickHideListener(OnClickHideListener listener) {
@@ -60,7 +80,9 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
         // El ViewHolder té el mètode que s'encarrega de llegir els atributs del Event (1r parametre),
         // i assignar-los a les variables del ViewHolder.
         // Qualsevol listener que volguem posar a un item, ha d'entrar com a paràmetre extra (2n).
-        holder.bind(mChats.get(position), this.mOnClickHideListener);
+        if (mChats.get(position).userInChat(currentUser)) {
+            holder.bind(mChats.get(position), this.mOnClickHideListener);
+        }
     }
 
     @Override

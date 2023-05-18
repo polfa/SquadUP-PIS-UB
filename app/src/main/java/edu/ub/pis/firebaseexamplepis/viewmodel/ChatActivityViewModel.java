@@ -18,11 +18,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.ChatRepository;
+import edu.ub.pis.firebaseexamplepis.model.User;
+
 public class ChatActivityViewModel extends AndroidViewModel
 {
     private final String TAG = "ChatActivityViewModel";
@@ -74,10 +74,7 @@ public class ChatActivityViewModel extends AndroidViewModel
     /*
      * Retorna els usuaris perquè la HomeChatsActivity pugui subscriure-hi l'observable.
      */
-    public LiveData<ArrayList<Chat>> getChats() {
-        return mChat;
-    }
-
+    public LiveData<ArrayList<Chat>> getChats() {return mChat;}
 
     /*
      * Retorna el LiveData de la URL de la foto per a què HomeChatsActivity

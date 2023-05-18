@@ -53,6 +53,10 @@ public class Chat {
     public String getMessage() {
         return missatge;
     }
+
+    public boolean userInChat(User user){
+        return user == user1 || user == user2;
+    }
 }
 
 

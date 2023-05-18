@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -27,9 +26,8 @@ import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.Chat;
-import edu.ub.pis.firebaseexamplepis.model.Event;
+import edu.ub.pis.firebaseexamplepis.model.UserRepository;
 import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
-import edu.ub.pis.firebaseexamplepis.viewmodel.HomeEventsActivityViewModel;
 
 public class ChatActivity extends AppCompatActivity {
     private final String TAG = "ChatActivity";
@@ -109,6 +107,8 @@ public class ChatActivity extends AppCompatActivity {
             this, LinearLayoutManager.VERTICAL, false
         );
         mChatCardsRV.setLayoutManager(manager);
+
+        UserRepository ur =  UserRepository.getInstance();
 
         // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
         mChatCardRVAdapter = new ChatCardAdapter(
