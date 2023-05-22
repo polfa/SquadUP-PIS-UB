@@ -21,6 +21,9 @@
             android:name="edu.ub.pis.firebaseexamplepis.view.ChatActivity"
             android:exported="false" />
         <activity
+            android:name="edu.ub.pis.firebaseexamplepis.view.ChatInsideActivity"
+            android:exported="false" />
+        <activity
             android:name="edu.ub.pis.firebaseexamplepis.view.SignUpActivity"
             android:exported="false" />
         <activity

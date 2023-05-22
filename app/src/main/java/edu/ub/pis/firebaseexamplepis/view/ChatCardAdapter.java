@@ -1,5 +1,6 @@
 package edu.ub.pis.firebaseexamplepis.view;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,8 +32,8 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
      *  per a quan algú vulgui escoltar un event de OnClickHide, és a dir,
      *  quan l'usuari faci clic en la creu (amagar) algún dels items de la RecyclerView
      */
-    public interface OnClickHideListener {
-        void OnClickHide(int position);
+    public interface OnClickEnterListener {
+        void OnClickEnter(int position);
     }
     private static ChatActivityViewModel mChatActivityViewModel; //nuestro viewModel
 
@@ -39,7 +41,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
 
     private FirebaseAuth mAuth;
     private User currentUser;
-    private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
+    private OnClickEnterListener mOnClickEnterListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
     public ChatCardAdapter(ArrayList<Chat> chatList, ChatActivityViewModel viewModelChat) {
@@ -62,8 +64,8 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
         return aux;
     }
 
-    public void setOnClickHideListener(OnClickHideListener listener) {
-        this.mOnClickHideListener = listener;
+    public void setOnClickEnterListener(OnClickEnterListener listener) {
+        this.mOnClickEnterListener = listener;
     }
 
     @NonNull
@@ -85,7 +87,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
         // i assignar-los a les variables del ViewHolder.
         // Qualsevol listener que volguem posar a un item, ha d'entrar com a paràmetre extra (2n).
         if (mChats.get(position).userInChat(currentUser)) {
-            holder.bind(mChats.get(position), this.mOnClickHideListener);
+            holder.bind(mChats.get(position), this.mOnClickEnterListener);
         }
     }
 
@@ -126,7 +128,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
      * Mètode que repinta només posició indicada
      * @param position
      */
-    public void hideChat(int position) {
+    public void enterChat(int position) {
         notifyItemRemoved(position);
     }
 
@@ -143,6 +145,8 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
 
         private final TextView mCardNumMisatges;
 
+        private final ConstraintLayout mChatBtn;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mCardPictureUrl = itemView.findViewById(R.id.avatar);
@@ -150,9 +154,10 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
             mCardChat = itemView.findViewById(R.id.chat);
             mCardTime = itemView.findViewById(R.id.time_last_message);
             mCardNumMisatges =  itemView.findViewById(R.id.num_missatges);
+            mChatBtn = itemView.findViewById(R.id.chatBtn);
         }
 
-        public void bind(final Chat chat, OnClickHideListener listener) {
+        public void bind(final Chat chat, OnClickEnterListener listener) {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             Date date = new Date();
             User currentUser = mChatActivityViewModel.getUserById();
@@ -180,6 +185,15 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
             // Seteja el listener onClick del botó d'amagar (hide), que alhora
             // cridi el mètode OnClickHide que implementen els nostres propis
             // listeners de tipus OnClickHideListener.
+
+            mChatBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.OnClickEnter(getAdapterPosition());
+                }
+            });
+
+
 
         }
     }

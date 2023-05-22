@@ -112,6 +112,17 @@ public class ChatActivity extends AppCompatActivity {
             mChatActivityViewModel.getChats().getValue(),mChatActivityViewModel // Passem-li referencia llista usuaris
         );
         mChatCardsRV.setAdapter(mChatCardRVAdapter); // Associa l'adapter amb la ReciclerView
+        mChatCardRVAdapter.setOnClickEnterListener(new ChatCardAdapter.OnClickEnterListener() {
+            // Listener que escoltarà quan interactuem amb un item en una posició donada
+            // dins de la recicler view. En aquest cas, quan es faci clic al botó d'amagar
+            // l'usuari.
+            @Override
+            public void OnClickEnter(int position) {
+                Intent intent = new Intent(ChatActivity.this, ChatInsideActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         // Observer a HomeActivity per veure si la llista de Event (observable MutableLiveData)
         // a HomeActivityViewModel ha canviat.

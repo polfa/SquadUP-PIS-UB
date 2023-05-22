@@ -157,6 +157,5 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
 
         }
     }
-
 }
 
