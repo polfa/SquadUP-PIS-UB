@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
                                               // correctament setChoosePictureListener()]
     private Button mLogoutButton;
     private ViewGroup loggedLayout;
-    private RecyclerView mUserCardsRV; // RecyclerView
+    private RecyclerView mUserCardsRV; // RecyclerView a
 
     /** Adapter de la RecyclerView */
     private UserCardAdapter mUserCardRVAdapter;
