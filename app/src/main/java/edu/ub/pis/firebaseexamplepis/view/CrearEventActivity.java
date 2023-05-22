@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,10 +41,11 @@ import edu.ub.pis.firebaseexamplepis.model.EventRepository;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
 import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
+import edu.ub.pis.firebaseexamplepis.viewmodel.HomeEventsActivityViewModel;
 
 public class CrearEventActivity extends AppCompatActivity {
     private static final String TAG = "UpdatePersonalInfoActivity";
-
+    private HomeEventsActivityViewModel mHomeEventsActivityViewModel;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDb;
     private Spinner mGameRankSpinner;
@@ -79,7 +81,8 @@ public class CrearEventActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDb = FirebaseFirestore.getInstance();
-
+        mHomeEventsActivityViewModel = new ViewModelProvider(this)
+                .get(HomeEventsActivityViewModel.class);
         mGameNameSpinner = findViewById(R.id.game_name_spinner);
         ArrayAdapter<String> adapterGameNames = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, listGames);
         mGameNameSpinner.setAdapter(adapterGameNames);
@@ -103,9 +106,7 @@ public class CrearEventActivity extends AppCompatActivity {
         mDateText = findViewById(R.id.date_txt);
         mHourText = findViewById(R.id.hour_txt);
 
-        UserRepository userRepository = UserRepository.getInstance();
-        EventRepository eventRepository = EventRepository.getInstance();
-        User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
+        User currentUser = mHomeEventsActivityViewModel.getUserById();
 
         mSetGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +122,7 @@ public class CrearEventActivity extends AppCompatActivity {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 try {
                     Date date = formatter.parse(mDateText.getText().toString() + " " + mHourText.getText().toString());
-                    eventRepository.addEvent(currentUser.getID(), mDescription.getText().toString(), mGameNameSpinner.getSelectedItem().toString().toUpperCase(), mGameRankSpinner.getSelectedItem().toString(), date, Integer.parseInt(mMaxMembersSpinner.getSelectedItem().toString()));
+                    mHomeEventsActivityViewModel.getInstance().addEvent(currentUser.getID(), mDescription.getText().toString(), mGameNameSpinner.getSelectedItem().toString().toUpperCase(), mGameRankSpinner.getSelectedItem().toString(), date, Integer.parseInt(mMaxMembersSpinner.getSelectedItem().toString()));
                     Intent intent = new Intent(CrearEventActivity.this, HomeEventsActivity.class);
                     startActivity(intent);
                 }catch (ParseException e) {

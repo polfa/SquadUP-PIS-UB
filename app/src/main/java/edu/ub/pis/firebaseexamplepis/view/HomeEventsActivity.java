@@ -124,7 +124,7 @@ public class HomeEventsActivity extends AppCompatActivity {
 
         // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
         mEventCardRVAdapter = new EventCardAdapter(
-            mHomeEventsActivityViewModel.getEvents().getValue() // Passem-li referencia llista usuaris
+            mHomeEventsActivityViewModel.getEvents().getValue(), mHomeEventsActivityViewModel // Passem-li referencia llista usuaris
         );
         mEventCardRVAdapter.setOnClickJoinListener(new EventCardAdapter.OnClickJoinListener() {
             // Listener que escoltarà quan interactuem amb un item en una posició donada

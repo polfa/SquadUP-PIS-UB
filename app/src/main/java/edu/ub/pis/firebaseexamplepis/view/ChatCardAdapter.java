@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +22,7 @@ import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.Event;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
+import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
 
 public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHolder> {
 
@@ -30,18 +33,19 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
     public interface OnClickHideListener {
         void OnClickHide(int position);
     }
+    private ChatActivityViewModel mChatActivityViewModel; //nuestro viewModel
+
     private ArrayList<Chat> mChats;
 
     private FirebaseAuth mAuth;
-    private UserRepository userRepository;
     private User currentUser;
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
-    public ChatCardAdapter(ArrayList<Chat> chatList) {
+    public ChatCardAdapter(ArrayList<Chat> chatList, ChatActivityViewModel viewModelChat) {
         mAuth = FirebaseAuth.getInstance();
-        userRepository = UserRepository.getInstance();
-        currentUser =  userRepository.getUserById(mAuth.getCurrentUser().getEmail());
+        mChatActivityViewModel = viewModelChat;
+        currentUser = mChatActivityViewModel.getUserById();
         this.mChats = chatList;
     }
 

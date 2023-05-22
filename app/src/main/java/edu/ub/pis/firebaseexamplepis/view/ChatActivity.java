@@ -109,7 +109,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
         mChatCardRVAdapter = new ChatCardAdapter(
-            mChatActivityViewModel.getChats().getValue() // Passem-li referencia llista usuaris
+            mChatActivityViewModel.getChats().getValue(),mChatActivityViewModel // Passem-li referencia llista usuaris
         );
         mChatCardsRV.setAdapter(mChatCardRVAdapter); // Associa l'adapter amb la ReciclerView
 

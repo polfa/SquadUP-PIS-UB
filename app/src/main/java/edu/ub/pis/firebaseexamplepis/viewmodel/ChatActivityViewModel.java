@@ -37,6 +37,8 @@ public class ChatActivityViewModel extends AndroidViewModel
     private final MutableLiveData<String> mPictureUrl; // URL de la foto de l'usuari logat
     private final MutableLiveData<Integer> mHidPosition;
 
+    private UserRepository userRepository;
+
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
@@ -50,6 +52,7 @@ public class ChatActivityViewModel extends AndroidViewModel
         super(application);
 
         // Instancia els atributs
+        userRepository = UserRepository.getInstance();
         mChat = new MutableLiveData<>(new ArrayList<>());
         mPictureUrl = new MutableLiveData<>();
         mHidPosition = new MutableLiveData<>();
@@ -77,6 +80,9 @@ public class ChatActivityViewModel extends AndroidViewModel
                 mPictureUrl.setValue(pictureUrl);
             }
         });
+    }
+    public User getUserById(){
+        return userRepository.getUserById(mAuth.getCurrentUser().getEmail());
     }
 
     /*

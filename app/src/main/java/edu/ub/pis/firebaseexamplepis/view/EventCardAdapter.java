@@ -23,6 +23,7 @@ import edu.ub.pis.firebaseexamplepis.model.Event;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
 import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
+import edu.ub.pis.firebaseexamplepis.viewmodel.HomeEventsActivityViewModel;
 
 public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.ViewHolder> {
 
@@ -30,6 +31,7 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
      *  per a quan algú vulgui escoltar un event de OnClickJoin, és a dir,
      *  quan l'usuari faci clic en la creu (amagar) algún dels items de la RecyclerView
      */
+    private static HomeEventsActivityViewModel mHomeEventsActivityViewModel;
     public interface OnClickJoinListener {
         void OnClickJoin(int position);
     }
@@ -38,9 +40,9 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                                                       // quan s'amagui
 
     // Constructor
-    public EventCardAdapter(ArrayList<Event> eventList) {
+    public EventCardAdapter(ArrayList<Event> eventList, HomeEventsActivityViewModel mHomeEventsActivityViewModel) {
         this.mEvents = eventList; // no fa new (La llista la manté el ViewModel)
-
+        this.mHomeEventsActivityViewModel = mHomeEventsActivityViewModel;
     }
 
     public void setOnClickJoinListener(OnClickJoinListener listener) {
@@ -144,8 +146,7 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             gameImage = null;
             rankImage = null;
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            UserRepository userRepository = UserRepository.getInstance();
-            currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
+            currentUser = mHomeEventsActivityViewModel.getUserById();
         }
 
         public void bind(final Event event, OnClickJoinListener listener) {

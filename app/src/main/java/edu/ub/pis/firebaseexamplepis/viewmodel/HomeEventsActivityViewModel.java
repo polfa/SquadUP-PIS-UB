@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -30,6 +31,10 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
 {
     private final String TAG = "HomeEventsActivityViewModel";
 
+    private UserRepository userRepository;
+
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     /* Elements observables del ViewModel */
     private final MutableLiveData<ArrayList<Event>> mEvents; // Els events que la RecyclerView mostra al home
     private final MutableLiveData<String> mPictureUrl; // URL de la foto de l'usuari logat
@@ -45,6 +50,7 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
         super(application);
 
         // Instancia els atributs
+        userRepository = UserRepository.getInstance();
         mEvents = new MutableLiveData<>(new ArrayList<>());
         mPictureUrl = new MutableLiveData<>();
         mHidPosition = new MutableLiveData<>();
@@ -77,6 +83,14 @@ public class HomeEventsActivityViewModel extends AndroidViewModel
     /*
      * Retorna els usuaris perquè la HomeEventsActivity pugui subscriure-hi l'observable.
      */
+    public EventRepository getInstance(){
+        return mEventRepository;
+    }
+
+    public User getUserById(){
+        return userRepository.getUserById(mAuth.getCurrentUser().getEmail());
+    }
+
     public LiveData<ArrayList<Event>> getEvents() {
         return mEvents;
     }
