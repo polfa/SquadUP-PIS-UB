@@ -104,9 +104,10 @@ public class ChatRepository {
                                     String text = (String) messageMap.get("text");
                                     Timestamp time = (Timestamp) messageMap.get("date");
                                     boolean read = (boolean) messageMap.get("read");
+                                    String userID = (String) messageMap.get("userID");
                                     // Otros atributos del mensaje que necesites obtener
 
-                                    Message message = new Message(text, time.toDate(), read);
+                                    Message message = new Message(userID, text, time.toDate(), read);
                                     // Establece los otros atributos del mensaje si los hay
 
                                     messages.add(message);

@@ -148,7 +148,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
             mCardPictureUrl = itemView.findViewById(R.id.avatar);
             mCardFullName = itemView.findViewById(R.id.fullname);
             mCardChat = itemView.findViewById(R.id.chat);
-            mCardTime = itemView.findViewById(R.id.time_event3);
+            mCardTime = itemView.findViewById(R.id.time_last_message);
             mCardNumMisatges =  itemView.findViewById(R.id.num_missatges);
         }
 
@@ -169,6 +169,8 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
             } else {
                 day = chat.getLastMessage().getTime().toString().substring(0, 3);
             }
+
+            mCardNumMisatges.setText(String.valueOf(chat.getMessages().size()));
 
             mCardTime.setText(day + " " + hour);
             // Carrega foto de l'usuari de la llista directament des d'una Url
