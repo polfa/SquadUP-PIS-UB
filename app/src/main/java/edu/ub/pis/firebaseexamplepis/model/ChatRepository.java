@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -13,6 +14,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,14 +96,25 @@ public class ChatRepository {
 
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                ArrayList<Message> a= new ArrayList<>();
-                                a.add(new Message("HOLAAAA"));
+                                ArrayList<Message> messages= new ArrayList<>();
                                 Log.d(TAG, document.getId() + " => " + document.getData());
+                                ArrayList<Map<String,Object>> messageData = (ArrayList<Map<String,Object>>) document.get("messages");
+                                for (int i = 0; i < messageData.size(); i++) {
+                                    Map<String, Object> messageMap = messageData.get(i);
+                                    String text = (String) messageMap.get("text");
+                                    Timestamp time = (Timestamp) messageMap.get("date");
+                                    boolean read = (boolean) messageMap.get("read");
+                                    // Otros atributos del mensaje que necesites obtener
 
+                                    Message message = new Message(text, time.toDate(), read);
+                                    // Establece los otros atributos del mensaje si los hay
+
+                                    messages.add(message);
+                                }
                                 Chat chat = new Chat(
                                         document.getString("idUser1"),
                                         document.getString("idUser2"),
-                                        a
+                                        messages
                                 );
                                 if (userID.equals(document.getString("idUser1") )|| userID.equals(document.getString("idUser1"))){
                                     chats.add(chat);
@@ -143,20 +156,20 @@ public class ChatRepository {
     /**
      * Mètode que afegeix un nou usuari a la base de dades. Utilitzat per la funció
      * de Sign-Up (registre) de la SignUpActivity.
-     * @param message
+     * @param messages
      * @param user1_ID
      * @param user2_ID
      */
     public void addChat(
             String user1_ID,
             String user2_ID,
-            Message message
+            ArrayList<Message> messages
     ) {
         // Obtenir informació personal de l'usuari
         Map<String, Object> newChat = new HashMap<>();
         newChat.put("idUser1", user1_ID);
         newChat.put("idUser2", user2_ID);
-        newChat.put("message", message);
+        newChat.put("messages", objectToMapArray(messages));
 
 
         // Afegir-la a la base de dades
@@ -171,6 +184,21 @@ public class ChatRepository {
                         }
                     }
                 });
+    }
+
+    public ArrayList<Map<String,Object>> objectToMapArray(ArrayList<Message> list){
+        ArrayList<Map<String,Object>> arrayMap = new ArrayList<>();
+        for (Message m: list){
+            Map<String,Object> aux = new HashMap<>();
+            String text = m.getText();
+            Date date = m.getTime();
+            boolean read = m.read();
+            aux.put("text", text);
+            aux.put("date", date);
+            aux.put("read", read);
+            arrayMap.add(aux);
+        }
+        return arrayMap;
     }
 
     public void setPictureUrlOfUser(String userId, String pictureUrl) {

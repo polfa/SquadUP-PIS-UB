@@ -17,7 +17,7 @@ public class Chat {
         if (!messages.isEmpty()) {
             this.lastMessage = messages.get(messages.size() - 1);
         }else{
-            lastMessage = new Message("");
+            lastMessage = null;
         }
     }
 

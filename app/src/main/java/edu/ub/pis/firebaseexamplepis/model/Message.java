@@ -7,10 +7,10 @@ public class Message {
     private Date time;
     private Boolean read;
 
-    public Message(String text) {
+    public Message(String text, Date time, boolean read) {
         this.text = text;
-        this.time = new Date();
-        this.read = false;
+        this.time = time;
+        this.read = read;
 
     }
 
