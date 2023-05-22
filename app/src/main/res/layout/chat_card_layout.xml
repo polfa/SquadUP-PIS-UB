@@ -16,7 +16,7 @@
         <!-- Title, secondary and supporting text -->
 
         <TextView
-            android:id="@+id/time_event3"
+            android:id="@+id/time_last_message"
             android:layout_width="93dp"
             android:layout_height="28dp"
             android:layout_marginEnd="16dp"

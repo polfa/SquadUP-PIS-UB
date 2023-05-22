@@ -7,10 +7,13 @@ public class Message {
     private Date time;
     private Boolean read;
 
-    public Message(String text, Date time, boolean read) {
+    private String userID;
+
+    public Message(String userID, String text, Date time, boolean read) {
         this.text = text;
         this.time = time;
         this.read = read;
+        this.userID = userID;
 
     }
 
@@ -20,6 +23,10 @@ public class Message {
 
     public Date getTime() {
         return time;
+    }
+
+    public String getUserID(){
+        return userID;
     }
 
     public void setText(String text) {
