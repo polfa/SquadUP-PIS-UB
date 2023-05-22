@@ -4,16 +4,21 @@ import java.util.ArrayList;
 
 public class Chat {
     private ArrayList<Message> messages;
-    private String missatge;
     private User user1;
     private User user2;
 
-    public Chat(String idUser1, String idUser2, String missatge) {
+    private Message lastMessage;
+
+    public Chat(String idUser1, String idUser2, ArrayList<Message> missatges) {
         UserRepository uRepo = UserRepository.getInstance();
         this.user1 = uRepo.getUserById(idUser1);
         this.user2 = uRepo.getUserById(idUser2);
-        this.messages = new ArrayList<>();
-        this.missatge = missatge;
+        this.messages = missatges;
+        if (!messages.isEmpty()) {
+            this.lastMessage = messages.get(messages.size() - 1);
+        }else{
+            lastMessage = new Message("");
+        }
     }
 
     public void addMessage(Message message) {
@@ -50,8 +55,8 @@ public class Chat {
         }
     }
 
-    public String getMessage() {
-        return missatge;
+    public Message getLastMessage() {
+        return lastMessage;
     }
 
     public boolean userInChat(User user){

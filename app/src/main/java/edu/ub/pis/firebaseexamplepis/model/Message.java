@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class Message {
     private String text;
-    private Date timestamp;
+    private Date time;
     private Boolean read;
 
     public Message(String text) {
         this.text = text;
-        this.timestamp = new Date();
+        this.time = new Date();
         this.read = false;
 
     }
@@ -18,20 +18,24 @@ public class Message {
         return text;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public Date getTime() {
+        return time;
     }
 
     public void setText(String text) {
         this.text = text;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
-    public void read(){
+    public void setRead(){
         this.read = true;
+    }
+
+    public boolean read(){
+        return read;
     }
 }
 

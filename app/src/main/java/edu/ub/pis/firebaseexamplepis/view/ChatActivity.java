@@ -127,7 +127,7 @@ public class ChatActivity extends AppCompatActivity {
         mChatActivityViewModel.getChats().observe(this, observerChats);
 
         // A partir d'aquí, en cas que es faci cap canvi a la llista d'usuaris, HomeActivity ho sabrá
-        mChatActivityViewModel.loadChatsFromRepository();  // Internament pobla els usuaris de la BBDD
+        mChatActivityViewModel.loadChatsFromRepository(mAuth.getCurrentUser().getEmail());  // Internament pobla els usuaris de la BBDD
 
         // Si hi ha usuari logat i seteja una foto de perfil, mostra-la.
         if (mAuth.getCurrentUser() != null) {

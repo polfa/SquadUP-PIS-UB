@@ -12,16 +12,21 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.ChatRepository;
+import edu.ub.pis.firebaseexamplepis.model.Message;
 import edu.ub.pis.firebaseexamplepis.model.User;
+import edu.ub.pis.firebaseexamplepis.model.UserRepository;
 
 public class ChatActivityViewModel extends AndroidViewModel
 {
@@ -31,6 +36,9 @@ public class ChatActivityViewModel extends AndroidViewModel
     private final MutableLiveData<ArrayList<Chat>> mChat; // Els Chats que la RecyclerView mostra al home
     private final MutableLiveData<String> mPictureUrl; // URL de la foto de l'usuari logat
     private final MutableLiveData<Integer> mHidPosition;
+
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
 
     /* Repositori (base de dades) dels usuaris */
     private ChatRepository mChatRepository; // On es manté la informació dels usuaris
@@ -74,7 +82,9 @@ public class ChatActivityViewModel extends AndroidViewModel
     /*
      * Retorna els usuaris perquè la HomeChatsActivity pugui subscriure-hi l'observable.
      */
-    public LiveData<ArrayList<Chat>> getChats() {return mChat;}
+    public LiveData<ArrayList<Chat>> getChats() {
+        return mChat;
+    }
 
     /*
      * Retorna el LiveData de la URL de la foto per a què HomeChatsActivity
@@ -153,8 +163,8 @@ public class ChatActivityViewModel extends AndroidViewModel
     }
 
     /* Mètode que crida a carregar dades dels usuaris */
-    public void loadChatsFromRepository() {
-        mChatRepository.loadChats(mChat.getValue());
+    public void loadChatsFromRepository(String userID) {
+        mChatRepository.loadUserChats(mChat.getValue(), userID);
     }
 
     /* Mètode que crida a carregar la foto d'un usuari entre els usuaris */

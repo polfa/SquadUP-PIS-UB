@@ -84,22 +84,28 @@ public class ChatRepository {
      * Mètode que llegeix els usuaris. Vindrà cridat des de fora i quan acabi,
      * avisarà sempre als listeners, invocant el seu OnLoadUsers.
      */
-    public void loadChats(ArrayList<Chat> chats){
+    public void loadUserChats(ArrayList<Chat> chats, String userID){
         chats.clear();
         mDb.collection("chats")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                ArrayList<Message> a= new ArrayList<>();
+                                a.add(new Message("HOLAAAA"));
                                 Log.d(TAG, document.getId() + " => " + document.getData());
+
                                 Chat chat = new Chat(
                                         document.getString("idUser1"),
                                         document.getString("idUser2"),
-                                        document.getString("message")
+                                        a
                                 );
-                                chats.add(chat);
+                                if (userID.equals(document.getString("idUser1") )|| userID.equals(document.getString("idUser1"))){
+                                    chats.add(chat);
+                                }
                             }
                             chatList = chats;
                             /* Callback listeners */
@@ -144,7 +150,7 @@ public class ChatRepository {
     public void addChat(
             String user1_ID,
             String user2_ID,
-            String message
+            Message message
     ) {
         // Obtenir informació personal de l'usuari
         Map<String, Object> newChat = new HashMap<>();

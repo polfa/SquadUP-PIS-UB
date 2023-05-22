@@ -152,35 +152,30 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             Date date = new Date();
             UserRepository userRepository = UserRepository.getInstance();
-            try {
-                User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
-                User chatUser = chat.getUser(currentUser);
-                mCardFullName.setText(chatUser.getFirstName() + " " + chatUser.getLastName());
-                mCardChat.setText(chat.getMessage());
-                /*
-                String day;
-                //a
-                String hour = String.valueOf(Integer.parseInt(event.getStartTime().toDate().toString().substring(11, 13)) + 2);
-                hour = hour + event.getStartTime().toDate().toString().substring(13, 16);
-                if (event.getStartTime().toDate().toString().substring(0, 3).equals(date.toString().substring(0, 3))) {
-                    day = "Today";
-                } else {
-                    day = event.getStartTime().toDate().toString().substring(0, 3);
-                }
+            User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
+            User chatUser = chat.getUser(currentUser);
+            mCardFullName.setText(chatUser.getFirstName() + " " + chatUser.getLastName());
+            mCardChat.setText(chat.getLastMessage().getText());
 
-                mCardTime.setText(day + " " + hour);
-                */
-                // Carrega foto de l'usuari de la llista directament des d'una Url
-                // d'Internet.
-                Picasso.get().load(chatUser.getURL()).into(mCardPictureUrl);
-                //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
-                //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
-                // Seteja el listener onClick del botó d'amagar (hide), que alhora
-                // cridi el mètode OnClickHide que implementen els nostres propis
-                // listeners de tipus OnClickHideListener.
-            }catch (Exception e){
-                System.out.println(e.toString());
+            String day;
+            String hour = String.valueOf(Integer.parseInt(chat.getLastMessage().getTime().toString().substring(11, 13)) + 2);
+            hour = hour + chat.getLastMessage().getTime().toString().substring(13, 16);
+            if (chat.getLastMessage().getTime().toString().substring(0, 3).equals(date.toString().substring(0, 3))) {
+                day = "Today";
+            } else {
+                day = chat.getLastMessage().getTime().toString().substring(0, 3);
             }
+
+            mCardTime.setText(day + " " + hour);
+            // Carrega foto de l'usuari de la llista directament des d'una Url
+            // d'Internet.
+            Picasso.get().load(chatUser.getURL()).into(mCardPictureUrl);
+            //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
+            //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
+            // Seteja el listener onClick del botó d'amagar (hide), que alhora
+            // cridi el mètode OnClickHide que implementen els nostres propis
+            // listeners de tipus OnClickHideListener.
+
         }
     }
 
