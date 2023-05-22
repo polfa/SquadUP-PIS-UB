@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
 
     /* Elements de la vista de la HomeActivity */
     private ImageView mModifyPersonalInfoButton;
-
+    private TextView grupBtn;
     private TextView eventBtn;
     private ImageView mChatBtn;
     private ImageView mLoggedPictureImageView;
@@ -63,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         eventBtn = findViewById(R.id.eventBtn);
         mChatBtn = findViewById(R.id.messages_btn);
+        grupBtn = findViewById(R.id.groupsBtn);
 
         // Inicialitza el ViewModel d'aquesta activity (HomeActivity)
         mHomeActivityViewModel = new ViewModelProvider(this)
@@ -99,7 +100,13 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
                 startActivity(intent);
             });
-        } else { // Si no ho està, ...
+
+            grupBtn.setOnClickListener(view -> {
+                Intent intent = new Intent(HomeActivity.this, GrupActivity.class);
+                startActivity(intent);
+            });
+
+        }else { // Si no ho està, ...
             //
             loggedLayout.setVisibility(View.GONE); // No mostris cap element del layout inferior
         }

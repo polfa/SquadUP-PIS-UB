@@ -106,7 +106,7 @@ public class GrupRepository {
                                     boolean read = (boolean) messageMap.get("read");
                                     // Otros atributos del mensaje que necesites obtener
 
-                                    Message message = new Message(text, time.toDate(), read);
+                                    Message message = new Message("",text, time.toDate(), read);
                                     // Establece los otros atributos del mensaje si los hay
 
                                     messages.add(message);

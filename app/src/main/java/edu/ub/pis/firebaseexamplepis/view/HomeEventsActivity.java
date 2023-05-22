@@ -48,7 +48,7 @@ public class HomeEventsActivity extends AppCompatActivity {
     private RecyclerView mEventCardsRV; // RecyclerView
 
     private TextView mFriendsButton;
-
+    private TextView mGrupButton;
     private ImageView mChatButton;
     /** Adapter de la RecyclerView */
     private EventCardAdapter mEventCardRVAdapter;
@@ -80,6 +80,7 @@ public class HomeEventsActivity extends AppCompatActivity {
             mFriendsButton = findViewById(R.id.friendsBtn);
             mChatButton = findViewById(R.id.messages_btn);
             mNewEventButton = findViewById(R.id.button);
+            mGrupButton = findViewById(R.id.groupsBtn);
 
             // Mostrar usuari logat
 
@@ -108,6 +109,12 @@ public class HomeEventsActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeEventsActivity.this, CrearEventActivity.class);
                 startActivity(intent);
             });
+
+            mGrupButton.setOnClickListener(view -> {
+                Intent intent = new Intent(HomeEventsActivity.this, GrupActivity.class);
+                startActivity(intent);
+            });
+
         } else { // Si no ho està, ...
             //
             loggedLayout.setVisibility(View.GONE); // No mostris cap element del layout inferior

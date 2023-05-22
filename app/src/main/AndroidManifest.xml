@@ -28,6 +28,9 @@
             android:exported="false" />
         <activity
             android:name="edu.ub.pis.firebaseexamplepis.view.HomeActivity"
+            android:exported="false"/>
+        <activity
+            android:name="edu.ub.pis.firebaseexamplepis.view.GrupActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.PICK" />
