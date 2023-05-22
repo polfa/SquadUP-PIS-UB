@@ -4,17 +4,22 @@ import java.util.ArrayList;
 
 public class Grup {
     private ArrayList<Message> messages;
-    private String missatge;
+
     private ArrayList<User> usuaris;
 
     private User user1, user2;
+    private Message lastMessage;
 
-    public Grup(String idUser1, String idUser2, String missatge) {
+    public Grup(String idUser1, String idUser2, ArrayList<Message> missatges) {
         UserRepository uRepo = UserRepository.getInstance();
         this.user1 = uRepo.getUserById(idUser1);
         this.user2 = uRepo.getUserById(idUser2);
-        this.messages = new ArrayList<>();
-        this.missatge = missatge;
+        this.messages = missatges;
+        if (!messages.isEmpty()) {
+            this.lastMessage = messages.get(messages.size() - 1);
+        }else{
+            lastMessage = null;
+        }
     }
 
     public void addMessage(Message message) {
@@ -50,9 +55,12 @@ public class Grup {
             throw new RuntimeException("user not in chat");
         }
     }
+    public Message getLastMessage() {
+        return lastMessage;
+    }
 
-    public String getMessage() {
-        return missatge;
+    public boolean userInGrup(User user){
+        return user == user1 || user == user2;
     }
 }
 

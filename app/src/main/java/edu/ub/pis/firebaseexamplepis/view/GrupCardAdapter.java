@@ -7,8 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,13 +16,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import edu.ub.pis.firebaseexamplepis.R;
-import edu.ub.pis.firebaseexamplepis.model.Chat;
-import edu.ub.pis.firebaseexamplepis.model.Event;
+import edu.ub.pis.firebaseexamplepis.model.Grup;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
-import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
+import edu.ub.pis.firebaseexamplepis.viewmodel.GrupActivityViewModel;
 
-public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHolder> {
+public class GrupCardAdapter extends RecyclerView.Adapter<GrupCardAdapter.ViewHolder> {
 
     /** Definició de listener (interficie)
      *  per a quan algú vulgui escoltar un event de OnClickHide, és a dir,
@@ -33,28 +30,28 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
     public interface OnClickHideListener {
         void OnClickHide(int position);
     }
-    private static ChatActivityViewModel mChatActivityViewModel; //nuestro viewModel
+    private GrupActivityViewModel mGrupActivityViewModel; //nuestro viewModel
 
-    private ArrayList<Chat> mChats;
+    private ArrayList<Grup> mGrups;
 
     private FirebaseAuth mAuth;
     private User currentUser;
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
-    public ChatCardAdapter(ArrayList<Chat> chatList, ChatActivityViewModel viewModelChat) {
+    public GrupCardAdapter(ArrayList<Grup> grupList, GrupActivityViewModel viewModelGrup) {
         mAuth = FirebaseAuth.getInstance();
-        mChatActivityViewModel = viewModelChat;
-        currentUser = mChatActivityViewModel.getUserById();
-        this.mChats = chatList;
+        mGrupActivityViewModel = viewModelGrup;
+        currentUser = mGrupActivityViewModel.getUserById();
+        this.mGrups = grupList;
     }
 
 
-    public ArrayList<Chat> getCuerrentUserChats(ArrayList<Chat> chatList){
-        ArrayList<Chat> aux = new ArrayList<>();
-        for (Chat c: chatList){
+    public ArrayList<Grup> getCuerrentUserGrups(ArrayList<Grup> grupList){
+        ArrayList<Grup> aux = new ArrayList<>();
+        for (Grup c: grupList){
             System.out.println("------------------------");
-            if(c.userInChat(currentUser)){
+            if(c.userInGrup(currentUser)){
                 System.out.println(c.getUser1().getID() + c.getUser2().getID() + currentUser.getID());
                 aux.add(c);
             }
@@ -72,7 +69,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         // Inflate crea una view genèrica definida pel layout que l'hi passem (l'event_card_layout)
-        View view = inflater.inflate(R.layout.chat_card_layout, parent, false);
+        View view = inflater.inflate(R.layout.grup_card_layout, parent, false);
 
         // La classe ViewHolder farà de pont entre la classe Event del model i la view (EventCard).
         return new ViewHolder(view);
@@ -84,18 +81,18 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
         // El ViewHolder té el mètode que s'encarrega de llegir els atributs del Event (1r parametre),
         // i assignar-los a les variables del ViewHolder.
         // Qualsevol listener que volguem posar a un item, ha d'entrar com a paràmetre extra (2n).
-        if (mChats.get(position).userInChat(currentUser)) {
-            holder.bind(mChats.get(position), this.mOnClickHideListener);
+        if (mGrups.get(position).userInGrup(currentUser)) {
+            holder.bind(mGrups.get(position), this.mOnClickHideListener);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mChats.size();
+        return mGrups.size();
     }
 
-    public void setChats(ArrayList<Chat> chats) {
-        this.mChats = chats; // no recicla/repinta res
+    public void setGrups(ArrayList<Grup> grups) {
+        this.mGrups = grups; // no recicla/repinta res
     }
 
     /**
@@ -118,7 +115,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
     /**
      * Mètode que repinta la RecyclerView sencera.
      */
-    public void updateChats() {
+    public void updateGrups() {
         notifyDataSetChanged();
     }
 
@@ -126,7 +123,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
      * Mètode que repinta només posició indicada
      * @param position
      */
-    public void hideChat(int position) {
+    public void hideGrup(int position) {
         notifyItemRemoved(position);
     }
 
@@ -138,7 +135,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView mCardPictureUrl;
         private final TextView mCardFullName;
-        private final TextView mCardChat;
+        private final TextView mCardGrup;
         private final TextView mCardTime;
 
         private final TextView mCardNumMisatges;
@@ -147,32 +144,33 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
             super(itemView);
             mCardPictureUrl = itemView.findViewById(R.id.avatar);
             mCardFullName = itemView.findViewById(R.id.fullname);
-            mCardChat = itemView.findViewById(R.id.chat);
+            mCardGrup = itemView.findViewById(R.id.chat);
             mCardTime = itemView.findViewById(R.id.time_event3);
             mCardNumMisatges =  itemView.findViewById(R.id.num_missatges);
         }
 
-        public void bind(final Chat chat, OnClickHideListener listener) {
+        public void bind(final Grup grup, OnClickHideListener listener) {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             Date date = new Date();
-            User currentUser = mChatActivityViewModel.getUserById();
-            User chatUser = chat.getUser(currentUser);
-            mCardFullName.setText(chatUser.getFirstName() + " " + chatUser.getLastName());
-            mCardChat.setText(chat.getLastMessage().getText());
+            UserRepository userRepository = UserRepository.getInstance();
+            User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
+            User grupUser = grup.getUser(currentUser);
+            mCardFullName.setText(grupUser.getFirstName() + " " + grupUser.getLastName());
+            mCardGrup.setText(grup.getLastMessage().getText());
 
             String day;
-            String hour = String.valueOf(Integer.parseInt(chat.getLastMessage().getTime().toString().substring(11, 13)) + 2);
-            hour = hour + chat.getLastMessage().getTime().toString().substring(13, 16);
-            if (chat.getLastMessage().getTime().toString().substring(0, 3).equals(date.toString().substring(0, 3))) {
+            String hour = String.valueOf(Integer.parseInt(grup.getLastMessage().getTime().toString().substring(11, 13)) + 2);
+            hour = hour + grup.getLastMessage().getTime().toString().substring(13, 16);
+            if (grup.getLastMessage().getTime().toString().substring(0, 3).equals(date.toString().substring(0, 3))) {
                 day = "Today";
             } else {
-                day = chat.getLastMessage().getTime().toString().substring(0, 3);
+                day = grup.getLastMessage().getTime().toString().substring(0, 3);
             }
-            mCardNumMisatges.setText(String.valueOf(chat.getMessages().size()));
+            mCardNumMisatges.setText(String.valueOf(grup.getMessages().size()));
             mCardTime.setText(day + " " + hour);
             // Carrega foto de l'usuari de la llista directament des d'una Url
             // d'Internet.
-            Picasso.get().load(chatUser.getURL()).into(mCardPictureUrl);
+            Picasso.get().load(grupUser.getURL()).into(mCardPictureUrl);
             //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
             //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
             // Seteja el listener onClick del botó d'amagar (hide), que alhora
