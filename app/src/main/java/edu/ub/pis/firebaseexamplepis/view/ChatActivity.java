@@ -26,7 +26,6 @@ import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.Chat;
-import edu.ub.pis.firebaseexamplepis.model.UserRepository;
 import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
 
 public class ChatActivity extends AppCompatActivity {
@@ -107,8 +106,6 @@ public class ChatActivity extends AppCompatActivity {
             this, LinearLayoutManager.VERTICAL, false
         );
         mChatCardsRV.setLayoutManager(manager);
-
-        UserRepository ur =  UserRepository.getInstance();
 
         // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
         mChatCardRVAdapter = new ChatCardAdapter(
