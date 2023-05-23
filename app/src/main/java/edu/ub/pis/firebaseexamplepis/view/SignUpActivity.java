@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private String[] listRanks = {};
     private Button mSignUpButton;
-
+    private Button mSetGameButton;
     private UserRepository mRepository;
 
     @Override
@@ -56,7 +57,14 @@ public class SignUpActivity extends AppCompatActivity {
         mGameNameSpinner.setAdapter(adapterGameNames);
         mGameRankSpinner = findViewById(R.id.game_rank_spinner2);
         mGameRankSpinner.setAdapter(getGameAdapter());
-        mSignUpButton = (Button) findViewById(R.id.updateButton);
+        mSignUpButton = findViewById(R.id.updateButton);
+        mSetGameButton = findViewById(R.id.set_game_button3);
+        mSetGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mGameRankSpinner.setAdapter(getGameAdapter());
+            }
+        });
         mSignUpButton.setOnClickListener(view -> {
             if (!mEmailText.getText().toString().isEmpty() && !mPasswordText.getText().toString().isEmpty()) {
                 signUp(mEmailText.getText().toString(), mPasswordText.getText().toString());

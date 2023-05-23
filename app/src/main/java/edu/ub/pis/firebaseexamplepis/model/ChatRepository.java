@@ -123,7 +123,7 @@ public class ChatRepository {
                                         messages
 
                                 );
-                                if (userID.equals(document.getString("idUser1") )|| userID.equals(document.getString("idUser1"))){
+                                if (userID.equals(document.getString("idUser1") )|| userID.equals(document.getString("idUser2"))){
                                     chats.add(chat);
                                 }
                             }
