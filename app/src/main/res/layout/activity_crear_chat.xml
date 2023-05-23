@@ -16,12 +16,13 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="77dp">
+            android:layout_height="74dp">
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -84,7 +85,7 @@
                 android:layout_width="411dp"
                 android:layout_height="61dp"
                 android:gravity="center"
-                android:text="CREATE NEW EVENT"
+                android:text="CREATE NEW CHAT"
                 android:textColor="#170028"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -95,123 +96,17 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text=" Game name"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/game_name_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center" />
-
-        <Button
-            android:id="@+id/set_game_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#686868"
-            android:text="set game" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text=" Game rank"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/game_rank_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center" />
-
-
-        <TextView
-            android:id="@+id/max_members_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text=" Max Members"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/max_members_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center" />
 
         <EditText
-            android:id="@+id/description_txt"
+            android:id="@+id/username_txt"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:ems="10"
-            android:gravity="center"
-            android:hint="Description"
-            android:inputType="text"
-            android:minHeight="48dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/date_txt"
-                android:layout_width="267dp"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="Date"
-                android:inputType="datetime|date"
-                android:minHeight="48dp" />
-
-            <ImageView
-                android:id="@+id/calendar_image"
-                android:layout_width="121dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="showCalendar"
-                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/hour_txt"
-                android:layout_width="267dp"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="Hour"
-                android:inputType="datetime|date"
-                android:minHeight="48dp" />
-
-            <ImageView
-                android:id="@+id/hour_image"
-                android:layout_width="109dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:onClick="showClock"
-                app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
-        </LinearLayout>
+            android:hint="username"
+            android:inputType="text" />
 
         <Button
-            android:id="@+id/create_event_button"
+            android:id="@+id/create_chat_button"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:backgroundTint="#170028"

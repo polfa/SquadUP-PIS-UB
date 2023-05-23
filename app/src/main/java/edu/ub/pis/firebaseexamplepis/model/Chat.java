@@ -64,6 +64,16 @@ public class Chat {
         }
     }
 
+    public User getUser(String currentUser) {
+        if (user1.getID().equals(currentUser)){
+            return user2;
+        }else if (user2.getID().equals(currentUser) ){
+            return user1;
+        }else{
+            throw new RuntimeException("user not in chat");
+        }
+    }
+
     public Message getLastMessage() {
         return lastMessage;
     }

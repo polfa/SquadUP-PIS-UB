@@ -63,6 +63,13 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#170028"
+            android:text="New Chat" />
+
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"

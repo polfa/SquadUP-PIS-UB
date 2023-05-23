@@ -95,12 +95,15 @@ public class ChatInsideActivity extends AppCompatActivity {
             // Mostrar usuari logat
 
             // Defineix listeners
-            mExitButton.setOnClickListener(view -> {
-                mAuth.signOut();
+            mExitButton.setOnClickListener(view -> {;
                 activeData.setCurrentChat(null);
                 Intent intent = new Intent(ChatInsideActivity.this, ChatActivity.class);
                 startActivity(intent);
             });
+
+            mUsernameTxt.setText(activeData.getCurrentChat().getUser(mAuth.getCurrentUser().getEmail()).getNickname());
+
+            Picasso.get().load(activeData.getCurrentChat().getUser(mAuth.getCurrentUser().getEmail()).getURL()).into(mUserPicture);
 
             // Anem a buscar la RecyclerView i fem dues coses:
             mChatCardsRV = findViewById(R.id.recyclerViewChat);
