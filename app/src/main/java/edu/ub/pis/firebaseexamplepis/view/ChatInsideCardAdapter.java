@@ -37,28 +37,19 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
 
     private FirebaseAuth mAuth;
     private User currentUser;
+
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
     // quan s'amagui
     // Constructor
-    public ChatInsideCardAdapter(Chat chat, ChatActivityViewModel viewModelChat) {
+    public ChatInsideCardAdapter(ArrayList<Message> messages, ChatActivityViewModel viewModelChat) {
         mAuth = FirebaseAuth.getInstance();
         mChatActivityViewModel = viewModelChat;
-        currentUser = mChatActivityViewModel.getUserById();
-        this.messages = chat.getMessages();
-    }
+        currentUser = mChatActivityViewModel.getUserById(mAuth.getCurrentUser().getEmail());
+        this.messages = messages;
 
 
-    public ArrayList<Chat> getCuerrentUserChats(ArrayList<Chat> chatList){
-        ArrayList<Chat> aux = new ArrayList<>();
-        for (Chat c: chatList){
-            System.out.println("------------------------");
-            if(c.userInChat(currentUser)){
-                System.out.println(c.getUser1().getID() + c.getUser2().getID() + currentUser.getID());
-                aux.add(c);
-            }
-        }
-        return aux;
     }
+
 
 
     @NonNull
@@ -78,7 +69,7 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
     /* Mètode cridat per cada ViewHolder de la RecyclerView */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(messages.get(position), this.mOnClickHideListener);
+            holder.bind(messages.get(position), this.mOnClickHideListener);
     }
 
     @Override
@@ -86,14 +77,12 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
         return messages.size();
     }
 
-    public void setMessages(Chat chat) {
-        this.messages = chat.getMessages(); // no recicla/repinta res
-    }
+
 
     @Override
     public int getItemViewType(int position) {
         Message message = messages.get(position);
-        if (message.getUserID() == mAuth.getCurrentUser().getEmail()) {
+        if (message.getUserID().equals(mAuth.getCurrentUser().getEmail())) {
             return 0;
         } else {
             return 1;
@@ -149,6 +138,7 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
 
         public void bind(final Message message, OnClickHideListener listener) {
             mTextViewMessage.setText(message.getText());
+            System.out.println("2333333333333334");
             //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
             //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
             // Seteja el listener onClick del botó d'amagar (hide), que alhora

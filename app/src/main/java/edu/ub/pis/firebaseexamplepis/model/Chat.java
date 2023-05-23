@@ -9,7 +9,9 @@ public class Chat {
 
     private Message lastMessage;
 
-    public Chat(String idUser1, String idUser2, ArrayList<Message> missatges) {
+    String chatID;
+
+    public Chat(String chatID, String idUser1, String idUser2, ArrayList<Message> missatges) {
         UserRepository uRepo = UserRepository.getInstance();
         this.user1 = uRepo.getUserById(idUser1);
         this.user2 = uRepo.getUserById(idUser2);
@@ -19,8 +21,13 @@ public class Chat {
         }else{
             lastMessage = null;
         }
+
+        this.chatID = chatID;
     }
 
+    public String getId(){
+        return chatID;
+    }
     public void addMessage(Message message) {
         messages.add(message);
     }

@@ -33,7 +33,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
      *  quan l'usuari faci clic en la creu (amagar) algún dels items de la RecyclerView
      */
     public interface OnClickEnterListener {
-        void OnClickEnter(int position);
+        void OnClickEnter(int position, Chat chat);
     }
     private static ChatActivityViewModel mChatActivityViewModel; //nuestro viewModel
 
@@ -47,22 +47,11 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
     public ChatCardAdapter(ArrayList<Chat> chatList, ChatActivityViewModel viewModelChat) {
         mAuth = FirebaseAuth.getInstance();
         mChatActivityViewModel = viewModelChat;
-        currentUser = mChatActivityViewModel.getUserById();
+        currentUser = mChatActivityViewModel.getUserById(mAuth.getCurrentUser().getEmail());
         this.mChats = chatList;
     }
 
 
-    public ArrayList<Chat> getCuerrentUserChats(ArrayList<Chat> chatList){
-        ArrayList<Chat> aux = new ArrayList<>();
-        for (Chat c: chatList){
-            System.out.println("------------------------");
-            if(c.userInChat(currentUser)){
-                System.out.println(c.getUser1().getID() + c.getUser2().getID() + currentUser.getID());
-                aux.add(c);
-            }
-        }
-        return aux;
-    }
 
     public void setOnClickEnterListener(OnClickEnterListener listener) {
         this.mOnClickEnterListener = listener;
@@ -160,7 +149,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
         public void bind(final Chat chat, OnClickEnterListener listener) {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             Date date = new Date();
-            User currentUser = mChatActivityViewModel.getUserById();
+            User currentUser = mChatActivityViewModel.getUserById(mAuth.getCurrentUser().getEmail());
             User chatUser = chat.getUser(currentUser);
             mCardFullName.setText(chatUser.getFirstName() + " " + chatUser.getLastName());
             mCardChat.setText(chat.getLastMessage().getText());
@@ -189,7 +178,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
             mChatBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.OnClickEnter(getAdapterPosition());
+                    listener.OnClickEnter(getAdapterPosition(),chat);
                 }
             });
 

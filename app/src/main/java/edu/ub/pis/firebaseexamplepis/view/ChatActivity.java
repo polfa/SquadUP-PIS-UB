@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.Chat;
+import edu.ub.pis.firebaseexamplepis.viewmodel.ActiveData;
 import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
 
 public class ChatActivity extends AppCompatActivity {
@@ -50,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatCardAdapter mChatCardRVAdapter;
 
     /** Autenticació de Firebase */
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth;
 
     /** Foto de perfil de l'usuari */
     private Uri mPhotoUri;
@@ -59,6 +60,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        mAuth = FirebaseAuth.getInstance();
 
         // Inicialitza el ViewModel d'aquesta activity (activity_chat)
         mChatActivityViewModel = new ViewModelProvider(this)
@@ -117,7 +119,8 @@ public class ChatActivity extends AppCompatActivity {
             // dins de la recicler view. En aquest cas, quan es faci clic al botó d'amagar
             // l'usuari.
             @Override
-            public void OnClickEnter(int position) {
+            public void OnClickEnter(int position,Chat chat) {
+                ActiveData.getInstance().setCurrentChat(chat);
                 Intent intent = new Intent(ChatActivity.this, ChatInsideActivity.class);
                 startActivity(intent);
             }

@@ -29,6 +29,7 @@ public class ChatRepository {
 
     private ArrayList<Chat> chatList = new ArrayList<>();
 
+
     /** Definició de listener (interficie),
      *  per escoltar quan s'hagin acabat de llegir els usuaris de la BBDD */
     public interface OnLoadChatsListener {
@@ -36,6 +37,7 @@ public class ChatRepository {
     }
 
     public ArrayList<ChatRepository.OnLoadChatsListener> mOnLoadChatsListeners = new ArrayList<>();
+
 
     /** Definició de listener (interficie)
      * per poder escoltar quan s'hagi acabat de llegir la Url de la foto de perfil
@@ -72,6 +74,7 @@ public class ChatRepository {
         mOnLoadChatsListeners.add(listener);
     }
 
+
     /**
      * Setejem un listener de la operació OnLoadUserPictureUrlListener.
      * En aquest cas, no és una llista de listeners. Només deixem haver-n'hi un,
@@ -80,6 +83,55 @@ public class ChatRepository {
      */
     public void setOnLoadUserPictureListener(ChatRepository.OnLoadUserPictureUrlListener listener) {
         mOnLoadUserPictureUrlListener = listener;
+    }
+
+    public void loadChatById(ArrayList<Chat> chats, String chatID){
+        chats.clear();
+        mDb.collection("chats")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ArrayList<Message> messages= new ArrayList<>();
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                ArrayList<Map<String,Object>> messageData = (ArrayList<Map<String,Object>>) document.get("messages");
+                                for (int i = 0; i < messageData.size(); i++) {
+                                    Map<String, Object> messageMap = messageData.get(i);
+                                    String text = (String) messageMap.get("text");
+                                    Timestamp time = (Timestamp) messageMap.get("date");
+                                    boolean read = (boolean) messageMap.get("read");
+                                    String userID = (String) messageMap.get("userID");
+                                    // Otros atributos del mensaje que necesites obtener
+
+                                    Message message = new Message(userID, text, time.toDate(), read);
+                                    // Establece los otros atributos del mensaje si los hay
+
+                                    messages.add(message);
+                                }
+                                Chat chat = new Chat(
+                                        document.getId(),
+                                        document.getString("idUser1"),
+                                        document.getString("idUser2"),
+                                        messages
+
+                                );
+                                if (chatID.equals(chat.getId())){
+                                    chats.add(chat);
+                                }
+                            }
+                            chatList = chats;
+                            /* Callback listeners */
+                            for (ChatRepository.OnLoadChatsListener l: mOnLoadChatsListeners) {
+                                l.onLoadChats(chats);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
     /**
@@ -113,9 +165,11 @@ public class ChatRepository {
                                     messages.add(message);
                                 }
                                 Chat chat = new Chat(
+                                        document.getId(),
                                         document.getString("idUser1"),
                                         document.getString("idUser2"),
                                         messages
+
                                 );
                                 if (userID.equals(document.getString("idUser1") )|| userID.equals(document.getString("idUser1"))){
                                     chats.add(chat);

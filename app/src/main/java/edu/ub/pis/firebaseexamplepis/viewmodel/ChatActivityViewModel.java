@@ -1,6 +1,7 @@
 package edu.ub.pis.firebaseexamplepis.viewmodel;
 
 import android.app.Application;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.util.Log;
 
@@ -21,6 +22,7 @@ import com.google.firebase.storage.UploadTask;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.ChatRepository;
@@ -48,6 +50,7 @@ public class ChatActivityViewModel extends AndroidViewModel
     /* Atributs auxiliars */
     private FirebaseStorage mStorage; // Per pujar fitxers grans (fotos) i accedir-hi
 
+
     public ChatActivityViewModel(Application application) {
         super(application);
 
@@ -70,6 +73,7 @@ public class ChatActivityViewModel extends AndroidViewModel
             }
         });
 
+
         // Quan s'acabi de llegir la URL de la foto de perfil de l'usuari logat, el ViewModel
         // actualitza també mPictureUrl, per a que la HomeChatsActivity la mostri en l'ImageView
         // corresponent
@@ -81,9 +85,6 @@ public class ChatActivityViewModel extends AndroidViewModel
             }
         });
     }
-    public User getUserById(){
-        return userRepository.getUserById(mAuth.getCurrentUser().getEmail());
-    }
 
     /*
      * Retorna els usuaris perquè la HomeChatsActivity pugui subscriure-hi l'observable.
@@ -91,6 +92,9 @@ public class ChatActivityViewModel extends AndroidViewModel
     public LiveData<ArrayList<Chat>> getChats() {
         return mChat;
     }
+
+
+
 
     /*
      * Retorna el LiveData de la URL de la foto per a què HomeChatsActivity
@@ -115,6 +119,11 @@ public class ChatActivityViewModel extends AndroidViewModel
     public void setChats(ArrayList<Chat> chats) {
         mChat.setValue(chats);
     }
+
+    public User getUserById(String id){
+        return userRepository.getUserById(id);
+    }
+
 
     /*
      * Mètode cridat per l'Intent de la captura de camera al HomeChatsActivity,
@@ -172,6 +181,15 @@ public class ChatActivityViewModel extends AndroidViewModel
     public void loadChatsFromRepository(String userID) {
         mChatRepository.loadUserChats(mChat.getValue(), userID);
     }
+
+    public void loadChatByIdFromRepository(String chatId) {
+        mChatRepository.loadUserChats(mChat.getValue(), chatId);
+    }
+
+
+
+
+
 
     /* Mètode que crida a carregar la foto d'un usuari entre els usuaris */
     public void loadPictureOfUser(String userId) {

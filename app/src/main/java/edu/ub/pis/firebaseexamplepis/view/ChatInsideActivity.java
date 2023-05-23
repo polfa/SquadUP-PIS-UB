@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.Chat;
+import edu.ub.pis.firebaseexamplepis.viewmodel.ActiveData;
 import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.Message;
@@ -68,9 +69,12 @@ public class ChatInsideActivity extends AppCompatActivity {
      */
     private Uri mPhotoUri;
 
+    private ActiveData activeData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activeData = ActiveData.getInstance();
         setContentView(R.layout.activity_chat_inside);
         mExitButton = findViewById(R.id.exit_btn);
         mUsernameTxt = findViewById(R.id.user_name_txt);
@@ -93,6 +97,7 @@ public class ChatInsideActivity extends AppCompatActivity {
             // Defineix listeners
             mExitButton.setOnClickListener(view -> {
                 mAuth.signOut();
+                activeData.setCurrentChat(null);
                 Intent intent = new Intent(ChatInsideActivity.this, ChatActivity.class);
                 startActivity(intent);
             });
@@ -106,24 +111,18 @@ public class ChatInsideActivity extends AppCompatActivity {
             );
             mChatCardsRV.setLayoutManager(manager);
 
+
             // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
             mChatCardRVAdapter = new ChatInsideCardAdapter(
-                    mChatActivityViewModel.getChats().getValue().get(0), mChatActivityViewModel // Passem-li referencia llista usuaris
+                    activeData.getCurrentChat().getMessages(), mChatActivityViewModel // Passem-li referencia llista usuaris
             );
             mChatCardsRV.setAdapter(mChatCardRVAdapter); // Associa l'adapter amb la ReciclerView
 
-            // Observer a ChatActivity per veure si la llista de Chat (observable MutableLiveData)
-            // a ChatActivityViewModel ha canviat.
-            final Observer<ArrayList<Chat>> observerChats = new Observer<ArrayList<Chat>>() {
-                @Override
-                public void onChanged(ArrayList<Chat> users) {
-                    mChatCardRVAdapter.notifyDataSetChanged();
-                }
-            };
-            mChatActivityViewModel.getChats().observe(this, observerChats);
 
-            // A partir d'aquí, en cas que es faci cap canvi a la llista d'usuaris, ChatActivity ho sabrá
-            mChatActivityViewModel.loadChatsFromRepository(mAuth.getCurrentUser().getEmail());  // Internament pobla els usuaris de la BBDD
+
+
+
+
         }
     }
 }
