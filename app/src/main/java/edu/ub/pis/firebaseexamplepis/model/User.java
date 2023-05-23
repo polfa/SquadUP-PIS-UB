@@ -2,54 +2,77 @@ package edu.ub.pis.firebaseexamplepis.model;
 
 import java.util.ArrayList;
 
+import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
+
 /**
  * Classe contenidor de la informació de l'usuari.
  */
 public class User {
     private String mId; // Per exemple, el mail
-    private String mFirstName;
-    private String mLastName;
-    private String mHobbies;
+    private String mNickname;
+    private String mDescripcio;
+    private String gameImageId;
+    private String rankImageId;
     private String mPictureURL;
+    private String gameImage, rankImage;
+
+    VideogameLogos vl;
     private String mail;// Url d'Internet, no la foto en si
     // Constructor
     public User(
         String id,
-        String firstName,
-        String lastName,
-        String hobbies,
+        String Nickname,
+        String descripcio,
         String pictureURL,
-        String mail
+        String mail,
+        String gameImageId,
+        String rankImageId
     ) {
         this.mId = id;
-        this.mFirstName = firstName;
-        this.mLastName = lastName;
-        this.mHobbies = hobbies;
+        this.mNickname = Nickname;
+        this.mDescripcio = descripcio;
         this.mPictureURL = pictureURL;
         this.mail = mail;
+        this.gameImageId = gameImageId;
+        this.rankImageId = rankImageId;
+        vl = VideogameLogos.valueOf(gameImageId);
+        gameImage = vl.getImageLocation();
+        rankImage = vl.getRank(getRankImageId());
     }
 
     // Getters
-    public String getFirstName () {
-        return this.mFirstName;
+    public String getNickname () {
+        return this.mNickname;
     }
-    public String getLastName () {
-        return this.mLastName;
-    }
-    public String getHobbies() {
-        return this.mHobbies;
+    public String getDescripcio() {
+        return this.mDescripcio;
     }
     public String getURL() { return this.mPictureURL; }
-
     public String getID() { return this.mId; }
+    public String getGameImageId() {
+        return gameImageId;
+    }
+    public String getGameImage() {
+        return gameImage;
+    }
+    public String getRankImageId() {
+        return rankImageId;
+    }
+    public String getRankImage() {
+        return rankImage;
+    }
+
 
     // Setters
-    public void setFirstName (String firstName) { this.mFirstName = firstName; }
-    public void setLastName (String lastName) {
-        this.mLastName = lastName;
-    }
-    public void setHobbies(String hobbies) {
-        this.mHobbies = hobbies;
+    public void setNickname (String nickname) { this.mNickname = nickname; }
+    public void setDescripcio(String descripcio) {
+        this.mDescripcio = descripcio;
     }
     public void setUrl(String pictureUrl) { this.mPictureURL = pictureUrl; }
+    public void setRankImageId(String rankImageId) {
+        this.rankImageId = rankImageId;
+    }
+    public void setGameImageId(String gameImageId) {
+        this.gameImageId = gameImageId;
+    }
 }

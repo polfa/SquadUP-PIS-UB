@@ -102,11 +102,12 @@ public class UserRepository {
                             Log.d(TAG, document.getId() + " => " + document.getData());
                             User user = new User(
                                 document.getId(), // ID = Email
-                                document.getString("first"),
-                                document.getString("last"),
-                                document.getString("hobbies"),
+                                document.getString("nickname"),
+                                document.getString("descripcio"),
                                 document.getString("picture_url"),
-                                    document.getString("mail")
+                                document.getString("mail"),
+                                document.getString("gameImageId"),
+                                document.getString("rankImageId")
                             );
                             users.add(user);
 
@@ -176,17 +177,20 @@ public class UserRepository {
      */
     public void addUser(
         String email,
-        String firstName,
-        String secondName,
-        String hobbies
+        String Nickname,
+        String descripcio,
+        String gameImageId,
+        String rankImageId
     ) {
-        userList.add(new User(email,firstName,secondName,hobbies,"",email));
+        userList.add(new User(email,Nickname,descripcio,"",email,gameImageId,rankImageId));
          // Obtenir informació personal de l'usuari
         Map<String, Object> signedUpUser = new HashMap<>();
-        signedUpUser.put("first", firstName);
-        signedUpUser.put("last", secondName);
-        signedUpUser.put("hobbies", hobbies);
-        signedUpUser.put("picture_url", null);
+        signedUpUser.put("nickname",Nickname);
+        signedUpUser.put("descripcio",descripcio);
+        signedUpUser.put("picture_url",null);
+        signedUpUser.put("mail",email);
+        signedUpUser.put("gameImageId",gameImageId);
+        signedUpUser.put("rankImageId",rankImageId);
 
         // Afegir-la a la base de dades
         mDb.collection("users").document(email).set(signedUpUser)

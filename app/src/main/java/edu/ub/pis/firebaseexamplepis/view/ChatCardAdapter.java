@@ -151,7 +151,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
             Date date = new Date();
             User currentUser = mChatActivityViewModel.getUserById(mAuth.getCurrentUser().getEmail());
             User chatUser = chat.getUser(currentUser);
-            mCardFullName.setText(chatUser.getFirstName() + " " + chatUser.getLastName());
+            mCardFullName.setText(chatUser.getNickname());
             mCardChat.setText(chat.getLastMessage().getText());
 
             String day;

@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
+import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
 
 public class SignUpActivity extends AppCompatActivity {
     private final String TAG = "SignUpActivity";
@@ -25,11 +28,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText mEmailText;
     private EditText mPasswordText;
-    private EditText mPasswordText2;
-    private EditText mFirstNameText;
-    private EditText mLastNameText;
-    private EditText mHobbiesText;
+    private EditText mNicknameText;
+    private EditText mDescripcioText;
+    private Spinner mGameRankSpinner;
+    private Spinner mGameNameSpinner;
+    private String[] listGames = {"Rocket_League", "Valorant", "CSGO"};
 
+    private String[] listRanks = {};
     private Button mSignUpButton;
 
     private UserRepository mRepository;
@@ -44,15 +49,16 @@ public class SignUpActivity extends AppCompatActivity {
 
         mEmailText = (EditText) findViewById(R.id.signUpEmailText);
         mPasswordText = (EditText) findViewById(R.id.signUpPasswordText);
-        mPasswordText2 = (EditText) findViewById(R.id.signUpPasswordText2);
-
-        mFirstNameText = (EditText) findViewById(R.id.updateFirstNameText);
-        mLastNameText = (EditText) findViewById(R.id.updateLastNameText);
-        mHobbiesText = (EditText) findViewById(R.id.updateHobbiesText);
-
+        mNicknameText = (EditText) findViewById(R.id.updateNicknameText);
+        mDescripcioText = (EditText) findViewById(R.id.updateDescriptionText);
+        mGameNameSpinner = findViewById(R.id.game_name_spinner2);
+        ArrayAdapter<String> adapterGameNames = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, listGames);
+        mGameNameSpinner.setAdapter(adapterGameNames);
+        mGameRankSpinner = findViewById(R.id.game_rank_spinner2);
+        mGameRankSpinner.setAdapter(getGameAdapter());
         mSignUpButton = (Button) findViewById(R.id.updateButton);
         mSignUpButton.setOnClickListener(view -> {
-            if (!mEmailText.getText().toString().isEmpty() && !mPasswordText.getText().toString().isEmpty() && mPasswordText.getText().toString().equals(mPasswordText2.getText().toString())) {
+            if (!mEmailText.getText().toString().isEmpty() && !mPasswordText.getText().toString().isEmpty()) {
                 signUp(mEmailText.getText().toString(), mPasswordText.getText().toString());
             }else if (mEmailText.getText().toString().isEmpty()){
                 Toast.makeText(getApplicationContext(), "Email is required. Please enter your email to continue.",
@@ -60,11 +66,24 @@ public class SignUpActivity extends AppCompatActivity {
             }else if (mPasswordText.getText().toString().isEmpty()){
                 Toast.makeText(getApplicationContext(), "Password is required. Please enter your password to continue.",
                         Toast.LENGTH_SHORT).show();
-            } else if(!mPasswordText.getText().toString().equals(mPasswordText2.getText().toString())){
-                Toast.makeText(getApplicationContext(), "Passwords need to be the same.",
+            }else if (mGameNameSpinner.getSelectedItem().toString().isEmpty()){
+                Toast.makeText(getApplicationContext(), "Favourite game is required. Please enter your favourite game to continue.",
+                        Toast.LENGTH_SHORT).show();
+            }else if (mGameRankSpinner.getSelectedItem().toString().isEmpty()){
+                Toast.makeText(getApplicationContext(), "Game rank is required. Please enter your rank to continue.",
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private ArrayAdapter<String> getGameAdapter() {
+        for (String s: listGames){
+            if (mGameNameSpinner.getSelectedItem().toString().equalsIgnoreCase(s)) {
+                ArrayAdapter<String> adapterGameRanks = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, VideogameLogos.valueOf(s.toUpperCase()).getRankNames());
+                return adapterGameRanks;
+            }
+        }
+        return null;
     }
 
     protected void signUp(String email, String password) {
@@ -73,18 +92,19 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if (task.isSuccessful() && !mFirstNameText.getText().toString().isEmpty() && !mLastNameText.getText().toString().isEmpty()) {
-                            String txtHobbies;
-                            if (!mHobbiesText.getText().toString().isEmpty()) {
-                                txtHobbies = mHobbiesText.getText().toString();
+                        if (task.isSuccessful() && !mNicknameText.getText().toString().isEmpty()) {
+                            String txtDescripcio;
+                            if (!mDescripcioText.getText().toString().isEmpty()) {
+                                txtDescripcio = mDescripcioText.getText().toString();
                             }else{
-                                txtHobbies = "";
+                                txtDescripcio = "";
                             }
                             mRepository.addUser(
                                 email,
-                                mFirstNameText.getText().toString(),
-                                mLastNameText.getText().toString(),
-                                    txtHobbies
+                                mNicknameText.getText().toString(),
+                                mDescripcioText.getText().toString(),
+                                mGameNameSpinner.getSelectedItem().toString().toUpperCase(),
+                                mGameRankSpinner.getSelectedItem().toString().toLowerCase()
 
                             );
                             // Anar a la pantalla home de l'usuari autenticat
@@ -92,12 +112,9 @@ public class SignUpActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             Log.d(TAG, "Sign up create user succeeded");
-                             if (mFirstNameText.getText().toString().isEmpty()){
+                             if (mNicknameText.getText().toString().isEmpty()){
                                 Toast.makeText(getApplicationContext(), "First name is required. Please enter your first name to continue.",
                                         Toast.LENGTH_SHORT).show();
-                             }else if (mLastNameText.getText().toString().isEmpty()) {
-                                 Toast.makeText(getApplicationContext(), "Last name is required. Please enter your last name to continue.",
-                                         Toast.LENGTH_SHORT).show();
                              }
                         }
                     }

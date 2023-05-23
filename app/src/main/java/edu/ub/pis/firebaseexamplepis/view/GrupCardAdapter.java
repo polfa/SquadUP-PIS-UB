@@ -155,7 +155,7 @@ public class GrupCardAdapter extends RecyclerView.Adapter<GrupCardAdapter.ViewHo
             UserRepository userRepository = UserRepository.getInstance();
             User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
             User grupUser = grup.getUser(currentUser);
-            mCardFullName.setText(grupUser.getFirstName() + " " + grupUser.getLastName());
+            mCardFullName.setText(grupUser.getNickname());
             mCardGrup.setText(grup.getLastMessage().getText());
 
             String day;

@@ -152,7 +152,7 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
         public void bind(final Event event, OnClickJoinListener listener) {
             Date date = new Date();
             if (date.getTime() < event.getStartTime().getTime() && currentUser != null) {
-                mCardFullName.setText(event.getUser().getFirstName() + " " + event.getUser().getLastName());
+                mCardFullName.setText(event.getUser().getNickname());
                 mCardHobbies.setText(event.getDescription());
                 String day;
                 String hour = String.valueOf(Integer.parseInt(event.getStartTime().toString().substring(11, 13)) + 2);
