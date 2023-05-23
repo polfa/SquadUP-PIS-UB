@@ -46,8 +46,6 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
         mChatActivityViewModel = viewModelChat;
         currentUser = mChatActivityViewModel.getUserById(mAuth.getCurrentUser().getEmail());
         this.messages = messages;
-
-
     }
 
 
@@ -141,8 +139,10 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
         }
 
         public void bind(final Message message, OnClickHideListener listener) {
-            mTextViewMessage.setText(message.getText());
-            System.out.println("2333333333333334");
+            if (message != null) {
+                mTextViewMessage.setText(message.getText());
+                System.out.println("2333333333333334");
+            }
             //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
             //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
             // Seteja el listener onClick del botó d'amagar (hide), que alhora

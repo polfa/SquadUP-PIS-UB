@@ -20,7 +20,7 @@ public class Chat {
         if (!messages.isEmpty()) {
             this.lastMessage = messages.get(messages.size() - 1);
         }else{
-            lastMessage = null;
+            lastMessage = new Message("","",new Date(), false);
         }
 
         this.chatID = chatID;

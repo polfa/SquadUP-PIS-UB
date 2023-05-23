@@ -131,6 +131,7 @@ public class ChatInsideActivity extends AppCompatActivity {
 
             mSendButton.setOnClickListener(view -> {
                 String text = mTypeTxt.getText().toString();
+                mTypeTxt.setText("");
                 activeData.getCurrentChat().addMessage(mAuth.getCurrentUser().getEmail(),text);
                 mChatActivityViewModel.updateChat(activeData.getCurrentChat());
                 mChatCardRVAdapter.updateMessages(activeData.getCurrentChat().getMessages());

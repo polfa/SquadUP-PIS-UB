@@ -210,6 +210,10 @@ public class ChatActivityViewModel extends AndroidViewModel
         mChatRepository.updateChat(currentChat.getId(), currentChat.getUser1().getID(), currentChat.getUser2().getID(), currentChat.getMessages());
     }
 
+    public void addChat(String idUser1, String idUser2) {
+        mChatRepository.addChat(idUser1, idUser2, new ArrayList<Message>());
+    }
+
     /*
     private ArrayList<Chat> ordenarChatsPerData(ArrayList<Chat> chatList){
         Collections.sort(chatList, new Comparator<Chat>() {

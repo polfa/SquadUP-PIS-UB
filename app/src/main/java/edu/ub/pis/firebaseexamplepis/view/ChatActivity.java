@@ -46,6 +46,8 @@ public class ChatActivity extends AppCompatActivity {
     private Button mLogoutButton;
     private RecyclerView mChatCardsRV; // RecyclerView
 
+    private Button mNewChatBtn;
+
 
     /** Adapter de la RecyclerView */
     private ChatCardAdapter mChatCardRVAdapter;
@@ -69,6 +71,7 @@ public class ChatActivity extends AppCompatActivity {
         // que només mostrarem si hi ha usuari logat.
         mHomeButton = findViewById(R.id.home_btn);
         loggedLayout = findViewById(R.id.loggedLayout);
+        mNewChatBtn = findViewById(R.id.new_chat_btn);
 
         if (mAuth.getCurrentUser() != null) {  // Si hi ha usuari logat...
             // Obté elements de loggedLayout
@@ -91,6 +94,11 @@ public class ChatActivity extends AppCompatActivity {
 
             mHomeButton.setOnClickListener(view -> {
                 Intent intent = new Intent(ChatActivity.this, HomeActivity.class);
+                startActivity(intent);
+            });
+
+            mNewChatBtn.setOnClickListener(view -> {
+                Intent intent = new Intent(ChatActivity.this, CrearChatActivity.class);
                 startActivity(intent);
             });
 
