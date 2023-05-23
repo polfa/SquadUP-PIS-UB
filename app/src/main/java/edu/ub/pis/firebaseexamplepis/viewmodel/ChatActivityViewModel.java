@@ -206,6 +206,10 @@ public class ChatActivityViewModel extends AndroidViewModel
         mChat.getValue().remove(position);
     }
 
+    public void updateChat(Chat currentChat) {
+        mChatRepository.updateChat(currentChat.getId(), currentChat.getUser1().getID(), currentChat.getUser2().getID(), currentChat.getMessages());
+    }
+
     /*
     private ArrayList<Chat> ordenarChatsPerData(ArrayList<Chat> chatList){
         Collections.sort(chatList, new Comparator<Chat>() {

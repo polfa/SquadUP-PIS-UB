@@ -89,6 +89,10 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
         }
     }
 
+    public void updateMessages(ArrayList<Message> messages){
+        this.messages = messages;
+    }
+
     /**
      * Retorna el número d'elements a la llista.
      * @return

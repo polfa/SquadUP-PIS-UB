@@ -1,6 +1,7 @@
 package edu.ub.pis.firebaseexamplepis.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Chat {
     private ArrayList<Message> messages;
@@ -28,7 +29,8 @@ public class Chat {
     public String getId(){
         return chatID;
     }
-    public void addMessage(Message message) {
+    public void addMessage(String userID, String text) {
+        Message message = new Message(userID,text, new Date(), false);
         messages.add(message);
     }
 

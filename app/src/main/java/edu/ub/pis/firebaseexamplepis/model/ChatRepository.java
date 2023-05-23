@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -83,55 +84,6 @@ public class ChatRepository {
      */
     public void setOnLoadUserPictureListener(ChatRepository.OnLoadUserPictureUrlListener listener) {
         mOnLoadUserPictureUrlListener = listener;
-    }
-
-    public void loadChatById(ArrayList<Chat> chats, String chatID){
-        chats.clear();
-        mDb.collection("chats")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                ArrayList<Message> messages= new ArrayList<>();
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                ArrayList<Map<String,Object>> messageData = (ArrayList<Map<String,Object>>) document.get("messages");
-                                for (int i = 0; i < messageData.size(); i++) {
-                                    Map<String, Object> messageMap = messageData.get(i);
-                                    String text = (String) messageMap.get("text");
-                                    Timestamp time = (Timestamp) messageMap.get("date");
-                                    boolean read = (boolean) messageMap.get("read");
-                                    String userID = (String) messageMap.get("userID");
-                                    // Otros atributos del mensaje que necesites obtener
-
-                                    Message message = new Message(userID, text, time.toDate(), read);
-                                    // Establece los otros atributos del mensaje si los hay
-
-                                    messages.add(message);
-                                }
-                                Chat chat = new Chat(
-                                        document.getId(),
-                                        document.getString("idUser1"),
-                                        document.getString("idUser2"),
-                                        messages
-
-                                );
-                                if (chatID.equals(chat.getId())){
-                                    chats.add(chat);
-                                }
-                            }
-                            chatList = chats;
-                            /* Callback listeners */
-                            for (ChatRepository.OnLoadChatsListener l: mOnLoadChatsListeners) {
-                                l.onLoadChats(chats);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
     }
 
     /**
@@ -241,6 +193,35 @@ public class ChatRepository {
                 });
     }
 
+    public void updateChat(
+            String chat_ID,
+            String user1_ID,
+            String user2_ID,
+            ArrayList<Message> messages
+    ) {
+
+        DocumentReference chatRef = mDb.collection("chats").document(chat_ID);
+
+        // Obtenir informació personal de l'usuari
+        Map<String, Object> newChat = new HashMap<>();
+        newChat.put("idUser1", user1_ID);
+        newChat.put("idUser2", user2_ID);
+        newChat.put("messages", objectToMapArray(messages));
+
+        chatRef.set(newChat).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Chat update completed successfully");
+                } else {
+                    Log.d(TAG, "Chat update failed");
+                }
+            }
+        });
+
+
+    }
+
     public ArrayList<Map<String,Object>> objectToMapArray(ArrayList<Message> list){
         ArrayList<Map<String,Object>> arrayMap = new ArrayList<>();
         for (Message m: list){
@@ -248,9 +229,11 @@ public class ChatRepository {
             String text = m.getText();
             Date date = m.getTime();
             boolean read = m.read();
+            String userID = m.getUserID();
             aux.put("text", text);
             aux.put("date", date);
             aux.put("read", read);
+            aux.put("userID", userID);
             arrayMap.add(aux);
         }
         return arrayMap;

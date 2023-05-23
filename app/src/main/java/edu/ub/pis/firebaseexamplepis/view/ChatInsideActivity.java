@@ -118,7 +118,21 @@ public class ChatInsideActivity extends AppCompatActivity {
             );
             mChatCardsRV.setAdapter(mChatCardRVAdapter); // Associa l'adapter amb la ReciclerView
 
+            final Observer<ArrayList<Chat>> observerChats = new Observer<ArrayList<Chat>>() {
+                @Override
+                public void onChanged(ArrayList<Chat> chats) {
+                    mChatCardRVAdapter.notifyDataSetChanged();
+                }
+            };
+            mChatActivityViewModel.getChats().observe(this, observerChats);
 
+            mSendButton.setOnClickListener(view -> {
+                String text = mTypeTxt.getText().toString();
+                activeData.getCurrentChat().addMessage(mAuth.getCurrentUser().getEmail(),text);
+                mChatActivityViewModel.updateChat(activeData.getCurrentChat());
+                mChatCardRVAdapter.updateMessages(activeData.getCurrentChat().getMessages());
+                mChatCardRVAdapter.notifyDataSetChanged();
+            });
 
 
 
