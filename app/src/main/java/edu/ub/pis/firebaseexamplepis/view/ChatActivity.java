@@ -51,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatCardAdapter mChatCardRVAdapter;
 
     /** Autenticació de Firebase */
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     /** Foto de perfil de l'usuari */
     private Uri mPhotoUri;
@@ -60,7 +60,6 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        mAuth = FirebaseAuth.getInstance();
 
         // Inicialitza el ViewModel d'aquesta activity (activity_chat)
         mChatActivityViewModel = new ViewModelProvider(this)
