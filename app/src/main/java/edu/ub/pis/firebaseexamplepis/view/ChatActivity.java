@@ -45,7 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     private ImageView mHomeButton;
     private Button mLogoutButton;
     private RecyclerView mChatCardsRV; // RecyclerView
-
+    private ImageView mMatchMaking;
     private Button mNewChatBtn;
 
 
@@ -72,6 +72,7 @@ public class ChatActivity extends AppCompatActivity {
         mHomeButton = findViewById(R.id.home_btn);
         loggedLayout = findViewById(R.id.loggedLayout);
         mNewChatBtn = findViewById(R.id.new_chat_btn);
+        mMatchMaking = findViewById(R.id.matchMakingButton);
 
         if (mAuth.getCurrentUser() != null) {  // Si hi ha usuari logat...
             // Obté elements de loggedLayout
@@ -99,6 +100,10 @@ public class ChatActivity extends AppCompatActivity {
 
             mNewChatBtn.setOnClickListener(view -> {
                 Intent intent = new Intent(ChatActivity.this, CrearChatActivity.class);
+                startActivity(intent);
+            });
+            mMatchMaking.setOnClickListener(view -> {
+                Intent intent = new Intent(ChatActivity.this, MatchMakingActivity.class);
                 startActivity(intent);
             });
 

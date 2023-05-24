@@ -48,7 +48,7 @@ public class GrupActivity extends AppCompatActivity {
     private TextView mEventButton;
     private ViewGroup loggedLayout;
     private RecyclerView mGrupCardRv; // RecyclerView
-
+    private ImageView mMatchMaking;
     private TextView mFriendsButton;
 
     private ImageView mChatButton;
@@ -83,6 +83,7 @@ public class GrupActivity extends AppCompatActivity {
             mChatButton = findViewById(R.id.messages_btn);
             mNewGrupButton = findViewById(R.id.newGroupBtn);
             mEventButton = findViewById(R.id.eventBtn);
+            mMatchMaking = findViewById(R.id.matchMakingButton);
 
             // Mostrar usuari logat
 
@@ -109,6 +110,10 @@ public class GrupActivity extends AppCompatActivity {
 
             mEventButton.setOnClickListener(view -> {
                 Intent intent = new Intent(GrupActivity.this, HomeEventsActivity.class);
+                startActivity(intent);
+            });
+            mMatchMaking.setOnClickListener(view -> {
+                Intent intent = new Intent(GrupActivity.this, MatchMakingActivity.class);
                 startActivity(intent);
             });
 

@@ -207,7 +207,7 @@
                 tools:ignore="ExtraText" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/matchMakingButton"
                 android:layout_width="39dp"
                 android:layout_height="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"

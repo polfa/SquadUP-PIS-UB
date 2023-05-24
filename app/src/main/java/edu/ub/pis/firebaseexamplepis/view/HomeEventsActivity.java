@@ -46,7 +46,7 @@ public class HomeEventsActivity extends AppCompatActivity {
     private Button mNewEventButton;
     private ViewGroup loggedLayout;
     private RecyclerView mEventCardsRV; // RecyclerView
-
+    private ImageView mMatchMaking;
     private TextView mFriendsButton;
     private TextView mGrupButton;
     private ImageView mChatButton;
@@ -81,6 +81,7 @@ public class HomeEventsActivity extends AppCompatActivity {
             mChatButton = findViewById(R.id.messages_btn);
             mNewEventButton = findViewById(R.id.button);
             mGrupButton = findViewById(R.id.groupsBtn);
+            mMatchMaking = findViewById(R.id.matchMakingButton);
 
             // Mostrar usuari logat
 
@@ -94,7 +95,10 @@ public class HomeEventsActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeEventsActivity.this, AuthenticationActivity.class);
                 startActivity(intent);
             });
-
+            mMatchMaking.setOnClickListener(view -> {
+                Intent intent = new Intent(HomeEventsActivity.this, MatchMakingActivity.class);
+                startActivity(intent);
+            });
             mFriendsButton.setOnClickListener(view -> {
                 Intent intent = new Intent(HomeEventsActivity.this, HomeActivity.class);
                 startActivity(intent);

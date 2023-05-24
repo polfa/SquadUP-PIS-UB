@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button mLogoutButton;
     private ViewGroup loggedLayout;
     private RecyclerView mUserCardsRV; // RecyclerView a
+    private ImageView mMatchMaking;
 
     /** Adapter de la RecyclerView */
     private UserCardAdapter mUserCardRVAdapter;
@@ -64,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         eventBtn = findViewById(R.id.eventBtn);
         mChatBtn = findViewById(R.id.messages_btn);
         grupBtn = findViewById(R.id.groupsBtn);
+        mMatchMaking = findViewById(R.id.matchMakingButton);
 
         // Inicialitza el ViewModel d'aquesta activity (HomeActivity)
         mHomeActivityViewModel = new ViewModelProvider(this)
@@ -84,6 +86,10 @@ public class HomeActivity extends AppCompatActivity {
             // Defineix listeners
             mModifyPersonalInfoButton.setOnClickListener(view -> {
                 Intent intent = new Intent(HomeActivity.this, UpdateInfoActivity.class);
+                startActivity(intent);
+            });
+            mMatchMaking.setOnClickListener(view -> {
+                Intent intent = new Intent(HomeActivity.this, MatchMakingActivity.class);
                 startActivity(intent);
             });
             mLogoutButton.setOnClickListener(view -> {

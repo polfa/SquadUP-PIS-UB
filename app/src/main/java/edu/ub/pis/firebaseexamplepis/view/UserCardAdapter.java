@@ -104,11 +104,13 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView mCardPictureUrl;
         private final TextView mCardNickname;
+        private final ImageView mFavouriteGame;
         private final TextView mCardDescription;
         private final ImageView mHideButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            mFavouriteGame = itemView.findViewById(R.id.favourite_game_image);
             mCardPictureUrl = itemView.findViewById(R.id.avatar);
             mCardNickname = itemView.findViewById(R.id.fullname);
             mCardDescription = itemView.findViewById(R.id.description_event);
@@ -118,6 +120,7 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.ViewHo
         public void bind(final User user, OnClickHideListener listener) {
             mCardNickname.setText(user.getNickname());
             mCardDescription.setText(user.getDescripcio());
+            Picasso.get().load(user.getGameImage()).into(mFavouriteGame);
             // Carrega foto de l'usuari de la llista directament des d'una Url
             // d'Internet.
             Picasso.get().load(user.getURL()).into(mCardPictureUrl);

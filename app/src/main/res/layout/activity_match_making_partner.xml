@@ -47,10 +47,10 @@
                 app:srcCompat="@drawable/logo_sin_nombre" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/findPartnerBtn"
                 android:layout_width="320dp"
                 android:layout_height="54dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="60dp"
                 android:backgroundTint="#170028"
                 android:shadowColor="#170028"
                 android:text="Find Partner"
@@ -59,71 +59,56 @@
                 android:textSize="18sp"
                 app:iconTint="#170028"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintHorizontal_bias="0.615"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordText"
+                app:layout_constraintTop_toBottomOf="@+id/game_name_spinner3"
                 app:rippleColor="#170028"
                 app:strokeColor="#170028" />
 
-            <EditText
-                android:id="@+id/emailText"
-                android:layout_width="360dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="20dp"
-                android:autofillHints=""
-                android:elegantTextHeight="false"
-                android:ems="10"
-                android:hint="Write Game Name"
-                android:inputType="textEmailAddress"
-                android:singleLine="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+            <Spinner
+                android:id="@+id/game_name_spinner3"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="@+id/textView18"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-            <EditText
-                android:id="@+id/passwordText"
-                android:layout_width="360dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="20dp"
-                android:autofillHints=""
-                android:elegantTextHeight="false"
-                android:ems="10"
-                android:hint="Approximate playing time(In hours)"
-                android:inputType="textEmailAddress"
-                android:singleLine="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailText" />
-
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="131dp"
-                android:layout_height="113dp"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/no_picture"
-                tools:layout_editor_absoluteX="140dp"
-                tools:layout_editor_absoluteY="456dp" />
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
             <TextView
-                android:id="@+id/textView14"
-                android:layout_width="100dp"
-                android:layout_height="32dp"
-                android:layout_marginTop="24dp"
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center|left"
+                android:text=" Game name"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/textView13"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+            <TextView
+                android:id="@+id/partnerName"
+                android:layout_width="196dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="40dp"
+                android:gravity="center"
                 android:text="PartnerName"
                 android:textColor="#170028"
-                android:textSize="13dp"
+                android:textSize="24sp"
                 android:textStyle="bold"
-                android:visibility="invisible"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.837"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView7"
+                app:layout_constraintTop_toBottomOf="@+id/partnerImage"
+                app:layout_constraintVertical_bias="0.51"
                 tools:ignore="TextSizeCheck" />
 
             <TextView
@@ -143,24 +128,34 @@
 
             <TextView
                 android:id="@+id/textView15"
-                android:layout_width="180dp"
+                android:layout_width="144dp"
                 android:layout_height="32dp"
-                android:layout_marginTop="28dp"
-                android:text="Found Partner"
+                android:layout_marginTop="40dp"
+                android:text="Found Partner:"
                 android:textColor="#170028"
-                android:textSize="13dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.194"
+                app:layout_constraintHorizontal_bias="0.168"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button2"
+                app:layout_constraintTop_toBottomOf="@+id/findPartnerBtn"
                 tools:ignore="TextSizeCheck" />
+
+            <ImageView
+                android:id="@+id/partnerImage"
+                android:layout_width="131dp"
+                android:layout_height="113dp"
+                android:layout_marginTop="35dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.76"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/findPartnerBtn"
+                app:srcCompat="@drawable/no_picture" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
     </LinearLayout>
@@ -207,7 +202,7 @@
                 tools:ignore="ExtraText" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/matchMakingButton"
                 android:layout_width="39dp"
                 android:layout_height="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -215,7 +210,7 @@
                 app:layout_constraintHorizontal_bias="0.408"
                 app:layout_constraintStart_toEndOf="@+id/home_btn"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/matchmaking_icon" />
+                app:srcCompat="@drawable/imagematchmaking" />
 
             <ImageView
                 android:id="@+id/home_btn"
@@ -238,7 +233,7 @@
                 app:layout_constraintHorizontal_bias="0.56"
                 app:layout_constraintStart_toEndOf="@+id/loggedPictureImageView"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/mensaje_lila" />
+                app:srcCompat="@drawable/messages_icon" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
