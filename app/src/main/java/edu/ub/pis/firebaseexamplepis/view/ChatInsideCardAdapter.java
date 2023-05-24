@@ -3,23 +3,19 @@ package edu.ub.pis.firebaseexamplepis.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import edu.ub.pis.firebaseexamplepis.R;
-import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.Message;
 import edu.ub.pis.firebaseexamplepis.model.User;
-import edu.ub.pis.firebaseexamplepis.model.UserRepository;
+import edu.ub.pis.firebaseexamplepis.viewmodel.ActiveData;
 import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
 
 public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAdapter.ViewHolder> {
@@ -66,7 +62,7 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
     /* Mètode cridat per cada ViewHolder de la RecyclerView */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            holder.bind(messages.get(position), this.mOnClickHideListener);
+            holder.bind(messages.get(position), this.mOnClickHideListener, mChatActivityViewModel);
     }
 
     @Override
@@ -131,6 +127,7 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
 
         private final TextView mTextViewMessage;
 
+        private ActiveData data = ActiveData.getInstance();
         private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         public ViewHolder(@NonNull View itemView) {
@@ -139,12 +136,16 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
 
         }
 
-        public void bind(final Message message, OnClickHideListener listener) {
+        public void bind(final Message message, OnClickHideListener listener, ChatActivityViewModel mChatActivityViewModel) {
 
             if (message != null && mAuth.getCurrentUser() != null) {
-                message.setRead(mAuth.getCurrentUser().getEmail());
+                if (!message.read()) {
+                    message.setRead(mAuth.getCurrentUser().getEmail());
+                    mChatActivityViewModel.updateChat(data.getCurrentChat());
+                }
                 mTextViewMessage.setText(message.getText());
                 System.out.println("2333333333333334");
+
             }
             //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
             //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);

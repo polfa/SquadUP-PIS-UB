@@ -96,6 +96,7 @@ public class ChatInsideActivity extends AppCompatActivity {
 
             // Defineix listeners
             mExitButton.setOnClickListener(view -> {;
+                mChatActivityViewModel.updateChat(activeData.getCurrentChat());
                 activeData.setCurrentChat(null);
                 Intent intent = new Intent(ChatInsideActivity.this, ChatActivity.class);
                 startActivity(intent);
@@ -137,10 +138,6 @@ public class ChatInsideActivity extends AppCompatActivity {
                 mChatCardRVAdapter.updateMessages(activeData.getCurrentChat().getMessages());
                 mChatCardRVAdapter.notifyDataSetChanged();
             });
-
-
-
-
         }
     }
 }

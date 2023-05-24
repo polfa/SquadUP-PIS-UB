@@ -22,10 +22,13 @@ import com.google.firebase.storage.UploadTask;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.ChatRepository;
+import edu.ub.pis.firebaseexamplepis.model.Event;
 import edu.ub.pis.firebaseexamplepis.model.Message;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
@@ -68,7 +71,7 @@ public class ChatActivityViewModel extends AndroidViewModel
         mChatRepository.addOnLoadChatsListener(new ChatRepository.OnLoadChatsListener() {
             @Override
             public void onLoadChats(ArrayList<Chat> chats) {
-               // chats = ordenarChatsPerData(chats);
+               chats = ordenarChatsPerData(chats);
                 ChatActivityViewModel.this.setChats(chats);
             }
         });
@@ -84,6 +87,16 @@ public class ChatActivityViewModel extends AndroidViewModel
                 mPictureUrl.setValue(pictureUrl);
             }
         });
+    }
+
+    private ArrayList<Chat> ordenarChatsPerData(ArrayList<Chat> chats) {
+        Collections.sort(chats, new Comparator<Chat>() {
+            public int compare(Chat e1, Chat e2) {
+                return e1.getLastMessage().getTime().compareTo(e2.getLastMessage().getTime());
+            }
+        });
+
+        return chats;
     }
 
     /*

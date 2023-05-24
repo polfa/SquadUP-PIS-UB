@@ -1,5 +1,8 @@
 package edu.ub.pis.firebaseexamplepis.view;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,6 +134,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
         private final TextView mCardChat;
         private final TextView mCardTime;
 
+        private ImageView mCircleNumMessages;
         private final TextView mCardNumMisatges;
 
         private final ConstraintLayout mChatBtn;
@@ -143,6 +147,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
             mCardTime = itemView.findViewById(R.id.time_last_message);
             mCardNumMisatges =  itemView.findViewById(R.id.num_missatges);
             mChatBtn = itemView.findViewById(R.id.chatBtn);
+            mCircleNumMessages = itemView.findViewById(R.id.punt_missatges);
         }
 
         public void bind(final Chat chat, OnClickEnterListener listener) {
@@ -160,6 +165,18 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
                 day = "Today";
             } else {
                 day = chat.getLastMessage().getTime().toString().substring(0, 3);
+            }
+
+            int unreadMessages = chat.getUnreadMessages(mAuth.getCurrentUser().getEmail());
+
+            if (unreadMessages == 0){
+                mCardNumMisatges.setVisibility(INVISIBLE);
+                mCircleNumMessages.setVisibility(INVISIBLE);
+            }else{
+                mCircleNumMessages.setVisibility(VISIBLE);
+                mCircleNumMessages.setVisibility(VISIBLE);
+                mCardNumMisatges.setText(String.valueOf(chat.getUnreadMessages(mAuth.getCurrentUser().getEmail())));
+
             }
 
             mCardNumMisatges.setText(String.valueOf(chat.getUnreadMessages(mAuth.getCurrentUser().getEmail())));
