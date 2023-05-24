@@ -79,9 +79,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
                     if (document.exists()) {
                         mNicknameText.setText(document.get("nickname").toString());
                         mDescriptionText.setText(document.get("descripcio").toString());
-                        if (document.get("picture_url") != null) {
-                            mPictureText.setText(document.get("picture_url").toString());
-                        }
+                        mPictureText.setText(document.get("picture_url").toString());
                         mUpdateButton.setVisibility(View.VISIBLE);
                     } else {
                         Log.d(TAG, "No such document");

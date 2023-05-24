@@ -12,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class CrearEventActivity extends AppCompatActivity {
     private EditText mStartTime, mDateText, mHourText;
 
     private Button mUpdateButton;
+    private ImageView mExitButton;
 
     private Button mSetGameButton;
 
@@ -86,7 +88,7 @@ public class CrearEventActivity extends AppCompatActivity {
         mGameNameSpinner = findViewById(R.id.game_name_spinner);
         ArrayAdapter<String> adapterGameNames = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, listGames);
         mGameNameSpinner.setAdapter(adapterGameNames);
-
+        mExitButton = findViewById(R.id.event_exit_btn);
         mGameRankSpinner = findViewById(R.id.game_rank_spinner);
         mGameRankSpinner.setAdapter(getGameAdapter());
 
@@ -128,6 +130,13 @@ public class CrearEventActivity extends AppCompatActivity {
                 }catch (ParseException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        mExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CrearEventActivity.this, HomeEventsActivity.class);
+                startActivity(intent);
             }
         });
     }
