@@ -16,9 +16,9 @@ import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.Message;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.viewmodel.ActiveData;
-import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
+import edu.ub.pis.firebaseexamplepis.viewmodel.GrupActivityViewModel;
 
-public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAdapter.ViewHolder> {
+public class GrupInsideCardAdapter extends RecyclerView.Adapter<GrupInsideCardAdapter.ViewHolder> {
 
     /** Definició de listener (interficie)
      *  per a quan algú vulgui escoltar un event de OnClickHide, és a dir,
@@ -27,7 +27,7 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
     public interface OnClickHideListener {
         void OnClickHide(int position);
     }
-    private ChatActivityViewModel mChatActivityViewModel; //nuestro viewModel
+    private GrupActivityViewModel mGrupActivityViewModel; //nuestro viewModel
 
     private ArrayList<Message> messages;
 
@@ -37,9 +37,9 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
     // quan s'amagui
     // Constructor
-    public ChatInsideCardAdapter(ArrayList<Message> messages, ChatActivityViewModel viewModelChat) {
-        mChatActivityViewModel = viewModelChat;
-        currentUser = mChatActivityViewModel.getUserById(mAuth.getCurrentUser().getEmail());
+    public GrupInsideCardAdapter(ArrayList<Message> messages, GrupActivityViewModel viewModelGrup) {
+        mGrupActivityViewModel = viewModelGrup;
+        currentUser = mGrupActivityViewModel.getUserById(mAuth.getCurrentUser().getEmail());
         this.messages = messages;
     }
 
@@ -106,7 +106,7 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
     /**
      * Mètode que repinta la RecyclerView sencera.
      */
-    public void updateChats() {
+    public void updateGrups() {
         notifyDataSetChanged();
     }
 
@@ -114,7 +114,7 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
      * Mètode que repinta només posició indicada
      * @param position
      */
-    public void hideChat(int position) {
+    public void hideGrup(int position) {
         notifyItemRemoved(position);
     }
 

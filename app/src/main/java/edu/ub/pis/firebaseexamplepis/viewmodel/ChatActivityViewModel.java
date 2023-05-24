@@ -91,7 +91,7 @@ public class ChatActivityViewModel extends AndroidViewModel
 
     private ArrayList<Chat> ordenarChatsPerData(ArrayList<Chat> chats) {
         Collections.sort(chats, new Comparator<Chat>() {
-            public int compare(Chat e1, Chat e2) {
+            public int compare(Chat e2, Chat e1) {
                 return e1.getLastMessage().getTime().compareTo(e2.getLastMessage().getTime());
             }
         });

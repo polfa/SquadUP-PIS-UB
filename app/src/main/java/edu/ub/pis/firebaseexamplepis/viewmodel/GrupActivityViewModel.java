@@ -19,7 +19,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
+import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.Grup;
 import edu.ub.pis.firebaseexamplepis.model.GrupRepository;
 import edu.ub.pis.firebaseexamplepis.model.User;
@@ -62,7 +65,7 @@ public class GrupActivityViewModel extends AndroidViewModel
         mGrupRepository.addOnLoadGrupsListener(new GrupRepository.OnLoadGrupsListener() {
             @Override
             public void onLoadGrups(ArrayList<Grup> grups) {
-                // grups = ordenarGrupsPerData(grups);
+                grups = ordenarGrupsPerData(grups);
                 GrupActivityViewModel.this.setGrups(grups);
             }
         });
@@ -164,6 +167,13 @@ public class GrupActivityViewModel extends AndroidViewModel
         });
     }
 
+    public User getUserById(String id){
+        return userRepository.getUserById(id);
+    }
+    public void updateGrup(Grup grup) {
+        mGrupRepository.updateGrup(grup.getId(), grup.getGroupName(), grup.getUsers(),grup.getMessages(), grup.getImageURL(), grup.getDescription());
+    }
+
     /* Mètode que crida a carregar dades dels usuaris */
     public void loadGrupsFromRepository(String userID) {
         mGrupRepository.loadUserGrups(mGrup.getValue(), userID);
@@ -184,14 +194,13 @@ public class GrupActivityViewModel extends AndroidViewModel
         mGrup.getValue().remove(position);
     }
 
-    /*
-    private ArrayList<Grup> ordenarGrupsPerData(ArrayList<Grup> grupList){
+    private ArrayList<Grup> ordenarGrupsPerData(ArrayList<Grup> grupList) {
         Collections.sort(grupList, new Comparator<Grup>() {
-            public int compare(Grup c1, Grup c2) {
-                return c1.getStartTime().compareTo(c2.getStartTime());
+            public int compare(Grup g2, Grup g1) {
+                return g1.getLastMessage().getTime().compareTo(g2.getLastMessage().getTime());
             }
         });
 
         return grupList;
-    }*/
+    }
 }

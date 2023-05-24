@@ -26,7 +26,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
+import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.Grup;
+import edu.ub.pis.firebaseexamplepis.viewmodel.ActiveData;
 import edu.ub.pis.firebaseexamplepis.viewmodel.GrupActivityViewModel;
 
 public class GrupActivity extends AppCompatActivity {
@@ -150,6 +152,18 @@ public class GrupActivity extends AppCompatActivity {
             }
         });*/
         mGrupCardRv.setAdapter(mGrupCardRVAdapter); // Associa l'adapter amb la ReciclerView
+
+        mGrupCardRVAdapter.setOnClickEnterListener(new GrupCardAdapter.OnClickEnterListener() {
+            // Listener que escoltarà quan interactuem amb un item en una posició donada
+            // dins de la recicler view. En aquest cas, quan es faci clic al botó d'amagar
+            // l'usuari.
+            @Override
+            public void OnClickEnter(int position, Grup grup) {
+                ActiveData.getInstance().setCurrentGrup(grup);
+                Intent intent = new Intent(GrupActivity.this, GrupInsideActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Observer a HomeActivity per veure si la llista de Grup (observable MutableLiveData)
         // a HomeActivityViewModel ha canviat.

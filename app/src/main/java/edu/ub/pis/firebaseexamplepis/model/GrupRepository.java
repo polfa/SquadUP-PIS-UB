@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -28,6 +29,7 @@ public class GrupRepository {
     private FirebaseFirestore mDb;
 
     private ArrayList<Grup> grupList = new ArrayList<>();
+
 
     /** Definició de listener (interficie),
      *  per escoltar quan s'hagin acabat de llegir els usuaris de la BBDD */
@@ -112,9 +114,12 @@ public class GrupRepository {
                                     messages.add(message);
                                 }
                                 Grup grup = new Grup(
-                                        document.getString("idUser1"),
-                                        document.getString("idUser2"),
-                                        messages
+                                        document.getId(),
+                                        document.getString("grupName"),
+                                        (ArrayList<String>) document.get("users"),
+                                        messages,
+                                        document.getString("imageURL"),
+                                        document.getString("description")
                                 );
                                 if (userID.equals(document.getString("idUser1") )|| userID.equals(document.getString("idUser1"))){
                                     grups.add(grup);
@@ -199,6 +204,31 @@ public class GrupRepository {
             arrayMap.add(aux);
         }
         return arrayMap;
+    }
+
+    public void updateGrup(String id, String groupName, ArrayList<String> users, ArrayList<Message> messages, String imageURL, String description)
+        {
+
+            DocumentReference chatRef = mDb.collection("grups").document(id);
+
+            // Obtenir informació personal de l'usuari
+            Map<String, Object> newGrup = new HashMap<>();
+            newGrup.put("grupName", groupName);
+            newGrup.put("users", users);
+            newGrup.put("messages", objectToMapArray(messages));
+            newGrup.put("imageURL", imageURL);
+            newGrup.put("description", description);
+
+            chatRef.set(newGrup).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Chat update completed successfully");
+                    } else {
+                        Log.d(TAG, "Chat update failed");
+                    }
+                }
+            });
     }
 
     public void setPictureUrlOfUser(String userId, String pictureUrl) {

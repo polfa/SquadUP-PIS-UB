@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import edu.ub.pis.firebaseexamplepis.R;
+import edu.ub.pis.firebaseexamplepis.model.Chat;
 import edu.ub.pis.firebaseexamplepis.model.Grup;
 import edu.ub.pis.firebaseexamplepis.model.User;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
@@ -27,16 +29,16 @@ public class GrupCardAdapter extends RecyclerView.Adapter<GrupCardAdapter.ViewHo
      *  per a quan algú vulgui escoltar un event de OnClickHide, és a dir,
      *  quan l'usuari faci clic en la creu (amagar) algún dels items de la RecyclerView
      */
-    public interface OnClickHideListener {
-        void OnClickHide(int position);
+    public interface OnClickEnterListener {
+        void OnClickEnter(int position, Grup grup);
     }
-    private GrupActivityViewModel mGrupActivityViewModel; //nuestro viewModel
+    private static GrupActivityViewModel mGrupActivityViewModel; //nuestro viewModel
 
     private ArrayList<Grup> mGrups;
 
     private FirebaseAuth mAuth;
     private User currentUser;
-    private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
+    private OnClickEnterListener mOnClickEnterListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
     public GrupCardAdapter(ArrayList<Grup> grupList, GrupActivityViewModel viewModelGrup) {
@@ -47,20 +49,8 @@ public class GrupCardAdapter extends RecyclerView.Adapter<GrupCardAdapter.ViewHo
     }
 
 
-    public ArrayList<Grup> getCuerrentUserGrups(ArrayList<Grup> grupList){
-        ArrayList<Grup> aux = new ArrayList<>();
-        for (Grup c: grupList){
-            System.out.println("------------------------");
-            if(c.userInGrup(currentUser)){
-                System.out.println(c.getUser1().getID() + c.getUser2().getID() + currentUser.getID());
-                aux.add(c);
-            }
-        }
-        return aux;
-    }
-
-    public void setOnClickHideListener(OnClickHideListener listener) {
-        this.mOnClickHideListener = listener;
+    public void setOnClickEnterListener(OnClickEnterListener listener) {
+        this.mOnClickEnterListener = listener;
     }
 
     @NonNull
@@ -81,9 +71,7 @@ public class GrupCardAdapter extends RecyclerView.Adapter<GrupCardAdapter.ViewHo
         // El ViewHolder té el mètode que s'encarrega de llegir els atributs del Event (1r parametre),
         // i assignar-los a les variables del ViewHolder.
         // Qualsevol listener que volguem posar a un item, ha d'entrar com a paràmetre extra (2n).
-        if (mGrups.get(position).userInGrup(currentUser)) {
-            holder.bind(mGrups.get(position), this.mOnClickHideListener);
-        }
+        holder.bind(mGrups.get(position), this.mOnClickEnterListener);
     }
 
     @Override
@@ -136,48 +124,41 @@ public class GrupCardAdapter extends RecyclerView.Adapter<GrupCardAdapter.ViewHo
         private final ImageView mCardPictureUrl;
         private final TextView mCardFullName;
         private final TextView mCardGrup;
-        private final TextView mCardTime;
 
-        private final TextView mCardNumMisatges;
+        private final ConstraintLayout mGrupBtn;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mCardPictureUrl = itemView.findViewById(R.id.avatar);
             mCardFullName = itemView.findViewById(R.id.fullname);
             mCardGrup = itemView.findViewById(R.id.chat);
-            mCardTime = itemView.findViewById(R.id.time_event3);
-            mCardNumMisatges =  itemView.findViewById(R.id.num_missatges);
+            mGrupBtn = itemView.findViewById(R.id.grupBtn);
         }
 
-        public void bind(final Grup grup, OnClickHideListener listener) {
+        public void bind(final Grup grup, OnClickEnterListener listener) {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             Date date = new Date();
             UserRepository userRepository = UserRepository.getInstance();
             User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
-            User grupUser = grup.getUser(currentUser);
-            mCardFullName.setText(grupUser.getNickname());
+            mCardFullName.setText(grup.getGroupName());
             mCardGrup.setText(grup.getLastMessage().getText());
-
-            String day;
-            String hour = String.valueOf(Integer.parseInt(grup.getLastMessage().getTime().toString().substring(11, 13)) + 2);
-            hour = hour + grup.getLastMessage().getTime().toString().substring(13, 16);
-            if (grup.getLastMessage().getTime().toString().substring(0, 3).equals(date.toString().substring(0, 3))) {
-                day = "Today";
-            } else {
-                day = grup.getLastMessage().getTime().toString().substring(0, 3);
-            }
-            mCardNumMisatges.setText(String.valueOf(grup.getMessages().size()));
-            mCardTime.setText(day + " " + hour);
             // Carrega foto de l'usuari de la llista directament des d'una Url
             // d'Internet.
-            Picasso.get().load(grupUser.getURL()).into(mCardPictureUrl);
+            Picasso.get().load(grup.getImageURL()).into(mCardPictureUrl);
             //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
             //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
             // Seteja el listener onClick del botó d'amagar (hide), que alhora
             // cridi el mètode OnClickHide que implementen els nostres propis
             // listeners de tipus OnClickHideListener.
 
+            mGrupBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.OnClickEnter(getAdapterPosition(),grup);
+                }
+            });
+
         }
     }
-
 }
