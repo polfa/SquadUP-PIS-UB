@@ -25,6 +25,19 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/partnerRank"
+                android:layout_width="131dp"
+                android:layout_height="113dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="30dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/partnerName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
+                app:srcCompat="@drawable/no_picture" />
+
+            <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="241dp"
                 android:layout_height="46dp"

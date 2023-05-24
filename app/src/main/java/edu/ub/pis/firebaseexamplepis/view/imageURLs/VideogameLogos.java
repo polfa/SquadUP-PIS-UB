@@ -55,7 +55,24 @@ public enum VideogameLogos {
             ranks.put("immortal_3", "https://cdn3.emoji.gg/emojis/5979-valorant-immortal-3.png");
             ranks.put("radiant", "https://i.imgur.com/iE0jMGR.png");
         }else if (gameID == "csgo"){
-
+            ranks.put("silver_1", "https://cdn.ligadegamers.com/imagenes/2-silver-1.jpg");
+            ranks.put("silver_2", "https://cdn.ligadegamers.com/imagenes/3-silver-2.jpg");
+            ranks.put("silver_3", "https://cdn.ligadegamers.com/imagenes/4-silver-3.jpg");
+            ranks.put("silver_4", "https://cdn.ligadegamers.com/imagenes/5-silver-4.jpg");
+            ranks.put("silver_elite", "https://cdn.ligadegamers.com/imagenes/6-silver-elite.jpg");
+            ranks.put("silver_elite_master", "https://cdn.ligadegamers.com/imagenes/7-silver-elite-master.jpg");
+            ranks.put("gold_nova_1", "https://cdn.ligadegamers.com/imagenes/8-gold-nova-1.jpg");
+            ranks.put("gold_nova_2", "https://cdn.ligadegamers.com/imagenes/9-gold-nova-2.jpg");
+            ranks.put("gold_nova_3", "https://cdn.ligadegamers.com/imagenes/10-gold-nova-3.jpg");
+            ranks.put("gold_nova_master", "https://cdn.ligadegamers.com/imagenes/11-gold-nova-master-o-gold-nova-4.jpg");
+            ranks.put("master_guardian_1", "https://cdn.ligadegamers.com/imagenes/12-master-guardian-1.jpg");
+            ranks.put("master_guardian_2", "https://cdn.ligadegamers.com/imagenes/13-master-guardian-2.jpg");
+            ranks.put("master_guardian_elite", "https://cdn.ligadegamers.com/imagenes/14-master-guardian-elite.jpg");
+            ranks.put("distinguished_master_guardian", "https://cdn.ligadegamers.com/imagenes/15-distinguished-master-guardian.jpg");
+            ranks.put("legendary_eagle", "https://cdn.ligadegamers.com/imagenes/16-legendary-eagle.jpg");
+            ranks.put("legendary_eagle_master", "https://cdn.ligadegamers.com/imagenes/17-legendary-eagle-master.jpg");
+            ranks.put("supreme_master_first_class", "https://cdn.ligadegamers.com/imagenes/18-supreme-master-first-class.jpg");
+            ranks.put("global_elite", "https://cdn.ligadegamers.com/imagenes/19-the-global-elite.jpg");
         }
     }
 
