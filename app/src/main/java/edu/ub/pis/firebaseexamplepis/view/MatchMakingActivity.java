@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.User;
+import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
 import edu.ub.pis.firebaseexamplepis.viewmodel.HomeActivityViewModel;
 
 public class MatchMakingActivity extends AppCompatActivity {
@@ -52,9 +53,13 @@ public class MatchMakingActivity extends AppCompatActivity {
      * Autenticació de Firebase
      */
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private HomeActivityViewModel mHomeActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mHomeActivityViewModel = new ViewModelProvider(this)
+                .get(HomeActivityViewModel.class);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_making_partner);
         mHomeBtn = findViewById(R.id.home_btn);
@@ -100,6 +105,21 @@ public class MatchMakingActivity extends AppCompatActivity {
         } else { // Si no ho està, ...
             //
             loggedLayout.setVisibility(View.GONE); // No mostris cap element del layout inferior
+        }
+        if (mAuth.getCurrentUser() != null) {
+            final Observer<String> observerPictureUrl = new Observer<String>() {
+                @Override
+                public void onChanged(String pictureUrl) {
+                    Picasso.get()
+                            .load(pictureUrl)
+                            .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
+                            .centerCrop()
+                            .into(mLoggedPictureImageView);
+                }
+            };
+            mHomeActivityViewModel.getPictureUrl().observe(this, observerPictureUrl);
+
+            mHomeActivityViewModel.loadPictureOfUser(mAuth.getCurrentUser().getEmail());
         }
 
         // Anem a buscar la RecyclerView i fem dues coses:
