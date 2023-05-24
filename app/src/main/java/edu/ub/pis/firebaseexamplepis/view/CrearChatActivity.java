@@ -2,8 +2,10 @@ package edu.ub.pis.firebaseexamplepis.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +20,7 @@ public class CrearChatActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private EditText mTxt;
     private Button mCrearChatBtn;
+    private ImageView mExitButton;
 
     private ChatActivityViewModel mChatActivityViewModel;
     @Override
@@ -28,11 +31,18 @@ public class CrearChatActivity extends AppCompatActivity {
                 .get(ChatActivityViewModel.class);
         mTxt = findViewById(R.id.username_txt);
         mCrearChatBtn = findViewById(R.id.create_chat_button);
-
+        mExitButton = findViewById(R.id.crear_chat_exit_btn);
         mCrearChatBtn.setOnClickListener(view ->{
             mChatActivityViewModel.addChat(mAuth.getCurrentUser().getEmail(),mTxt.getText().toString());
             Intent intent = new Intent(CrearChatActivity.this, ChatActivity.class);
             startActivity(intent);
+        });
+        mExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CrearChatActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
         });
     }
 

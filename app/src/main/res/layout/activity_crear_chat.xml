@@ -94,15 +94,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/crear_chat_exit_btn"
+                android:layout_width="66dp"
+                android:layout_height="46dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_delete" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <EditText
             android:id="@+id/username_txt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="58dp"
             android:ems="10"
-            android:hint="username"
+            android:hint="Username"
             android:inputType="text" />
 
         <Button
