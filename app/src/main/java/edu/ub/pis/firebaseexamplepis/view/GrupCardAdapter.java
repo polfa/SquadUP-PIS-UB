@@ -142,7 +142,7 @@ public class GrupCardAdapter extends RecyclerView.Adapter<GrupCardAdapter.ViewHo
             UserRepository userRepository = UserRepository.getInstance();
             User currentUser = userRepository.getUserById(mAuth.getCurrentUser().getEmail());
             mCardFullName.setText(grup.getGroupName());
-            mCardGrup.setText(grup.getLastMessage().getText());
+            mCardGrup.setText(grup.getDescription());
             // Carrega foto de l'usuari de la llista directament des d'una Url
             // d'Internet.
             Picasso.get().load(grup.getImageURL()).into(mCardPictureUrl);

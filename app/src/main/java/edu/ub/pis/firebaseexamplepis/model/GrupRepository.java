@@ -106,9 +106,10 @@ public class GrupRepository {
                                     String text = (String) messageMap.get("text");
                                     Timestamp time = (Timestamp) messageMap.get("date");
                                     boolean read = (boolean) messageMap.get("read");
+                                    String id = (String) messageMap.get("userID");
                                     // Otros atributos del mensaje que necesites obtener
 
-                                    Message message = new Message("",text, time.toDate(), read);
+                                    Message message = new Message(id,text, time.toDate(), read);
                                     // Establece los otros atributos del mensaje si los hay
 
                                     messages.add(message);
@@ -199,9 +200,11 @@ public class GrupRepository {
             String text = m.getText();
             Date date = m.getTime();
             boolean read = m.read();
+            String userID = m.getUserID();
             aux.put("text", text);
             aux.put("date", date);
             aux.put("read", read);
+            aux.put("userID", userID);
             arrayMap.add(aux);
         }
         return arrayMap;
