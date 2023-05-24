@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +37,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
     private EditText mDescriptionText;
     private Spinner mGameRankSpinner;
     private Button mSetGameButton;
+    private ImageView mExtitButton;
     private Spinner mGameNameSpinner;
     private Button mUpdateButton;
 
@@ -48,6 +50,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDb = FirebaseFirestore.getInstance();
 
+        mExtitButton = findViewById(R.id.update_exit_btn);
         mNicknameText = findViewById(R.id.updateNicknameTxt);
         mDescriptionText = (EditText) findViewById(R.id.updateDescriptionTxt);
         mPictureText = findViewById(R.id.updatePhotoTxt);
@@ -94,6 +97,13 @@ public class UpdateInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateCompletion(user.getEmail());
+                Intent intent = new Intent(UpdateInfoActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+        mExtitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent intent = new Intent(UpdateInfoActivity.this, HomeActivity.class);
                 startActivity(intent);
             }

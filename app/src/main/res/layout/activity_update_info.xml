@@ -6,45 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".view.UpdateInfoActivity">
 
-    <EditText
-        android:id="@+id/updatePhotoTxt"
-        android:layout_width="350dp"
-        android:layout_height="40dp"
+    <ImageView
+        android:id="@+id/update_exit_btn"
+        android:layout_width="66dp"
+        android:layout_height="46dp"
         android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Picture_URL"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/updateDescriptionTxt"
-        app:layout_constraintStart_toStartOf="@+id/updateDescriptionTxt"
-        app:layout_constraintTop_toBottomOf="@+id/updateDescriptionTxt"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <EditText
-        android:id="@+id/updateDescriptionTxt"
-        android:layout_width="350dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Description"
-        android:inputType="textPostalAddress"
-        app:layout_constraintEnd_toEndOf="@+id/updateNicknameTxt"
-        app:layout_constraintStart_toStartOf="@+id/updateNicknameTxt"
-        app:layout_constraintTop_toBottomOf="@+id/updateNicknameTxt"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/idPersonalInfoText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_delete" />
 
     <TextView
-        android:id="@+id/textView17"
-        android:layout_width="350dp"
+        android:id="@+id/idPersonalInfoText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/personal_info_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/updateNicknameTxt"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:gravity="center|left"
-        android:text="Favourite Game"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/updatePhotoTxt"
-        app:layout_constraintStart_toStartOf="@+id/updatePhotoTxt"
-        app:layout_constraintTop_toBottomOf="@+id/updatePhotoTxt" />
+        android:ems="10"
+        android:hint="Nickname"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/idPersonalInfoText"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="@+id/idPersonalInfoText"
+        app:layout_constraintTop_toBottomOf="@+id/idPersonalInfoText"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/updateButton"
@@ -56,18 +56,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/update_rank_spinner"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.008" />
 
-    <Spinner
-        android:id="@+id/update_rank_spinner"
+    <EditText
+        android:id="@+id/updatePhotoTxt"
         android:layout_width="350dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="@+id/update_game_button"
+        android:ems="10"
+        android:hint="Picture_URL"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/updateDescriptionTxt"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        app:layout_constraintStart_toStartOf="@+id/updateDescriptionTxt"
+        app:layout_constraintTop_toBottomOf="@+id/updateDescriptionTxt"
         tools:ignore="TouchTargetSizeCheck" />
 
     <Spinner
@@ -80,6 +82,45 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView17"
         app:layout_constraintTop_toBottomOf="@+id/textView17"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/update_game_button"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#686868"
+        android:text="set game"
+        app:layout_constraintEnd_toEndOf="@+id/update_game_spinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/update_game_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/update_game_spinner"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/updateDescriptionTxt"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textPostalAddress"
+        app:layout_constraintEnd_toEndOf="@+id/updateNicknameTxt"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/updateNicknameTxt"
+        app:layout_constraintTop_toBottomOf="@+id/updateNicknameTxt"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Spinner
+        android:id="@+id/update_rank_spinner"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/update_game_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/textView16"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
@@ -97,43 +138,18 @@
         app:layout_constraintStart_toStartOf="@+id/update_game_button"
         app:layout_constraintTop_toBottomOf="@+id/update_game_button" />
 
-    <Button
-        android:id="@+id/update_game_button"
-        android:layout_width="350dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#686868"
-        android:text="set game"
-        app:layout_constraintEnd_toEndOf="@+id/update_game_spinner"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/update_game_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/update_game_spinner"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <EditText
-        android:id="@+id/updateNicknameTxt"
-        android:layout_width="350dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Nickname"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/idPersonalInfoText"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="@+id/idPersonalInfoText"
-        app:layout_constraintTop_toBottomOf="@+id/idPersonalInfoText"
-        tools:ignore="TouchTargetSizeCheck" />
-
     <TextView
-        android:id="@+id/idPersonalInfoText"
-        android:layout_width="0dp"
+        android:id="@+id/textView17"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/personal_info_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="10dp"
+        android:gravity="center|left"
+        android:text="Favourite Game"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/updatePhotoTxt"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/updatePhotoTxt"
+        app:layout_constraintTop_toBottomOf="@+id/updatePhotoTxt" />
 </androidx.constraintlayout.widget.ConstraintLayout>
