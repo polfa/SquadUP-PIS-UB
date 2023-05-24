@@ -36,6 +36,9 @@
             android:name="edu.ub.pis.firebaseexamplepis.view.MatchMakingActivity"
             android:exported="false" />
         <activity
+            android:name="edu.ub.pis.firebaseexamplepis.view.YourProfileActivity"
+            android:exported="false" />
+        <activity
             android:name="edu.ub.pis.firebaseexamplepis.view.CrearChatActivity"
             android:exported="false" />
         <activity

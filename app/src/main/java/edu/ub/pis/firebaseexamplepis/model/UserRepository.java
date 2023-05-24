@@ -272,4 +272,8 @@ public class UserRepository {
                 Log.d(TAG, "Photo upload failed: " + pictureUrl);
             });
     }
+
+    public ArrayList<User> getUserList() {
+        return userList;
+    }
 }

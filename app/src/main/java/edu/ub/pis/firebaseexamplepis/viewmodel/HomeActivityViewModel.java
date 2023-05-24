@@ -151,7 +151,9 @@ public class HomeActivityViewModel extends AndroidViewModel
             }
         });
     }
-
+    public User getUserbyId(String idUser){
+        return mUserRepository.getUserById(idUser);
+    }
     /* Mètode que crida a carregar dades dels usuaris */
     public void loadUsersFromRepository() {
         mUserRepository.loadUsers(mUsers.getValue());
@@ -171,6 +173,8 @@ public class HomeActivityViewModel extends AndroidViewModel
     public void removeUserFromHome(int position) {
         mUsers.getValue().remove(position);
     }
+
 }
+
 
 
