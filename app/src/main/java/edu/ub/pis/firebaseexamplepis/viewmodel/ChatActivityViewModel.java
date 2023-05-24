@@ -228,7 +228,9 @@ public class ChatActivityViewModel extends AndroidViewModel
     }
 
     public void addChat(String idUser1, String idUser2) {
-        mChatRepository.addChat(idUser1, idUser2, new ArrayList<Message>());
+        if (userRepository.getUserById(idUser1) != null && userRepository.getUserById(idUser2) != null) {
+            mChatRepository.addChat(idUser1, idUser2, new ArrayList<Message>());
+        }
     }
 
     public Chat getChat(String user1, String user2) {
