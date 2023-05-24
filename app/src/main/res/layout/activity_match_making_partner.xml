@@ -63,7 +63,7 @@
                 android:id="@+id/findPartnerBtn"
                 android:layout_width="320dp"
                 android:layout_height="54dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="#170028"
                 android:shadowColor="#170028"
                 android:text="Find Partner"
@@ -159,13 +159,25 @@
                 android:id="@+id/partnerImage"
                 android:layout_width="131dp"
                 android:layout_height="113dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="56dp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.76"
+                app:layout_constraintHorizontal_bias="0.753"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/findPartnerBtn"
                 app:srcCompat="@drawable/no_picture" />
+
+            <Button
+                android:id="@+id/create_chat_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Chat"
+                app:layout_constraintBottom_toTopOf="@+id/partnerImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.772"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/findPartnerBtn"
+                app:layout_constraintVertical_bias="0.0" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

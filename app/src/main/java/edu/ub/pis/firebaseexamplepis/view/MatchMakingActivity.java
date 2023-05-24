@@ -62,6 +62,8 @@ public class MatchMakingActivity extends AppCompatActivity {
 
     private ActiveData data= ActiveData.getInstance();
 
+    private Button mCreateChatButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class MatchMakingActivity extends AppCompatActivity {
         mFindPartner = findViewById(R.id.findPartnerBtn);
         mUserPhoto = findViewById(R.id.partnerImage);
         mGameSpinner = findViewById(R.id.game_name_spinner3);
+        mCreateChatButton = findViewById(R.id.create_chat_btn);
         ArrayAdapter<String> adapterGameNames = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, listGames);
         mGameSpinner.setAdapter(adapterGameNames);
         mFoundPartner = findViewById(R.id.textView15);
@@ -88,6 +91,7 @@ public class MatchMakingActivity extends AppCompatActivity {
         mPartnerName.setVisibility(View.GONE);
         mUserPhoto.setVisibility(View.GONE);
         mPartnerRank.setVisibility(View.GONE);
+        mCreateChatButton.setVisibility(View.GONE);
 
         // Elements del ViewGroup inferior (email, botó logout, etc),
         // que només mostrarem si hi ha usuari logat.
@@ -120,7 +124,7 @@ public class MatchMakingActivity extends AppCompatActivity {
             });
 
             mFindPartner.setOnClickListener(view -> {
-                User selectedUser = mHomeActivityViewModel.getUserByGame(mGameSpinner.getSelectedItem().toString(), mAuth.getCurrentUser().getEmail());
+                selectedUser = mHomeActivityViewModel.getUserByGame(mGameSpinner.getSelectedItem().toString(), mAuth.getCurrentUser().getEmail());
                 Picasso.get().load(selectedUser.getURL()).into(mUserPhoto);
                 Picasso.get().load(selectedUser.getRankImage()).into(mPartnerRank);
                 mPartnerName.setText(selectedUser.getNickname());
@@ -129,20 +133,14 @@ public class MatchMakingActivity extends AppCompatActivity {
                 mUserPhoto.setVisibility(View.VISIBLE);
                 mFoundPartner.setVisibility(View.VISIBLE);
                 mPartnerRank.setVisibility(View.VISIBLE);
+                mCreateChatButton.setVisibility(View.VISIBLE);
 
             });
 
-            mUserPhoto.setOnClickListener(view -> {
-                if (selectedUser != null){
+            mCreateChatButton.setOnClickListener(view -> {
+                if (selectedUser != null) {
                     mChatActivityViewModel.addChat(mAuth.getCurrentUser().getEmail(), selectedUser.getID());
-                    data.setCurrentChat(mChatActivityViewModel.getChat(mAuth.getCurrentUser().getEmail(), selectedUser.getID()));
-                    mChatActivityViewModel.loadChatsFromRepository();
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Intent intent = new Intent(MatchMakingActivity.this, ChatInsideActivity.class);
+                    Intent intent = new Intent(MatchMakingActivity.this, ChatActivity.class);
                     startActivity(intent);
                 }
             });

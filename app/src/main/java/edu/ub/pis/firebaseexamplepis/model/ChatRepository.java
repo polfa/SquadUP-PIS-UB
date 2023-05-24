@@ -234,19 +234,29 @@ public class ChatRepository {
         newChat.put("idUser2", user2_ID);
         newChat.put("messages", objectToMapArray(messages));
 
-
-        // Afegir-la a la base de dades
-        mDb.collection("chats").document().set(newChat)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "Sign up completion succeeded");
-                        } else {
-                            Log.d(TAG, "Sign up completion failed");
+        if (!usersInChatList(user1_ID,user2_ID)) {
+            // Afegir-la a la base de dades
+            mDb.collection("chats").document(user1_ID + user2_ID).set(newChat)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Sign up completion succeeded");
+                            } else {
+                                Log.d(TAG, "Sign up completion failed");
+                            }
                         }
-                    }
-                });
+                    });
+        }
+    }
+
+    private boolean usersInChatList(String user1_id, String user2_id) {
+        for (Chat c: chatList){
+            if (c.usersInChat(user1_id,user2_id)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void updateChat(
