@@ -37,8 +37,10 @@ public class Message {
         this.time = time;
     }
 
-    public void setRead(){
-        this.read = true;
+    public void setRead(String userReading){
+        if (!userReading.equals(userID)) {
+            this.read = true;
+        }
     }
 
     public boolean read(){

@@ -81,6 +81,16 @@ public class Chat {
     public boolean userInChat(User user){
         return user == user1 || user == user2;
     }
+
+    public int getUnreadMessages(String currentUser){
+        int count = 0;
+        for (Message m: messages){
+            if (!m.read() && !m.getUserID().equals(currentUser)){
+                count += 1;
+            }
+        }
+        return count;
+    }
 }
 
 

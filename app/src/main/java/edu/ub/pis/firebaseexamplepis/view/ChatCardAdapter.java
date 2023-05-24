@@ -162,7 +162,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
                 day = chat.getLastMessage().getTime().toString().substring(0, 3);
             }
 
-            mCardNumMisatges.setText(String.valueOf(chat.getMessages().size()));
+            mCardNumMisatges.setText(String.valueOf(chat.getUnreadMessages(mAuth.getCurrentUser().getEmail())));
 
             mCardTime.setText(day + " " + hour);
             // Carrega foto de l'usuari de la llista directament des d'una Url
