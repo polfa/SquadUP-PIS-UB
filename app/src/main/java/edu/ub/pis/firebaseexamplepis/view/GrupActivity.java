@@ -118,6 +118,10 @@ public class GrupActivity extends AppCompatActivity {
                 Intent intent = new Intent(GrupActivity.this, MatchMakingActivity.class);
                 startActivity(intent);
             });
+            mLoggedPictureImageView.setOnClickListener(view -> {
+                Intent intent = new Intent(GrupActivity.this, YourProfileActivity.class);
+                startActivity(intent);
+            });
 
             /*mNewGrupButton.setOnClickListener(view -> {
                 Intent intent = new Intent(GrupActivity.this, CrearGrupActivity.class);

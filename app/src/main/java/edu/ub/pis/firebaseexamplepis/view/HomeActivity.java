@@ -111,6 +111,10 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, GrupActivity.class);
                 startActivity(intent);
             });
+            mLoggedPictureImageView.setOnClickListener(view -> {
+                Intent intent = new Intent(HomeActivity.this, YourProfileActivity.class);
+                startActivity(intent);
+            });
 
         }else { // Si no ho està, ...
             //

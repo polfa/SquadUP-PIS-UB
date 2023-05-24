@@ -137,6 +137,10 @@ public class HomeEventsActivity extends AppCompatActivity {
         mEventCardRVAdapter = new EventCardAdapter(
                 mHomeEventsActivityViewModel.getEvents().getValue(), mHomeEventsActivityViewModel // Passem-li referencia llista usuaris
         );
+        mLoggedPictureImageView.setOnClickListener(view -> {
+            Intent intent = new Intent(HomeEventsActivity.this, YourProfileActivity.class);
+            startActivity(intent);
+        });
         mEventCardRVAdapter.setOnClickJoinListener(new EventCardAdapter.OnClickJoinListener() {
             // Listener que escoltarà quan interactuem amb un item en una posició donada
             // dins de la recicler view. En aquest cas, quan es faci clic al botó d'amagar

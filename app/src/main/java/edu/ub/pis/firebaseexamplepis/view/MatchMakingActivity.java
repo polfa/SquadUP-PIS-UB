@@ -101,6 +101,10 @@ public class MatchMakingActivity extends AppCompatActivity {
                 Intent intent = new Intent(MatchMakingActivity.this, ChatActivity.class);
                 startActivity(intent);
             });
+            mLoggedPictureImageView.setOnClickListener(view -> {
+                Intent intent = new Intent(MatchMakingActivity.this, YourProfileActivity.class);
+                startActivity(intent);
+            });
 
         } else { // Si no ho està, ...
             //
