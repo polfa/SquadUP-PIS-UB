@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.HomeActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#C0C0c0"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/loggedLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="241dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo_letras" />
+
+            <ImageView
+                android:id="@+id/imageView15"
+                android:layout_width="57dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="36dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.568"
+                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo_sin_nombre" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="320dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="36dp"
+                android:backgroundTint="#170028"
+                android:shadowColor="#170028"
+                android:text="Find Partner"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#170028"
+                android:textSize="18sp"
+                app:iconTint="#170028"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordText"
+                app:rippleColor="#170028"
+                app:strokeColor="#170028" />
+
+            <EditText
+                android:id="@+id/emailText"
+                android:layout_width="360dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:autofillHints=""
+                android:elegantTextHeight="false"
+                android:ems="10"
+                android:hint="Write Game Name"
+                android:inputType="textEmailAddress"
+                android:singleLine="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.454"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/numberText" />
+
+            <EditText
+                android:id="@+id/passwordText"
+                android:layout_width="360dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:autofillHints=""
+                android:elegantTextHeight="false"
+                android:ems="10"
+                android:hint="Approximate playing time(In hours)"
+                android:inputType="textEmailAddress"
+                android:singleLine="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.454"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailText" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="131dp"
+                android:layout_height="113dp"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/no_picture"
+                tools:layout_editor_absoluteX="124dp"
+                tools:layout_editor_absoluteY="491dp" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="100dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:text="PartnerName"
+                android:textColor="#170028"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.456"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView7"
+                tools:ignore="TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="250dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Matchmaking Team"
+                android:textColor="#170028"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                tools:ignore="TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="180dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="28dp"
+                android:text="Found Partner"
+                android:textColor="#170028"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.194"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button2"
+                tools:ignore="TextSizeCheck" />
+
+            <EditText
+                android:id="@+id/numberText"
+                android:layout_width="360dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="20dp"
+                android:autofillHints=""
+                android:elegantTextHeight="false"
+                android:ems="10"
+                android:hint="Write Number of Team Members"
+                android:inputType="textEmailAddress"
+                android:singleLine="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.454"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loggedLayout"
+        android:layout_width="418dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="0dp"
+        android:background="#CECECE"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/modifyPersonalInfoButton"
+                android:layout_width="34dp"
+                android:layout_height="31dp"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/settings_icon" />
+
+            <ImageView
+                android:id="@+id/loggedPictureImageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/no_picture"
+                android:contentDescription="@string/logged_picture_desc"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_launcher_foreground"
+                tools:ignore="ExtraText" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="39dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/loggedPictureImageView"
+                app:layout_constraintHorizontal_bias="0.408"
+                app:layout_constraintStart_toEndOf="@+id/home_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/matchmaking_icon" />
+
+            <ImageView
+                android:id="@+id/home_btn"
+                android:layout_width="40dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="32dp"
+                android:rotationX="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.416"
+                app:srcCompat="@drawable/home_negro" />
+
+            <ImageView
+                android:id="@+id/messages_btn"
+                android:layout_width="35dp"
+                android:layout_height="29dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/modifyPersonalInfoButton"
+                app:layout_constraintHorizontal_bias="0.56"
+                app:layout_constraintStart_toEndOf="@+id/loggedPictureImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/mensaje_lila" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

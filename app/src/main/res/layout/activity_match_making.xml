@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.HomeActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#C0C0c0"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/loggedLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="241dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo_letras" />
+
+            <ImageView
+                android:id="@+id/imageView15"
+                android:layout_width="57dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="36dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.568"
+                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo_sin_nombre" />
+
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="320dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="92dp"
+                android:backgroundTint="#170028"
+                android:shadowColor="#170028"
+                android:text="Find Partner"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#170028"
+                android:textSize="18sp"
+                app:iconTint="#170028"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.428"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView13"
+                app:rippleColor="#170028"
+                app:strokeColor="#170028" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="320dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="#170028"
+                android:shadowColor="#170028"
+                android:text="Find  Team"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#170028"
+                android:textSize="18sp"
+                app:iconTint="#170028"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button4"
+                app:rippleColor="#170028"
+                app:strokeColor="#170028"  />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="150dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Matchmaking"
+                android:textColor="#170028"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                tools:ignore="TextSizeCheck" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loggedLayout"
+        android:layout_width="418dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="0dp"
+        android:background="#CECECE"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/modifyPersonalInfoButton"
+                android:layout_width="34dp"
+                android:layout_height="31dp"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/settings_icon" />
+
+            <ImageView
+                android:id="@+id/loggedPictureImageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/no_picture"
+                android:contentDescription="@string/logged_picture_desc"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_launcher_foreground"
+                tools:ignore="ExtraText" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="39dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/loggedPictureImageView"
+                app:layout_constraintHorizontal_bias="0.408"
+                app:layout_constraintStart_toEndOf="@+id/home_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/matchmaking_icon" />
+
+            <ImageView
+                android:id="@+id/home_btn"
+                android:layout_width="40dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="32dp"
+                android:rotationX="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.416"
+                app:srcCompat="@drawable/home_negro" />
+
+            <ImageView
+                android:id="@+id/messages_btn"
+                android:layout_width="35dp"
+                android:layout_height="29dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/modifyPersonalInfoButton"
+                app:layout_constraintHorizontal_bias="0.56"
+                app:layout_constraintStart_toEndOf="@+id/loggedPictureImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/mensaje_lila" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
