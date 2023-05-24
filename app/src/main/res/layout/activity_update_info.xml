@@ -7,41 +7,44 @@
     tools:context=".view.UpdateInfoActivity">
 
     <EditText
-        android:id="@+id/updateFirstNameText"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:id="@+id/updatePhotoTxt"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="First name"
+        android:hint="Picture_URL"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/idPersonalInfoText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/idPersonalInfoText"
-        app:layout_constraintTop_toBottomOf="@+id/idPersonalInfoText" />
+        app:layout_constraintEnd_toEndOf="@+id/updateDescriptionTxt"
+        app:layout_constraintStart_toStartOf="@+id/updateDescriptionTxt"
+        app:layout_constraintTop_toBottomOf="@+id/updateDescriptionTxt"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/updateLastNameText"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:id="@+id/updateDescriptionTxt"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="Last name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/updateFirstNameText"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/updateFirstNameText"
-        app:layout_constraintTop_toBottomOf="@+id/updateFirstNameText" />
-
-    <EditText
-        android:id="@+id/updateHobbiesText"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:ems="10"
-        android:hint="Address, City, ZIP code"
+        android:hint="Description"
         android:inputType="textPostalAddress"
-        app:layout_constraintEnd_toEndOf="@+id/updateLastNameText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/updateLastNameText"
-        app:layout_constraintTop_toBottomOf="@+id/updateLastNameText" />
+        app:layout_constraintEnd_toEndOf="@+id/updateNicknameTxt"
+        app:layout_constraintStart_toStartOf="@+id/updateNicknameTxt"
+        app:layout_constraintTop_toBottomOf="@+id/updateNicknameTxt"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center|left"
+        android:text="Favourite Game"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/updatePhotoTxt"
+        app:layout_constraintStart_toStartOf="@+id/updatePhotoTxt"
+        app:layout_constraintTop_toBottomOf="@+id/updatePhotoTxt" />
 
     <Button
         android:id="@+id/updateButton"
@@ -49,20 +52,88 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/update_button"
-        app:layout_constraintEnd_toEndOf="@+id/updateHobbiesText"
-        app:layout_constraintStart_toStartOf="@+id/updateHobbiesText"
-        app:layout_constraintTop_toBottomOf="@+id/updateHobbiesText" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_rank_spinner"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Spinner
+        android:id="@+id/update_rank_spinner"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/update_game_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Spinner
+        android:id="@+id/update_game_spinner"
+        android:layout_width="350dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/textView17"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center|left"
+        android:text=" Game rank"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/update_game_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/update_game_button"
+        app:layout_constraintTop_toBottomOf="@+id/update_game_button" />
+
+    <Button
+        android:id="@+id/update_game_button"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#686868"
+        android:text="set game"
+        app:layout_constraintEnd_toEndOf="@+id/update_game_spinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/update_game_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/update_game_spinner"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/updateNicknameTxt"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Nickname"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/idPersonalInfoText"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="@+id/idPersonalInfoText"
+        app:layout_constraintTop_toBottomOf="@+id/idPersonalInfoText"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/idPersonalInfoText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="20dp"
         android:text="@string/personal_info_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

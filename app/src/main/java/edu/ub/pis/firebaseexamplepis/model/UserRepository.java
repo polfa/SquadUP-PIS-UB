@@ -171,9 +171,10 @@ public class UserRepository {
      * Mètode que afegeix un nou usuari a la base de dades. Utilitzat per la funció
      * de Sign-Up (registre) de la SignUpActivity.
      * @param email
-     * @param firstName
-     * @param secondName
-     * @param hobbies
+     * @param Nickname
+     * @param descripcio
+     * @param gameImageId
+     * @param rankImageId
      */
     public void addUser(
         String email,

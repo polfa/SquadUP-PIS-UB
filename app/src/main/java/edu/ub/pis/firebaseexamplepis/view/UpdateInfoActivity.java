@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,17 +24,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.ub.pis.firebaseexamplepis.R;
+import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
 
 public class UpdateInfoActivity extends AppCompatActivity {
     private static final String TAG = "UpdatePersonalInfoActivity";
-
+    private String[] listGames = {"Rocket_League", "Valorant", "CSGO"};
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDb;
-
-    private EditText mFirstNameText;
-    private EditText mLastNameText;
-    private EditText mHobbiesText;
-
+    private EditText mPictureText;
+    private EditText mNicknameText;
+    private EditText mDescriptionText;
+    private Spinner mGameRankSpinner;
+    private Button mSetGameButton;
+    private Spinner mGameNameSpinner;
     private Button mUpdateButton;
 
     @Override
@@ -44,11 +48,22 @@ public class UpdateInfoActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDb = FirebaseFirestore.getInstance();
 
-        mFirstNameText = (EditText) findViewById(R.id.updateFirstNameText);
-        mLastNameText = (EditText) findViewById(R.id.updateLastNameText);
-        mHobbiesText = (EditText) findViewById(R.id.updateHobbiesText);
+        mNicknameText = findViewById(R.id.updateNicknameTxt);
+        mDescriptionText = (EditText) findViewById(R.id.updateDescriptionTxt);
+        mPictureText = findViewById(R.id.updatePhotoTxt);
         mUpdateButton = (Button) findViewById(R.id.updateButton);
-
+        mGameNameSpinner = findViewById(R.id.update_game_spinner);
+        ArrayAdapter<String> adapterGameNames = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, listGames);
+        mGameNameSpinner.setAdapter(adapterGameNames);
+        mGameRankSpinner = findViewById(R.id.update_rank_spinner);
+        mGameRankSpinner.setAdapter(getGameAdapter());
+        mSetGameButton = findViewById(R.id.update_game_button);
+        mSetGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mGameRankSpinner.setAdapter(getGameAdapter());
+            }
+        });
         mUpdateButton.setVisibility(View.INVISIBLE);
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -59,11 +74,9 @@ public class UpdateInfoActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        mFirstNameText.setText(document.get("first").toString());
-                        mLastNameText.setText(document.get("last").toString());
-                        mFirstNameText.setEnabled(false);
-                        mLastNameText.setEnabled(false);
-                        mHobbiesText.setText(document.get("hobbies").toString());
+                        mNicknameText.setText(document.get("nickname").toString());
+                        mDescriptionText.setText(document.get("descripcio").toString());
+                        mPictureText.setText(document.get("picture_url").toString());
                         mUpdateButton.setVisibility(View.VISIBLE);
                     } else {
                         Log.d(TAG, "No such document");
@@ -85,10 +98,29 @@ public class UpdateInfoActivity extends AppCompatActivity {
         });
     }
 
+    private ArrayAdapter<String> getGameAdapter() {
+        for (String s: listGames){
+            if (mGameNameSpinner.getSelectedItem().toString().equalsIgnoreCase(s)) {
+                ArrayAdapter<String> adapterGameRanks = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, VideogameLogos.valueOf(s.toUpperCase()).getRankNames());
+                return adapterGameRanks;
+            }
+        }
+        return null;
+    }
+
     protected void updateCompletion(String email) {
         // Obtenir informació personal de l'usuari
         Map<String, Object> signedUpUser = new HashMap<>();
-        signedUpUser.put("hobbies", mHobbiesText.getText().toString());
+        if(!mDescriptionText.getText().toString().isEmpty()){
+            signedUpUser.put("descripcio", mDescriptionText.getText().toString());
+        }
+        if(!mNicknameText.getText().toString().isEmpty()){
+            signedUpUser.put("nickname", mNicknameText.getText().toString());
+        }
+        signedUpUser.put("picture_url",mPictureText.getText().toString());
+        signedUpUser.put("gameImageId",mGameNameSpinner.getSelectedItem().toString().toUpperCase());
+        signedUpUser.put("rankImageId",mGameRankSpinner.getSelectedItem().toString().toLowerCase());
+
 
         // Actualitzar-la a la base de dades
         mDb.collection("users").document(email).update(signedUpUser);
