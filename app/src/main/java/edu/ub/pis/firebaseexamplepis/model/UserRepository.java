@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -17,6 +16,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import edu.ub.pis.firebaseexamplepis.viewmodel.HomeActivityViewModel;
 
@@ -58,6 +58,7 @@ public class UserRepository {
     private UserRepository() {
         mDb = FirebaseFirestore.getInstance();
     }
+
 
     /**
      * Retorna aqusta instancia singleton
@@ -156,7 +157,6 @@ public class UserRepository {
                                 }
 
                             }
-                            userList = users;
                             /* Callback listeners */
                             for (OnLoadUsersListener l: mOnLoadUsersListeners) {
                                 l.onLoadUsers(users);
@@ -184,6 +184,20 @@ public class UserRepository {
             }
         }
         return null;
+    }
+
+    public User getUserByGame(String gameName, String currentUserID) {
+        ArrayList<User> selectedUsers = new ArrayList<>();
+        for (User user: userList){
+            if (user.getGameImageId().equals(gameName.toUpperCase()) && !user.getID().equals(currentUserID)){
+                selectedUsers.add(user);
+            }
+        }
+        Random random = new Random();
+        int size = selectedUsers.size();
+        int randomIndex = random.nextInt(size);
+        User randomUser = selectedUsers.get(randomIndex);
+        return randomUser;
     }
 
     /**

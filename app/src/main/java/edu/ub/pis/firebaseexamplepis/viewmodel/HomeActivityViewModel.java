@@ -174,6 +174,9 @@ public class HomeActivityViewModel extends AndroidViewModel
         mUsers.getValue().remove(position);
     }
 
+    public User getUserByGame(String gameName, String currentUser) {
+        return mUserRepository.getUserByGame(gameName, currentUser);
+    }
 }
 
 

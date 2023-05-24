@@ -106,6 +106,16 @@ public class MatchMakingActivity extends AppCompatActivity {
                 startActivity(intent);
             });
 
+            mFindPartner.setOnClickListener(view -> {
+                User selectedUser = mHomeActivityViewModel.getUserByGame(mGameSpinner.getSelectedItem().toString(), mAuth.getCurrentUser().getEmail());
+                mFoundPartner.setVisibility(View.VISIBLE);
+                mPartnerName.setText(selectedUser.getNickname());
+                mPartnerName.setVisibility(View.VISIBLE);
+                Picasso.get().load(selectedUser.getURL()).into(mUserPhoto);
+                mUserPhoto.setVisibility(View.VISIBLE);
+
+            });
+
         } else { // Si no ho està, ...
             //
             loggedLayout.setVisibility(View.GONE); // No mostris cap element del layout inferior
