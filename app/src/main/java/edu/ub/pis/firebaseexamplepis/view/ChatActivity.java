@@ -32,9 +32,7 @@ import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
 public class ChatActivity extends AppCompatActivity {
     private final String TAG = "ChatActivity";
 
-    /**
-     * ViewModel del HomeActivity
-     */
+    /** ViewModel del HomeActivity */
     private ChatActivityViewModel mChatActivityViewModel; //nuestro viewModel
 
     /* Elements de la vista de la HomeActivity */
@@ -51,19 +49,13 @@ public class ChatActivity extends AppCompatActivity {
     private Button mNewChatBtn;
 
 
-    /**
-     * Adapter de la RecyclerView
-     */
+    /** Adapter de la RecyclerView */
     private ChatCardAdapter mChatCardRVAdapter;
 
-    /**
-     * Autenticació de Firebase
-     */
+    /** Autenticació de Firebase */
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    /**
-     * Foto de perfil de l'usuari
-     */
+    /** Foto de perfil de l'usuari */
     private Uri mPhotoUri;
 
     @Override
@@ -126,7 +118,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
         mChatCardRVAdapter = new ChatCardAdapter(
-                mChatActivityViewModel.getChats().getValue(), mChatActivityViewModel // Passem-li referencia llista usuaris
+                mChatActivityViewModel.getChats().getValue(),mChatActivityViewModel // Passem-li referencia llista usuaris
         );
         mChatCardsRV.setAdapter(mChatCardRVAdapter); // Associa l'adapter amb la ReciclerView
         mChatCardRVAdapter.setOnClickEnterListener(new ChatCardAdapter.OnClickEnterListener() {
@@ -134,7 +126,7 @@ public class ChatActivity extends AppCompatActivity {
             // dins de la recicler view. En aquest cas, quan es faci clic al botó d'amagar
             // l'usuari.
             @Override
-            public void OnClickEnter(int position, Chat chat) {
+            public void OnClickEnter(int position,Chat chat) {
                 ActiveData.getInstance().setCurrentChat(chat);
                 Intent intent = new Intent(ChatActivity.this, ChatInsideActivity.class);
                 startActivity(intent);
@@ -154,5 +146,66 @@ public class ChatActivity extends AppCompatActivity {
 
         // A partir d'aquí, en cas que es faci cap canvi a la llista d'usuaris, HomeActivity ho sabrá
         mChatActivityViewModel.loadChatsFromRepository(mAuth.getCurrentUser().getEmail());  // Internament pobla els usuaris de la BBDD
+
+        // Si hi ha usuari logat i seteja una foto de perfil, mostra-la.
+        if (mAuth.getCurrentUser() != null) {
+            final Observer<String> observerPictureUrl = new Observer<String>() {
+                @Override
+                public void onChanged(String pictureUrl) {
+                    Picasso.get()
+                            .load(pictureUrl)
+                            .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
+                            .centerCrop()
+                            .into(mLoggedPictureImageView);
+                }
+            };
+            mChatActivityViewModel.getPictureUrl().observe(this, observerPictureUrl);
+
+            mChatActivityViewModel.loadPictureOfUser(mAuth.getCurrentUser().getEmail());
+        }
+    }
+
+    /**
+     * Bloc que seteja un listener al botó de fer foto i que la posarà com a imatge de perfil.
+     * Això inclou:
+     * 1. Preparar un launcher per llençar l'intent implicit que fa una captura des de la càmera.
+     * 2. Crear el listener del botó, que prepararà un lloc on guardar temporalment la foto i
+     *    seguidament llençarà l'intent.
+     *
+     * Un cop retorni l'Intent (onActivityResult), li demanarem al HomeActivityViewModel que faci coses,
+     * incloent-hi: pujar la foto a FireStore per obtenir una Url d'Internet i assignar-la
+     * a una variable observable, que HomeActivity està observant. Quan HomeActivity detecti
+     * el canvi, la pintarà al seu l'ImageView loggedPictureImageView.
+     */
+
+
+    /**
+     * Bloc que seteja un listener al botó de seleccionar foto i que la posarà com a imatge de perfil.
+     * [Exercici 2: completar linies que hi manquen]
+     */
+    private void setChoosePictureListener(@NonNull View choosePicture) {
+        // Codi que s'encarrega de rebre el resultat de l'intent de seleccionar foto de galeria
+        // i que es llençarà des del listener que definirem a baix.
+        ActivityResultLauncher<Intent> startActivityForResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        Uri contentUri = data.getData(); // En aquest intent, sí que hi arriba la URI
+                        /*
+                         * [Exercici 2: Aquí hi manca 1 línia de codi]
+                         */
+                    }
+                });
+
+        // Listener del botó de seleccionar imatge, que llençarà l'intent amb l'ActivityResultLauncher.
+        choosePicture.setOnClickListener(view -> {
+            Intent data = new Intent(Intent.ACTION_GET_CONTENT);
+            data.addCategory(Intent.CATEGORY_OPENABLE);
+            data.setType("image/*");
+            Intent intent = Intent.createChooser(data, "Choose a file");
+            /*
+             * [Exercici 2: Aquí hi manca 1 línia de codi]
+             */
+        });
     }
 }

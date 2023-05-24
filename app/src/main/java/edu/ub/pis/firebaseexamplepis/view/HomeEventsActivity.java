@@ -40,7 +40,7 @@ public class HomeEventsActivity extends AppCompatActivity {
     private ImageView mLoggedPictureImageView;
     private ImageButton mTakePictureButton;
     private ImageButton mChoosePictureButton; // [Exercici 2: crea aquest botó al layout i implementa
-                                              // correctament setChoosePictureListener()]
+    // correctament setChoosePictureListener()]
     private Button mLogoutButton;
 
     private Button mNewEventButton;
@@ -66,7 +66,7 @@ public class HomeEventsActivity extends AppCompatActivity {
 
         // Inicialitza el ViewModel d'aquesta activity (HomeEventsActivity)
         mHomeEventsActivityViewModel = new ViewModelProvider(this)
-            .get(HomeEventsActivityViewModel.class);
+                .get(HomeEventsActivityViewModel.class);
 
         // Elements del ViewGroup inferior (email, botó logout, etc),
         // que només mostrarem si hi ha usuari logat.
@@ -125,13 +125,13 @@ public class HomeEventsActivity extends AppCompatActivity {
 
         // (1) Li assignem un layout manager.
         LinearLayoutManager manager = new LinearLayoutManager(
-            this, LinearLayoutManager.VERTICAL, false
+                this, LinearLayoutManager.VERTICAL, false
         );
         mEventCardsRV.setLayoutManager(manager);
 
         // (2) Inicialitza el RecyclerViewAdapter i li assignem a la RecyclerView.
         mEventCardRVAdapter = new EventCardAdapter(
-            mHomeEventsActivityViewModel.getEvents().getValue(), mHomeEventsActivityViewModel // Passem-li referencia llista usuaris
+                mHomeEventsActivityViewModel.getEvents().getValue(), mHomeEventsActivityViewModel // Passem-li referencia llista usuaris
         );
         mEventCardRVAdapter.setOnClickJoinListener(new EventCardAdapter.OnClickJoinListener() {
             // Listener que escoltarà quan interactuem amb un item en una posició donada
@@ -139,6 +139,7 @@ public class HomeEventsActivity extends AppCompatActivity {
             // l'usuari.
             @Override
             public void OnClickJoin(int position) {
+                mHomeEventsActivityViewModel.removeEventFromHome(position);
                 mEventCardRVAdapter.JoinEvent(position);
             }
         });
@@ -156,6 +157,23 @@ public class HomeEventsActivity extends AppCompatActivity {
 
         // A partir d'aquí, en cas que es faci cap canvi a la llista d'usuaris, HomeActivity ho sabrá
         mHomeEventsActivityViewModel.loadEventsFromRepository();  // Internament pobla els usuaris de la BBDD
+
+        // Si hi ha usuari logat i seteja una foto de perfil, mostra-la.
+        if (mAuth.getCurrentUser() != null) {
+            final Observer<String> observerPictureUrl = new Observer<String>() {
+                @Override
+                public void onChanged(String pictureUrl) {
+                    Picasso.get()
+                            .load(pictureUrl)
+                            .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
+                            .centerCrop()
+                            .into(mLoggedPictureImageView);
+                }
+            };
+            mHomeEventsActivityViewModel.getPictureUrl().observe(this, observerPictureUrl);
+
+            mHomeEventsActivityViewModel.loadPictureOfUser(mAuth.getCurrentUser().getEmail());
+        }
     }
 
     public void ClickJoin(int position){
@@ -184,15 +202,15 @@ public class HomeEventsActivity extends AppCompatActivity {
         // Codi que s'encarrega de rebre el resultat de l'intent de seleccionar foto de galeria
         // i que es llençarà des del listener que definirem a baix.
         ActivityResultLauncher<Intent> startActivityForResult = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                Intent data = result.getData();
-                Uri contentUri = data.getData(); // En aquest intent, sí que hi arriba la URI
-                /*
-                 * [Exercici 2: Aquí hi manca 1 línia de codi]
-                 */
-            }
-        });
+                new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        Uri contentUri = data.getData(); // En aquest intent, sí que hi arriba la URI
+                        /*
+                         * [Exercici 2: Aquí hi manca 1 línia de codi]
+                         */
+                    }
+                });
 
         // Listener del botó de seleccionar imatge, que llençarà l'intent amb l'ActivityResultLauncher.
         choosePicture.setOnClickListener(view -> {
