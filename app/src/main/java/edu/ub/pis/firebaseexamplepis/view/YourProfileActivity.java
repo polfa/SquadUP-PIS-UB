@@ -91,6 +91,10 @@ public class YourProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(YourProfileActivity.this, ChatActivity.class);
                 startActivity(intent);
             });
+            mMatchMaking.setOnClickListener(view -> {
+                Intent intent = new Intent(YourProfileActivity.this, MatchMakingActivity.class);
+                startActivity(intent);
+            });
 
         } else { // Si no ho està, ...
             //
