@@ -43,6 +43,7 @@ public class MatchMakingActivity extends AppCompatActivity {
     private ImageView mModifyPersonalInfoButton;
     private ImageView mChatBtn;
     private ImageView mHomeBtn;
+    private ImageView mPartnerRank;
     private ImageView mLoggedPictureImageView;
     private ViewGroup loggedLayout;
     private TextView mFoundPartner;
@@ -71,10 +72,12 @@ public class MatchMakingActivity extends AppCompatActivity {
         mGameSpinner.setAdapter(adapterGameNames);
         mFoundPartner = findViewById(R.id.textView15);
         mPartnerName = findViewById(R.id.partnerName);
+        mPartnerRank = findViewById(R.id.partnerRank);
 
         mFoundPartner.setVisibility(View.GONE);
         mPartnerName.setVisibility(View.GONE);
         mUserPhoto.setVisibility(View.GONE);
+        mPartnerRank.setVisibility(View.GONE);
 
         // Elements del ViewGroup inferior (email, botó logout, etc),
         // que només mostrarem si hi ha usuari logat.
@@ -108,11 +111,13 @@ public class MatchMakingActivity extends AppCompatActivity {
 
             mFindPartner.setOnClickListener(view -> {
                 User selectedUser = mHomeActivityViewModel.getUserByGame(mGameSpinner.getSelectedItem().toString(), mAuth.getCurrentUser().getEmail());
-                mFoundPartner.setVisibility(View.VISIBLE);
+                Picasso.get().load(selectedUser.getURL()).into(mUserPhoto);
+                Picasso.get().load(selectedUser.getRankImage()).into(mPartnerRank);
                 mPartnerName.setText(selectedUser.getNickname());
                 mPartnerName.setVisibility(View.VISIBLE);
-                Picasso.get().load(selectedUser.getURL()).into(mUserPhoto);
                 mUserPhoto.setVisibility(View.VISIBLE);
+                mFoundPartner.setVisibility(View.VISIBLE);
+                mPartnerRank.setVisibility(View.VISIBLE);
 
             });
 

@@ -126,6 +126,7 @@
                 android:id="@+id/game_Image"
                 android:layout_width="wrap_content"
                 android:layout_height="97dp"
+                android:layout_marginLeft="10sp"
                 android:layout_marginTop="20sp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/no_picture" />
@@ -135,6 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="99dp"
                 android:layout_marginTop="20sp"
+                android:layout_marginRight="10sp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/no_picture" />
         </LinearLayout>
