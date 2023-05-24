@@ -113,15 +113,16 @@ public class GrupRepository {
 
                                     messages.add(message);
                                 }
+                                ArrayList<String> users = (ArrayList<String>) document.get("users");
                                 Grup grup = new Grup(
                                         document.getId(),
                                         document.getString("grupName"),
-                                        (ArrayList<String>) document.get("users"),
+                                        users,
                                         messages,
                                         document.getString("imageURL"),
                                         document.getString("description")
                                 );
-                                if (userID.equals(document.getString("idUser1") )|| userID.equals(document.getString("idUser1"))){
+                                if (users.contains(userID)){
                                     grups.add(grup);
                                 }
                             }
