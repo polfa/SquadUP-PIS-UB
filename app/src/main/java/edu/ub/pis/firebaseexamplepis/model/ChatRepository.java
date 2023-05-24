@@ -139,6 +139,62 @@ public class ChatRepository {
                 });
     }
 
+    public void loadUserChats(ArrayList<Chat> chats){
+        chats.clear();
+        mDb.collection("chats")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ArrayList<Message> messages= new ArrayList<>();
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                ArrayList<Map<String,Object>> messageData = (ArrayList<Map<String,Object>>) document.get("messages");
+                                for (int i = 0; i < messageData.size(); i++) {
+                                    Map<String, Object> messageMap = messageData.get(i);
+                                    String text = (String) messageMap.get("text");
+                                    Timestamp time = (Timestamp) messageMap.get("date");
+                                    boolean read = (boolean) messageMap.get("read");
+                                    String userID = (String) messageMap.get("userID");
+                                    // Otros atributos del mensaje que necesites obtener
+
+                                    Message message = new Message(userID, text, time.toDate(), read);
+                                    // Establece los otros atributos del mensaje si los hay
+
+                                    messages.add(message);
+                                }
+                                Chat chat = new Chat(
+                                        document.getId(),
+                                        document.getString("idUser1"),
+                                        document.getString("idUser2"),
+                                        messages
+
+                                );
+                                chats.add(chat);
+                            }
+                            chatList = chats;
+                            /* Callback listeners */
+                            for (ChatRepository.OnLoadChatsListener l: mOnLoadChatsListeners) {
+                                l.onLoadChats(chats);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public Chat getChat(String user1, String user2){
+        for (Chat c: chatList){
+            if (c.usersInChat(user1,user2)){
+                return c;
+            }
+        }
+        return null;
+    }
+
     public void loadPictureOfUser(String email) {
         mDb.collection("users")
                 .document(email)

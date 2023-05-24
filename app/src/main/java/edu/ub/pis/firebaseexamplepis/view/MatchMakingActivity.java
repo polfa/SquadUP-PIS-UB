@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.User;
+import edu.ub.pis.firebaseexamplepis.viewmodel.ActiveData;
 import edu.ub.pis.firebaseexamplepis.viewmodel.ChatActivityViewModel;
 import edu.ub.pis.firebaseexamplepis.viewmodel.HomeActivityViewModel;
 
@@ -55,10 +56,19 @@ public class MatchMakingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private HomeActivityViewModel mHomeActivityViewModel;
 
+    private ChatActivityViewModel mChatActivityViewModel;
+    private User selectedUser;
+
+    private ActiveData data= ActiveData.getInstance();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mHomeActivityViewModel = new ViewModelProvider(this)
                 .get(HomeActivityViewModel.class);
+
+        mChatActivityViewModel = new ViewModelProvider(this)
+                .get(ChatActivityViewModel.class);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_making_partner);
@@ -71,6 +81,7 @@ public class MatchMakingActivity extends AppCompatActivity {
         mGameSpinner.setAdapter(adapterGameNames);
         mFoundPartner = findViewById(R.id.textView15);
         mPartnerName = findViewById(R.id.partnerName);
+        selectedUser = null;
 
         mFoundPartner.setVisibility(View.GONE);
         mPartnerName.setVisibility(View.GONE);
@@ -107,13 +118,28 @@ public class MatchMakingActivity extends AppCompatActivity {
             });
 
             mFindPartner.setOnClickListener(view -> {
-                User selectedUser = mHomeActivityViewModel.getUserByGame(mGameSpinner.getSelectedItem().toString(), mAuth.getCurrentUser().getEmail());
+                selectedUser = mHomeActivityViewModel.getUserByGame(mGameSpinner.getSelectedItem().toString(), mAuth.getCurrentUser().getEmail());
                 mFoundPartner.setVisibility(View.VISIBLE);
                 mPartnerName.setText(selectedUser.getNickname());
                 mPartnerName.setVisibility(View.VISIBLE);
                 Picasso.get().load(selectedUser.getURL()).into(mUserPhoto);
                 mUserPhoto.setVisibility(View.VISIBLE);
 
+            });
+
+            mUserPhoto.setOnClickListener(view -> {
+                if (selectedUser != null){
+                    mChatActivityViewModel.addChat(mAuth.getCurrentUser().getEmail(), selectedUser.getID());
+                    data.setCurrentChat(mChatActivityViewModel.getChat(mAuth.getCurrentUser().getEmail(), selectedUser.getID()));
+                    mChatActivityViewModel.loadChatsFromRepository();
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Intent intent = new Intent(MatchMakingActivity.this, ChatInsideActivity.class);
+                    startActivity(intent);
+                }
             });
 
         } else { // Si no ho està, ...

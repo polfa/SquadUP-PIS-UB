@@ -195,6 +195,10 @@ public class ChatActivityViewModel extends AndroidViewModel
         mChatRepository.loadUserChats(mChat.getValue(), userID);
     }
 
+    public void loadChatsFromRepository() {
+        mChatRepository.loadUserChats(mChat.getValue());
+    }
+
     public void loadChatByIdFromRepository(String chatId) {
         mChatRepository.loadUserChats(mChat.getValue(), chatId);
     }
@@ -225,6 +229,10 @@ public class ChatActivityViewModel extends AndroidViewModel
 
     public void addChat(String idUser1, String idUser2) {
         mChatRepository.addChat(idUser1, idUser2, new ArrayList<Message>());
+    }
+
+    public Chat getChat(String user1, String user2) {
+        return mChatRepository.getChat(user1, user2);
     }
 
     /*

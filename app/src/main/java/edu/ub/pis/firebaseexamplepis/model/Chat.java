@@ -91,6 +91,14 @@ public class Chat {
         }
         return count;
     }
+
+    public boolean usersInChat(String u1, String u2) {
+        if ((u1.equals(user1.getID()) || u1.equals(user2.getID())) && (u2.equals(user1.getID()) || u2.equals(user2.getID()))){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
 
 
