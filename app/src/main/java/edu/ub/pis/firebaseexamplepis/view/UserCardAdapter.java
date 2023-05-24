@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
@@ -24,12 +25,15 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.ViewHo
         void OnClickHide(int position);
     }
 
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     private ArrayList<User> mUsers; // Referència a la llista d'usuaris
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
     public UserCardAdapter(ArrayList<User> userList) {
-        this.mUsers = userList; // no fa new (La llista la manté el ViewModel)
+        mUsers = userList;
+
 
     }
 
@@ -55,7 +59,9 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.ViewHo
         // El ViewHolder té el mètode que s'encarrega de llegir els atributs del User (1r parametre),
         // i assignar-los a les variables del ViewHolder.
         // Qualsevol listener que volguem posar a un item, ha d'entrar com a paràmetre extra (2n).
+
         holder.bind(mUsers.get(position), this.mOnClickHideListener);
+
     }
 
     /**

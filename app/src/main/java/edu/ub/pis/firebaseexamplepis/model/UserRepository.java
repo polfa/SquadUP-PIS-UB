@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -100,6 +101,10 @@ public class UserRepository {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId() + " => " + document.getData());
+                            ArrayList<String> friends = (ArrayList<String>) document.get("friends");
+                            if (friends == null){
+                                friends = new ArrayList<>();
+                            }
                             User user = new User(
                                 document.getId(), // ID = Email
                                 document.getString("nickname"),
@@ -107,8 +112,8 @@ public class UserRepository {
                                 document.getString("picture_url"),
                                 document.getString("mail"),
                                 document.getString("gameImageId"),
-                                document.getString("rankImageId")
-                            );
+                                document.getString("rankImageId"),
+                                    friends);
                             users.add(user);
 
                         }
@@ -122,6 +127,45 @@ public class UserRepository {
                     }
                 }
             });
+    }
+
+    public void loadUserFriends(ArrayList<User> users, ArrayList<String> friends){
+        users.clear();
+        mDb.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                ArrayList<String> friends = (ArrayList<String>) document.get("friends");
+                                User user = new User(
+                                        document.getId(), // ID = Email
+                                        document.getString("nickname"),
+                                        document.getString("descripcio"),
+                                        document.getString("picture_url"),
+                                        document.getString("mail"),
+                                        document.getString("gameImageId"),
+                                        document.getString("rankImageId"),
+                                        friends);
+                                if (friends != null) {
+                                    if (friends.contains(user.getID())) {
+                                        users.add(user);
+                                    }
+                                }
+
+                            }
+                            userList = users;
+                            /* Callback listeners */
+                            for (OnLoadUsersListener l: mOnLoadUsersListeners) {
+                                l.onLoadUsers(users);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
     public User getUserById(String userID){
@@ -181,9 +225,9 @@ public class UserRepository {
         String Nickname,
         String descripcio,
         String gameImageId,
-        String rankImageId
+        String rankImageId,
+        ArrayList<String> friends
     ) {
-        userList.add(new User(email,Nickname,descripcio,"",email,gameImageId,rankImageId));
          // Obtenir informació personal de l'usuari
         Map<String, Object> signedUpUser = new HashMap<>();
         signedUpUser.put("nickname",Nickname);
@@ -192,6 +236,7 @@ public class UserRepository {
         signedUpUser.put("mail",email);
         signedUpUser.put("gameImageId",gameImageId);
         signedUpUser.put("rankImageId",rankImageId);
+        signedUpUser.put("friends", friends);
 
         // Afegir-la a la base de dades
         mDb.collection("users").document(email).set(signedUpUser)

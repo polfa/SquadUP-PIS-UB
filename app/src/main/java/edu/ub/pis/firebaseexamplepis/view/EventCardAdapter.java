@@ -145,7 +145,6 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
             userImage = null;
             gameImage = null;
             rankImage = null;
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
             currentUser = mHomeEventsActivityViewModel.getUserById();
         }
 
@@ -167,7 +166,6 @@ public class EventCardAdapter extends RecyclerView.Adapter<EventCardAdapter.View
                 // Carrega foto de l'usuari de la llista directament des d'una Url
                 // d'Internet
                 userImage = event.getUser().getURL();
-                Picasso.get().load(userImage).into(mCardPictureUrl);
                 Picasso.get().load(userImage).into(mCardPictureUrl);
                 Picasso.get().load(event.getGameImage()).into(mCardGameImage);
                 Picasso.get().load(event.getRankImage()).into(mCardRankImage);

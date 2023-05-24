@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 import edu.ub.pis.firebaseexamplepis.R;
 import edu.ub.pis.firebaseexamplepis.model.UserRepository;
 import edu.ub.pis.firebaseexamplepis.view.imageURLs.VideogameLogos;
@@ -112,7 +114,8 @@ public class SignUpActivity extends AppCompatActivity {
                                 mNicknameText.getText().toString(),
                                 mDescripcioText.getText().toString(),
                                 mGameNameSpinner.getSelectedItem().toString().toUpperCase(),
-                                mGameRankSpinner.getSelectedItem().toString().toLowerCase()
+                                mGameRankSpinner.getSelectedItem().toString().toLowerCase(),
+                                    new ArrayList<String>()
 
                             );
                             // Anar a la pantalla home de l'usuari autenticat

@@ -141,7 +141,6 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
             if (message != null && mAuth.getCurrentUser() != null) {
                 if (!message.read()) {
                     message.setRead(mAuth.getCurrentUser().getEmail());
-                    mChatActivityViewModel.updateChat(data.getCurrentChat());
                 }
                 mTextViewMessage.setText(message.getText());
                 System.out.println("2333333333333334");

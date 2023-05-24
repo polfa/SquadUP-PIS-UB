@@ -16,6 +16,8 @@ public class User {
     private String mPictureURL;
     private String gameImage, rankImage;
 
+    private ArrayList<String> friends;
+
     VideogameLogos vl;
     private String mail;// Url d'Internet, no la foto en si
     // Constructor
@@ -26,7 +28,8 @@ public class User {
         String pictureURL,
         String mail,
         String gameImageId,
-        String rankImageId
+        String rankImageId,
+        ArrayList<String> friends
     ) {
         this.mId = id;
         this.mNickname = Nickname;
@@ -38,6 +41,7 @@ public class User {
         vl = VideogameLogos.valueOf(gameImageId);
         gameImage = vl.getImageLocation();
         rankImage = vl.getRank(getRankImageId());
+        this.friends = friends;
     }
 
     // Getters
@@ -74,5 +78,13 @@ public class User {
     }
     public void setGameImageId(String gameImageId) {
         this.gameImageId = gameImageId;
+    }
+
+    public boolean isFriend(String id){
+        if (friends.contains(id)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

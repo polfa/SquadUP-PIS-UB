@@ -139,7 +139,6 @@ public class HomeEventsActivity extends AppCompatActivity {
             // l'usuari.
             @Override
             public void OnClickJoin(int position) {
-                mHomeEventsActivityViewModel.removeEventFromHome(position);
                 mEventCardRVAdapter.JoinEvent(position);
             }
         });
@@ -157,23 +156,6 @@ public class HomeEventsActivity extends AppCompatActivity {
 
         // A partir d'aquí, en cas que es faci cap canvi a la llista d'usuaris, HomeActivity ho sabrá
         mHomeEventsActivityViewModel.loadEventsFromRepository();  // Internament pobla els usuaris de la BBDD
-
-        // Si hi ha usuari logat i seteja una foto de perfil, mostra-la.
-        if (mAuth.getCurrentUser() != null) {
-            final Observer<String> observerPictureUrl = new Observer<String>() {
-                @Override
-                public void onChanged(String pictureUrl) {
-                    Picasso.get()
-                        .load(pictureUrl)
-                        .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
-                        .centerCrop()
-                        .into(mLoggedPictureImageView);
-                }
-            };
-            mHomeEventsActivityViewModel.getPictureUrl().observe(this, observerPictureUrl);
-
-            mHomeEventsActivityViewModel.loadPictureOfUser(mAuth.getCurrentUser().getEmail());
-        }
     }
 
     public void ClickJoin(int position){
