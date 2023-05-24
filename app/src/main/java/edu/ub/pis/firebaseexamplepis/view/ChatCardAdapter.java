@@ -39,13 +39,12 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
 
     private ArrayList<Chat> mChats;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();;
     private User currentUser;
     private OnClickEnterListener mOnClickEnterListener; // Qui hagi de repintar la ReciclerView
                                                       // quan s'amagui
     // Constructor
     public ChatCardAdapter(ArrayList<Chat> chatList, ChatActivityViewModel viewModelChat) {
-        mAuth = FirebaseAuth.getInstance();
         mChatActivityViewModel = viewModelChat;
         currentUser = mChatActivityViewModel.getUserById(mAuth.getCurrentUser().getEmail());
         this.mChats = chatList;
@@ -163,7 +162,7 @@ public class ChatCardAdapter extends RecyclerView.Adapter<ChatCardAdapter.ViewHo
                 day = chat.getLastMessage().getTime().toString().substring(0, 3);
             }
 
-            mCardNumMisatges.setText(String.valueOf(chat.getMessages().size()));
+            mCardNumMisatges.setText(String.valueOf(chat.getUnreadMessages(mAuth.getCurrentUser().getEmail())));
 
             mCardTime.setText(day + " " + hour);
             // Carrega foto de l'usuari de la llista directament des d'una Url

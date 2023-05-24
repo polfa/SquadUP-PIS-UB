@@ -20,7 +20,7 @@ public class Chat {
         if (!messages.isEmpty()) {
             this.lastMessage = messages.get(messages.size() - 1);
         }else{
-            lastMessage = null;
+            lastMessage = new Message("","",new Date(), false);
         }
 
         this.chatID = chatID;
@@ -64,12 +64,32 @@ public class Chat {
         }
     }
 
+    public User getUser(String currentUser) {
+        if (user1.getID().equals(currentUser)){
+            return user2;
+        }else if (user2.getID().equals(currentUser) ){
+            return user1;
+        }else{
+            throw new RuntimeException("user not in chat");
+        }
+    }
+
     public Message getLastMessage() {
         return lastMessage;
     }
 
     public boolean userInChat(User user){
         return user == user1 || user == user2;
+    }
+
+    public int getUnreadMessages(String currentUser){
+        int count = 0;
+        for (Message m: messages){
+            if (!m.read() && !m.getUserID().equals(currentUser)){
+                count += 1;
+            }
+        }
+        return count;
     }
 }
 

@@ -35,19 +35,16 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
 
     private ArrayList<Message> messages;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private User currentUser;
 
     private OnClickHideListener mOnClickHideListener; // Qui hagi de repintar la ReciclerView
     // quan s'amagui
     // Constructor
     public ChatInsideCardAdapter(ArrayList<Message> messages, ChatActivityViewModel viewModelChat) {
-        mAuth = FirebaseAuth.getInstance();
         mChatActivityViewModel = viewModelChat;
         currentUser = mChatActivityViewModel.getUserById(mAuth.getCurrentUser().getEmail());
         this.messages = messages;
-
-
     }
 
 
@@ -134,6 +131,8 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
 
         private final TextView mTextViewMessage;
 
+        private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTextViewMessage = itemView.findViewById(R.id.textViewMessageContent);
@@ -141,8 +140,12 @@ public class ChatInsideCardAdapter extends RecyclerView.Adapter<ChatInsideCardAd
         }
 
         public void bind(final Message message, OnClickHideListener listener) {
-            mTextViewMessage.setText(message.getText());
-            System.out.println("2333333333333334");
+
+            if (message != null && mAuth.getCurrentUser() != null) {
+                message.setRead(mAuth.getCurrentUser().getEmail());
+                mTextViewMessage.setText(message.getText());
+                System.out.println("2333333333333334");
+            }
             //Picasso.get().load(event.getGameImageId()).into(mCardGameImage);
             //Picasso.get().load(event.getRankImageId()).into(mCardRankImage);
             // Seteja el listener onClick del botó d'amagar (hide), que alhora
