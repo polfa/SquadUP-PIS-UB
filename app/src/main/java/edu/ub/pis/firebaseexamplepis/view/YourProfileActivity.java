@@ -69,7 +69,9 @@ public class YourProfileActivity extends AppCompatActivity {
         // Carrega foto de l'usuari de la llista directament des d'una Url
         // d'Internet.
         Picasso.get().load(currentUser.getRankImage()).into(mRankInGame);
-        Picasso.get().load(currentUser.getURL()).into(mUserPhoto);
+        if (currentUser.getURL() != null && !currentUser.getURL().isEmpty()) {
+            Picasso.get().load(currentUser.getURL()).into(mUserPhoto);
+        }
         if (mAuth.getCurrentUser() != null) {  // Si hi ha usuari logat...
             // Obté elements de loggedLayout
             mModifyPersonalInfoButton = findViewById(R.id.modifyPersonalInfoButton);
@@ -104,11 +106,13 @@ public class YourProfileActivity extends AppCompatActivity {
             final Observer<String> observerPictureUrl = new Observer<String>() {
                 @Override
                 public void onChanged(String pictureUrl) {
-                    Picasso.get()
-                            .load(pictureUrl)
-                            .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
-                            .centerCrop()
-                            .into(mLoggedPictureImageView);
+                    if (!pictureUrl.isEmpty()) {
+                        Picasso.get()
+                                .load(pictureUrl)
+                                .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
+                                .centerCrop()
+                                .into(mLoggedPictureImageView);
+                    }
                 }
 
             };

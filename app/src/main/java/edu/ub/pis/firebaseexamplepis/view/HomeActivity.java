@@ -164,11 +164,13 @@ public class HomeActivity extends AppCompatActivity {
             final Observer<String> observerPictureUrl = new Observer<String>() {
                 @Override
                 public void onChanged(String pictureUrl) {
-                    Picasso.get()
-                            .load(pictureUrl)
-                            .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
-                            .centerCrop()
-                            .into(mLoggedPictureImageView);
+                    if (!pictureUrl.isEmpty()) {
+                        Picasso.get()
+                                .load(pictureUrl)
+                                .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
+                                .centerCrop()
+                                .into(mLoggedPictureImageView);
+                    }
                 }
             };
             mHomeActivityViewModel.getPictureUrl().observe(this, observerPictureUrl);

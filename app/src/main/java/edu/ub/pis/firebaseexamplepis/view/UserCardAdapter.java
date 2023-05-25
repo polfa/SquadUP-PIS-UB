@@ -123,7 +123,9 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.ViewHo
             Picasso.get().load(user.getGameImage()).into(mFavouriteGame);
             // Carrega foto de l'usuari de la llista directament des d'una Url
             // d'Internet.
-            Picasso.get().load(user.getURL()).into(mCardPictureUrl);
+            if (user.getURL() != null && !user.getURL().isEmpty()) {
+                Picasso.get().load(user.getURL()).into(mCardPictureUrl);
+            }
             // Seteja el listener onClick del botó d'amagar (hide), que alhora
             // cridi el mètode OnClickHide que implementen els nostres propis
             // listeners de tipus OnClickHideListener.
