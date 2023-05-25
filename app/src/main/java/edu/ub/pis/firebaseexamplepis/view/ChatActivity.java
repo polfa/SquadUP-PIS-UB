@@ -162,12 +162,14 @@ public class ChatActivity extends AppCompatActivity {
             final Observer<String> observerPictureUrl = new Observer<String>() {
                 @Override
                 public void onChanged(String pictureUrl) {
-                    if (!pictureUrl.isEmpty()) {
-                        Picasso.get()
-                                .load(pictureUrl)
-                                .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
-                                .centerCrop()
-                                .into(mLoggedPictureImageView);
+                    if (pictureUrl != null) {
+                        if (!pictureUrl.isEmpty()) {
+                            Picasso.get()
+                                    .load(pictureUrl)
+                                    .resize(mLoggedPictureImageView.getWidth(), mLoggedPictureImageView.getHeight())
+                                    .centerCrop()
+                                    .into(mLoggedPictureImageView);
+                        }
                     }
                 }
             };
