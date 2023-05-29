@@ -125,7 +125,9 @@ public class MatchMakingActivity extends AppCompatActivity {
 
             mFindPartner.setOnClickListener(view -> {
                 selectedUser = mHomeActivityViewModel.getUserByGame(mGameSpinner.getSelectedItem().toString(), mAuth.getCurrentUser().getEmail());
-                Picasso.get().load(selectedUser.getURL()).into(mUserPhoto);
+                if(selectedUser.getURL() != null) {
+                    Picasso.get().load(selectedUser.getURL()).into(mUserPhoto);
+                }
                 Picasso.get().load(selectedUser.getRankImage()).into(mPartnerRank);
                 mPartnerName.setText(selectedUser.getNickname());
                 mPartnerName.setVisibility(View.VISIBLE);
